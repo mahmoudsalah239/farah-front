@@ -5,7 +5,7 @@
 }
 .brand {
   color: var(--main-color);
-  text-decoration: none ;
+  text-decoration: none;
 }
 
 .navbar {
@@ -44,14 +44,15 @@
 body {
   direction: rtl;
   text-align: right;
+  background: url(https://code-theme.com/html/findhouses/images/bg/bg-pattern-dot.png)
+    0 0 repeat !important;
 }
 
 ::selection {
   background-color: var(--main-color);
 }
 
-.brandbtn{
+.brandbtn {
   background-color: var(--main-color);
   color: #fff;
-
 }
