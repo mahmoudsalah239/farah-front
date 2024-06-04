@@ -1,0 +1,19 @@
+// .carousel-item a {
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// }
+
+.carousel-caption {
+  position: absolute;
+  top: 70%;
+  transform: translateY(-50%);
+//   text-align: center;
+  color: white; /* Adjust the color as needed */
+}
+
+
+.carousel-item img{
+    height: 80vh;
+}

@@ -1,1 +1,57 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --main-color: #4f1649;
+  --main-color: #942f66;
+}
+.brand {
+  color: var(--main-color);
+  text-decoration: none ;
+}
+
+.navbar {
+  background-color: var(--main-color);
+}
+
+* {
+  font-family: "Almarai", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+.almarai-light {
+  font-family: "Almarai", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.almarai-regular {
+  font-family: "Almarai", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.almarai-bold {
+  font-family: "Almarai", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.almarai-extrabold {
+  font-family: "Almarai", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+body {
+  direction: rtl;
+  text-align: right;
+}
+
+::selection {
+  background-color: var(--main-color);
+}
+
+.brandbtn{
+  background-color: var(--main-color);
+  color: #fff;
+
+}

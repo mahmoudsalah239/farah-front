@@ -1,0 +1,94 @@
+.nav-link {
+  margin: 0 10px 0 10px;
+  padding: 0 10 0 10;
+  color: white;
+}
+.header,
+.navbar {
+  background-color: var(--main-color) !important;
+  //   color: white !important;
+}
+
+.navbar-brand img {
+  width: 70px;
+  margin: 0;
+}
+/* styles.css */
+
+/* زر التبديل */
+.navbar-toggler {
+  border: none;
+  outline: none;
+  position: relative;
+  width: 30px;
+  height: 24px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+/* الأشرطة الثلاثة للزر */
+.navbar-toggler-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+  outline: none;
+  border: none;
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  transition: all 0.3s ease;
+  border: none;
+  outline: none;
+}
+
+/* الشريط العلوي */
+.navbar-toggler-icon::before {
+  top: -8px;
+  border: none;
+  outline: none;
+}
+
+/* الشريط السفلي */
+.navbar-toggler-icon::after {
+  bottom: -8px;
+  border: none;
+  outline: none;
+}
+
+/* عند الضغط، إخفاء الشريط الأوسط */
+.navbar-toggler.collapsed .navbar-toggler-icon {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+/* تحويل الشريط العلوي إلى زاوية 45 درجة */
+.navbar-toggler.collapsed .navbar-toggler-icon::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+/* تحويل الشريط السفلي إلى زاوية -45 درجة */
+.navbar-toggler.collapsed .navbar-toggler-icon::after {
+  transform: rotate(-45deg);
+  bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .navbar-nav .nav-item .nav-link {
+    border-bottom: 1px solid white;
+    padding-bottom: 10px;
+  }
+}

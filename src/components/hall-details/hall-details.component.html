@@ -1,0 +1,45 @@
+<div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-inner" *ngFor="let item of images ; let i = index">
+        <div class="carousel-item active">
+            <img class="w-100" [src]="'assets/' + item" alt="Image">
+            <div class="carousel-caption d-flex  justify-content-around">
+                <div class="col-8 text-end">
+                    <p class="badge  bg-info">قاعه افراح ومناسبات </p>
+                    <h1 class="fw-bold almarai-extrabold">ليله العمر </h1>
+                    <h5>طريق المنصوريه
+
+                        <i class="fa-solid fa-location-dot"></i>
+                    </h5>
+                    <hr>
+                    <div class="d-flex text-warning gap-2 fs-2">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i>
+                    </div>
+                </div>
+                <div class="col-4 text-black rounded  ">
+                    <div class=" bg-white rounded-2 py-3 ">
+                        <div class="row">
+                            <div class="col-6">
+                                السعر 7500.00
+                            </div>
+                            <div class="col-6">
+                                300 السعه
+                            </div>
+                        </div>
+                        <button class="btn btn-outline-light d-block brandbtn m-auto my-2"> حجز القاعه الان </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon " aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next " type="button" data-bs-target="#header-carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon " aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
