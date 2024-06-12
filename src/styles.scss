@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
   --main-color: #4f1649;
-  --main-color: #942f66;
+  // --main-color: #942f66;
 }
 .brand {
   color: var(--main-color);
@@ -44,8 +44,8 @@
 body {
   direction: rtl;
   text-align: right;
-  background: url(https://code-theme.com/html/findhouses/images/bg/bg-pattern-dot.png)
-    0 0 repeat !important;
+  // background: url(https://code-theme.com/html/findhouses/images/bg/bg-pattern-dot.png)
+  //   0 0 repeat !important;
 }
 
 ::selection {
@@ -55,4 +55,16 @@ body {
 .brandbtn {
   background-color: var(--main-color);
   color: #fff;
+  letter-spacing: 2px;
 }
+
+
+.brandbtn:hover{
+  background-color: #fff;
+  color:var(--main-color);
+  font-weight: bold;
+  // border: 2px solid var(--main-color);
+
+}
+
+

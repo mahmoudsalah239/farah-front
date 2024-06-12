@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row align-items-center">
+      <div class="col col-md-6 col-12">
+        <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="d-flex justify-content-around">
+            <button type="button" class="btn" (click)="goToRegister('buyer')">تسجيل مشتري</button>
+            <button type="button" class="btn" (click)="goToRegister('seller')">تسجيل بائع</button>
+          </div>
+          <p class="title"> تسجيل الدخول </p>
+  
+          <label>
+            <input formControlName="email" placeholder="" type="email" class="input">
+            <span>الايميل </span>
+          </label>
+  
+          <label>
+            <input formControlName="password" placeholder="" type="password" class="input">
+            <span>كلمة السر </span>
+          </label>
+  
+          <button type="submit" class="submit">تسجيل دخول </button>
+          <p class="signin">هل تريد انشاء حساب ؟
+            <a routerLink="/register"> أنشاء حساب</a>
+          </p>
+        </form>
+      </div>
+      <div class="col col-md-6 col-12">
+        <img class="w-75" src="../../assets/7314119.svg" alt="">
+      </div>
+    </div>
+  </div>
+  

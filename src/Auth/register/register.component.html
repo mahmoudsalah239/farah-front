@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="row justify-content-center align-items-center">
+    <div class="col col-md-6 col-12">
+      <form [formGroup]="registerForm" (submit)="onSubmit()" class="form">
+        <div class="d-flex justify-content-around">
+          <button class="btn" routerLink="/register">تسجيل مشتري </button>
+          <button class="btn" routerLink="/OwnerRegister">تسجيل بائع </button>
+        </div>
+        <p class="title"> تسجيل مشتري  </p>
+        
+        <div class="flex">
+          <label>
+            <input formControlName="firstName" placeholder="" type="text" class="input">
+            <span>الاسم الاول </span>
+          </label>
+
+          <label>
+            <input formControlName="lastName" placeholder="" type="text" class="input">
+            <span>الاسم الاخير </span>
+          </label>
+        </div>
+        <label>
+          <input formControlName="ssn" placeholder="" type="text" class="input">
+          <span>الرقم القومي </span>
+        </label>
+
+        <label>
+          <input formControlName="email" placeholder="" type="email" class="input">
+          <span>الايميل </span>
+        </label>
+
+        <div class="flex">
+        <div class="mb-3">
+             <select id="gove" class="form-control" formControlName="governorate" >
+                  <option value="">اختر المحافظة</option>
+                  <option *ngFor="let governorate of AllGovernments"
+                       [value]="governorate.governorateID">
+                       {{ governorate.name }}
+                  </option>
+             </select>
+             <div *ngIf="registerForm.get('governorate')?.invalid && registerForm.get('governorate')?.touched"
+                  class="text-danger">
+                  المحافظة مطلوبة
+             </div>
+        </div>
+        <div class="mb-3">
+               <select id="city" class="form-control" formControlName="city">
+                  <option value="">اختر المدينة</option>
+                  <option *ngFor="let city of Cites" [value]="city.id">
+                       {{ city.name }}
+                  </option>
+             </select>
+             <div *ngIf="registerForm.get('city')?.invalid && registerForm.get('city')?.touched"
+                  class="text-danger">
+                  المدينة مطلوبة
+             </div>
+        </div>
+          </div> 
+          <!-- <label>
+            <input formControlName="city" placeholder="" type="text" class="input">
+            <span> المدينه  </span>
+          </label>
+
+          <label>
+            <input formControlName="governorate" placeholder="" type="text" class="input">
+            <span>المحافظه </span>
+          </label> -->
+        <!-- </div> -->
+        <label>
+          <input formControlName="password" placeholder="" type="password" class="input">
+          <span>كلمه السر </span>
+        </label>
+        <label>
+          <input formControlName="confirmPassword" placeholder="" type="password" class="input">
+          <span>تأكيد كلمه السر </span>
+        </label>
+        <label>
+          <input formControlName="yourFavirotePerson" placeholder="" type="text" class="input">
+          <span>اسم صديقك المفضل ؟</span>
+        </label>
+        <button type="submit" class="submit">انشاء حساب </button>
+        <p class="signin">هل لديك حساب بالفعل  ؟  
+          <a  routerLink="/Login">سجل دخول</a>
+        </p>
+      </form>
+    </div>    
+    <div class="col col-md-6 col-12 d-none d-lg-block">
+      <img class="w-100" src="../../assets/7314118.svg" alt="">
+    </div>
+  </div> 
+</div>

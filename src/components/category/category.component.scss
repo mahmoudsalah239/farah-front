@@ -1,0 +1,330 @@
+.container .box {
+    background-color: white;
+    position: relative;
+    box-shadow: 5px 4px 20px 4px #00000016;
+    border-radius: 15px;
+  }
+  
+  .container .box .top {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+//   .container .box .for-sale {
+//     background-color: #6449e7;
+//     color: white;
+//     font-size: 13px;
+//     font-weight: bold;
+//     padding: 4px 10px;
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     transform: translateY(-50%);
+//     z-index: 1;
+//   }
+  
+//   .container .box .top:before {
+//     content: "";
+//     width: 100%;
+//     height: 100%;
+//     background-color: #6349e77a;
+//     position: absolute;
+//     left: 0;
+//     top: 0;
+//     transition: 0.3s;
+//     opacity: 0;
+//   }
+  
+//   .container .box .top button.view-property-btn {
+//     background-color: white;
+//     color: #6449e7;
+//     font-size: 12px;
+//     padding: 10px;
+//     border: 1px solid white;
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     cursor: pointer;
+//     transition: 0.3s;
+//     transition-delay: 0.08s;
+//     opacity: 0;
+//     border-radius: 15px;
+//     font-weight: bold;
+//     z-index: 10;
+//   }
+  
+//   .container .box .top:hover button.view-property-btn {
+//     opacity: 1;
+//   }
+  
+  .container .box .top img {
+    
+     height: 320px;
+    object-fit: cover;
+    border-top-right-radius: 10px;
+    transition: 0.3s;
+    overflow: hidden;
+  }
+  
+  .container .box .top:hover img {
+    transform: scale(.9);
+  }
+  
+//   .container .box .top span {
+//     position: absolute;
+//     right: 20px;
+//     bottom: 15px;
+//     color: white;
+//     font-size: 20px;
+//   }
+//   
+//   .container .box .top span i {
+//     margin-left: 5px;
+//   }
+  
+//   .container .box .bottom {
+//     padding: 20px 15px;
+//     position: relative;
+//   }
+  
+//   .container .box .bottom {
+//     padding: 20px 15px;
+//     position: relative;
+//   }
+  
+//   .container .box .top {
+//     position: relative;
+//   }
+//   .container .box .bottom h3 {
+//     font-size: 15px;
+//   }
+  
+//   .container .box .bottom > p {
+//     margin: 15px 0;
+//     font-size: 13px;
+//     line-height: 1.4;
+//     color: #777;
+//   }
+  
+
+
+ 
+  
+  
+  
+//   .container .box .price {
+//     position: absolute;
+//     top: 0;
+//     right: 0;
+//     background-color: #6449e7;
+//     color: white;
+//     font-size: 1rem;
+//     padding: 4px 10px;
+//     transform: translateY(-50%);
+//     z-index: 1;
+//     border-radius: 5px;
+//     font-weight: bold;
+//     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+//   }
+  
+  .apartment-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .container .box .footer {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  
+  .container .box .footer .owner-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .container .box .footer .owner-details {
+    display: flex;
+    align-items: center;
+  }
+  
+  .container .box .footer .owner-details .owner-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+  }
+  
+  .container .box .footer .owner-details .owner-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .container .box .footer .owner-details .owner-name {
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  .container .box .footer .ad-time {
+    margin: 0;
+    font-size: 12px;
+    color: #777;
+  }
+  
+  .reservation {
+    position: relative;
+    background-image: url("../../assets/hero-image-2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+  
+  .background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(101, 47, 90, 0.3);
+    z-index: 1;
+  }
+  
+  .reservation * {
+    position: relative;
+    z-index: 2;
+  }
+  
+
+
+
+//   button
+.button {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    background: none;
+    color: #0f1923;
+    cursor: pointer;
+    position: relative;
+    padding: 8px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all .15s ease;
+  text-align: center;
+  }
+  
+  .button::before,
+  .button::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: calc(50% - 5px);
+    border: 1px solid #7D8082;
+    transition: all .15s ease;
+  }
+  
+  .button::before {
+    top: 0;
+    border-bottom-width: 0;
+  }
+  
+  .button::after {
+    bottom: 0;
+    border-top-width: 0;
+  }
+  
+  .button:active,
+  .button:focus {
+    outline: none;
+  }
+  
+  .button:active::before,
+  .button:active::after {
+    right: 3px;
+    left: 3px;
+  }
+  
+  .button:active::before {
+    top: 3px;
+  }
+  
+  .button:active::after {
+    bottom: 3px;
+  }
+  
+  .button_lg {
+    position: relative;
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #7b0654;
+    overflow: hidden;
+    box-shadow: inset 0px 0px 0px 1px transparent;
+  }
+  
+  .button_lg::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    background-color: #f229e8;
+  }
+  
+  .button_lg::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 4px;
+    height: 4px;
+    background-color: #c81aef;
+    transition: all .2s ease;
+  }
+  
+  .button_sl {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: -1px;
+    left: -8px;
+    width: 0;
+    background-color: var(--main-color);
+    transform: skew(-15deg);
+    transition: all .2s ease;
+  }
+  
+  .button_text {
+    position: relative;
+  }
+  
+  .button:hover {
+    color: #0f1923;
+  }
+  
+  .button:hover .button_sl {
+    width: calc(100% + 15px);
+  }
+  
+  .button:hover .button_lg::after {
+    background-color: #fff;
+  }
+  
