@@ -21,7 +21,8 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/photographer">المصور</a>
-          </li>   <li class="nav-item">
+          </li>
+          <li class="nav-item">
             <a class="nav-link" routerLink="/dress">فساتين</a>
           </li>
           <li class="nav-item">
@@ -31,11 +32,32 @@
             <a class="nav-link" routerLink="#">اتصل بنا</a>
           </li>
         </ul>
-        <ul class="navbar-nav m-auto">
+        <ul *ngIf="!IsLogin ;else logined " class="navbar-nav m-auto">
           <li class="nav-item">
             <a class="nav-link" routerLink="register">انضم إلينا</a>
           </li>
         </ul>
+        <ng-template #logined>
+          <ul class="navbar-nav m-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+
+                clirk <img class="rounded rounded-circle loginUserImg " src="assets/ts-1.jpg" alt="">
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" routerLink="#"><i class="fa fa-user"></i> Profile</a>
+                </li>
+                <li><a class="dropdown-item" routerLink="LayOut"><i class="fa fa-list"></i> DashBoard</a>
+                </li>
+                <li><a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i>Logout</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+        </ng-template>
+
       </div>
     </nav>
   </div>
