@@ -9,6 +9,7 @@ import { PhotographerComponent } from '../components/photographer/photographer.c
 import { DressComponent } from '../components/dress/dress.component';
 import { CarComponent } from '../components/car/car.component';
 import { BeautyCenterComponent } from '../components/beauty-center/beauty-center.component';
+import { ForgotPasswordComponentComponent } from '../Auth/forgot-password-component/forgot-password-component.component';
 import { HallDetailsComponent } from '../components/hall/hall-details/hall-details.component';
 
 export const routes: Routes = [
@@ -23,6 +24,7 @@ export const routes: Routes = [
   { path: 'Account', component: AccountComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'Login', component: LoginComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponentComponent },
   { path: 'OwnerRegister', component: OwnerRegisterComponent },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ];
