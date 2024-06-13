@@ -1,19 +1,32 @@
-// .carousel-item a {
-//   position: absolute;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-// }
+.hall-image {
+  width: 100%;
+height: 30rem;
+  border-radius: 30% 70% 70% 30% / 26% 20% 80% 74%;
+  position: relative; 
+}
 
-.carousel-caption {
-  position: absolute;
-  top: 70%;
-  transform: translateY(-50%);
-//   text-align: center;
-  color: white; /* Adjust the color as needed */
+.details .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background-color: var(--main-color);
+  color: white;
+  border: 1px solid var(--main-color);
+  transition: all 0.3s ease;
+
+  .fas {
+    color: white;
+  }
+}
+
+.details .btn:hover {
+  background-color: transparent;
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
+
+  .fas {
+    color: var(--main-color);
+  }
 }
 
 
-.carousel-item img{
-    height: 80vh;
-}

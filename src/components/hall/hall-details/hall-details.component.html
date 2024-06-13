@@ -1,3 +1,26 @@
+
+<div class="container-fluid mt-5 mb-5">
+  <div class="row">
+    <!-- Image Section -->
+    <div class="col-lg-4 col-md-6 mb-3 position-relative">
+      <img [src]="hall.imageUrl" alt="{{ hall.name }}" class="hall-image img-fluid">
+      <div class="coloredDiv"></div>
+    </div>
+    
+    <!-- Details Section -->
+    <div class="col-lg-8 col-md-6 details mt-5 fs-4">
+      <h2>{{ hall.name }}</h2>
+      <p><strong>السعر:</strong> {{ hall.price }}</p>
+      <p><strong>المدينة:</strong> {{ hall.city }}</p>
+      <p><strong>الحي:</strong> {{ hall.town }}</p>
+      <p><strong>الوصف:</strong> {{ hall.description }}</p>
+      <button [routerLink]="['/favorite']" class="btn m-2">
+        أضف الى المفضلة <i class="fas fa-heart"></i>
+      </button>
+      <button [routerLink]="['/booking']" class="btn m-2">
+        أحجز الان <i class="fas fa-calendar-check"></i>
+      </button>
+
 <div id="header-carousel" class="carousel slide carousel-fade my-5 " data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item" *ngFor="let img of images; let i = index" [class.active]="i === 0">
@@ -29,16 +52,7 @@
           </div>
         </div>
       </div>
+
     </div>
-  
-    <!-- Carousel navigation buttons -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#header-carousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
   </div>
-  
+</div>
