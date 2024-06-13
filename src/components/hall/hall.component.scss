@@ -439,3 +439,175 @@ color: white;
   }
 }
 
+
+
+.main {
+  margin: 0 auto;
+}
+
+.cards {
+  list-style: none;
+  gap: 1rem;
+ 
+}
+
+.card_image {
+  display: flex;
+  position: relative;
+  height: 250px;
+  box-shadow: 0 50px 100px 0 var(--violet);
+
+}
+.fa-heart {
+  position: absolute;
+  bottom: 10px;
+  left: 10px; 
+  color:var(--main-color);
+  font-size: 24px; 
+  cursor: pointer;
+  background-color: white;
+  border-radius: 50%; 
+  padding: 5px; 
+}
+.card_image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.card {
+  overflow: hidden;
+  background-color: var(--main-color);
+  border-radius: 5px 25px 5px 50px;
+  transition: transform 0.1s linear, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.card_text:focus,
+.card:focus {
+  outline: 2px dashed var(--main-color);
+}
+
+.card:focus,
+.card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 10px 5px -5px rgba(0, 0, 0, 0.2);
+}
+
+.card_content {
+  padding: 0.5rem 1rem 1rem;
+  color:white;
+  width: 600px;
+}
+
+.card_title {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 5px 0 0 5px;
+  transform: rotate(-3.3deg);
+  transform-origin: left top;
+  font-family: Georgia, Times, serif;
+  font-weight: 600;
+  font-size: 1.325rem;
+  overflow: hidden;
+  z-index: 1;
+  background-color: rgba(253, 73, 160, 0.75);
+  animation: 0s 0s fly-in 0 reverse both;
+}
+
+@media (min-width: 535px) {
+  .card_title {
+    animation: 0.5s 0.25s fly-out 1 both;
+  }
+}
+
+.card:focus .card_title,
+.card:hover .card_title {
+  animation: 0.5s ease-in 0s fly-in 1 both;
+}
+
+.card_text {
+  line-height: 1.5;
+  text-size-adjust: 0.2px;
+  padding: 0 1rem;
+}
+
+.card_text p:first-of-type:first-letter {
+  font-size: 1.8em;
+  margin-right: 0.05em;
+}
+
+
+@keyframes fly-in {
+  0% {
+    top: 0;
+    right: 0;
+    font-size: 1.325rem;
+  }
+
+  25% {
+    top: 0;
+    right: -200%;
+    font-size: 1.325rem;
+  }
+
+  26% {
+    font-size: 2rem;
+  }
+
+  100% {
+    top: 2rem;
+    right: 0;
+    font-size: 2rem;
+  }
+}
+
+@keyframes fly-out {
+  0% {
+    top: 2rem;
+    right: 0;
+    font-size: 2rem;
+  }
+
+  50% {
+    top: 0;
+    right: -200%;
+    font-size: 1.325rem;
+  }
+
+  100% {
+    top: 0;
+    right: 0;
+    font-size: 1.325rem;
+  }
+}
+
+
+.pagination button {
+  font-size: 14px;
+  padding: 8px 16px;
+  color: white; 
+  background-color: var(--main-color); 
+  border: 1px solid var(--main-color); 
+
+}
+
+.pagination button:hover {
+  background-color: transparent;
+  color: var(--main-color); 
+  border-color: var(--main-color); 
+}
+
+.pagination button.active {
+  border-color: var(--main-color); 
+}
+
+.pagination span {
+  margin: 0 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
