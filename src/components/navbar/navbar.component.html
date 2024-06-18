@@ -11,30 +11,30 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto ">
           <li class="nav-item topBotomBordersOut">
-            <a class="nav-link" routerLink="/home">الرئيسية</a>
+            <a class="nav-link" routerLink="/home" routerLinkActive="active">الرئيسية</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/hall">القاعات</a>
+            <a class="nav-link" routerLink="/hall" routerLinkActive="active">القاعات</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/car">السيارات</a>
+            <a class="nav-link" routerLink="/car" routerLinkActive="active">السيارات</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/photographer">المصور</a>
+            <a class="nav-link" routerLink="/photographer" routerLinkActive="active">المصور</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/dress">فساتين</a>
+            <a class="nav-link" routerLink="/dress" routerLinkActive="active">فساتين</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/beauty">بيوتي سنتر</a>
+            <a class="nav-link" routerLink="/beauty" routerLinkActive="active">بيوتي سنتر</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="#">اتصل بنا</a>
+            <a class="nav-link" routerLink="#" routerLinkActive="active">اتصل بنا</a>
           </li>
         </ul>
         <ul *ngIf="!IsLogin ;else logined " class="navbar-nav m-auto">
           <li class="nav-item">
-            <a class="nav-link" routerLink="register">انضم إلينا</a>
+            <a class="nav-link" routerLink="register" routerLinkActive="active">انضم إلينا</a>
           </li>
         </ul>
         <ng-template #logined>

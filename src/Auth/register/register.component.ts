@@ -36,7 +36,7 @@ export class RegisterComponent {
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
       yourFavirotePerson : ['', Validators.required]
-    });
+    },{ validator: this.mustMatch('password', 'confirmPassword') });
   }
 
   ngOnInit(): void {
@@ -73,7 +73,7 @@ export class RegisterComponent {
   onSubmit() {
    
     if (this.registerForm.valid) {
-      this.regservice.register(this.registerForm.value).subscribe({
+      this.regservice.register(this.registerForm).subscribe({
         next:(res)=>{
 console.log(res);
         }
@@ -81,6 +81,24 @@ console.log(res);
   
       console.log(this.registerForm.value);
     }
+  }
+
+
+  mustMatch(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+
+      if (matchingControl.errors && !matchingControl.errors?.['mustMatch']) {
+        return;
+      }
+
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ mustMatch: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    };
   }
 
 

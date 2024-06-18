@@ -135,23 +135,4 @@
   }
   
 
-  .file-input-container {
-  margin: 20px;
-}
-.file-label {
-  display: inline-block;
-  padding: 10px 20px;
 
-  border-radius: 5px;
-  cursor: pointer;
-}
-.file-label:hover {
-  background-color: #d61bba;
-}
-.file-name {
-  margin-left: 10px;
-}
-/* Hide the actual file input */
-.file-input {
-  display: none;
-}

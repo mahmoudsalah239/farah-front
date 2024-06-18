@@ -3,11 +3,12 @@ import { Router, RouterLink } from '@angular/router';
 import { Governorate } from '../../interfaces/governorate';
 import { City } from '../../interfaces/city';
 import { AddressServiceService } from '../../services/address-service.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-owner-register',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink,CommonModule],
   templateUrl: './owner-register.component.html',
   styleUrl: './owner-register.component.scss'
 })

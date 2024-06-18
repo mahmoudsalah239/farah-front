@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 
 @Component({
@@ -15,7 +15,7 @@ constructor(private _loginservice:LoginService){
 
 }
   IsLogin: boolean = false;
-
+ 
   ngOnInit(): void {
     const token = localStorage.getItem('userToken');
     if (token != null) {
@@ -27,7 +27,6 @@ constructor(private _loginservice:LoginService){
   logout(){
     localStorage.removeItem("userToken");
     this._loginservice.userInfo.next(null);
-
   }
 
 }
