@@ -1,4 +1,3 @@
-
 <div class="container-fluid mt-5 mb-5">
   <div class="row">
     <!-- Image Section -->
@@ -7,13 +6,32 @@
       <div class="coloredDiv"></div>
     </div>
     
-    <!-- Details Section -->
     <div class="col-lg-8 col-md-6 details mt-5 fs-4">
       <h2>{{ hall.name }}</h2>
       <p><strong>السعر:</strong> {{ hall.price }}</p>
-      <p><strong>المدينة:</strong> {{ hall.city }}</p>
-      <p><strong>الحي:</strong> {{ hall.town }}</p>
+      <p><strong>السعة:</strong> {{ hall.capacity }}</p>
       <p><strong>الوصف:</strong> {{ hall.description }}</p>
+      <div class="form-group w-25">
+        <label for="town">المحافظة:</label>
+        <select class="form-select" id="town" [(ngModel)]="hall.town" name="town">
+          <option *ngFor="let town of towns" [value]="town">{{ town }}</option>
+        </select>
+      </div>
+      
+      <div class="form-group w-25">
+        <label for="city">المدينة:</label>
+        <select class="form-select" id="city" [(ngModel)]="hall.city" name="city">
+          <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+        </select>
+      </div>
+
+      <div class="row mt-3 mb-3 w-50">
+        <div class="col-md-8">
+          <label for="city">اضافة مميزات:</label>
+          <textarea class="form-control" rows="4" placeholder="اضافة مميزات" [(ngModel)]="features"></textarea>
+        </div>
+        </div>
+     
       <button [routerLink]="['/favorite']" class="btn m-2">
         أضف الى المفضلة <i class="fas fa-heart"></i>
       </button>
@@ -23,3 +41,6 @@
     </div>
   </div>
 </div>
+
+
+

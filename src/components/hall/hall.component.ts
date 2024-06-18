@@ -27,9 +27,7 @@ export class HallComponent implements OnInit {
     
   }
 
-  navigateToDetails(hallId: number): void {
-    this.router.navigate(['/hall-details', hallId]);
-  }
+  
 
   // Pagination methods
   onPageChange(pageNumber: number): void {
