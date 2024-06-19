@@ -1,3 +1,4 @@
+
 <div class="container-fluid mt-5 mb-5">
   <div class="row">
     <!-- Image Section -->
@@ -19,6 +20,39 @@
       <button [routerLink]="['/booking']" class="btn m-2">
         أحجز الان <i class="fas fa-calendar-check"></i>
       </button>
+
+<div id="header-carousel" class="carousel slide carousel-fade my-5 " data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item" *ngFor="let img of images; let i = index" [class.active]="i === 0">
+        <img class="w-100" [src]="'../../assets/' + img" alt="Image">
+        <div class="carousel-caption d-flex justify-content-around">
+          <div class="col-8 text-end">
+            <p class="badge bg-info">قاعة للأفراح والمناسبات</p>
+            <h1 class="fw-bold almarai-extrabold">{{ hallName }}</h1>
+            <h5>طريق المنصورية <i class="fa-solid fa-location-dot"></i></h5>
+            <hr>
+            <div class="d-flex text-warning gap-2 fs-2">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+              class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+              class="fa-solid fa-star"></i>
+            </div>
+          </div>
+          <div class="col-4 text-black rounded">
+            <div class="bg-white rounded-2 py-3">
+              <div class="row">
+                <div class="col-6">
+                  السعر {{ price | number:'1.2-2' }}
+                </div>
+                <div class="col-6">
+                  {{ capacity }} السعة
+                </div>
+              </div>
+              <button class="btn btn-outline-light d-block brandbtn m-auto my-2">حجز القاعة الآن</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
