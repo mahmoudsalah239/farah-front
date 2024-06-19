@@ -1,3 +1,5 @@
+
+
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
@@ -75,3 +77,4 @@ export class HallComponent implements OnInit {
     return description;
   }
 }
+
