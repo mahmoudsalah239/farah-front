@@ -1,12 +1,8 @@
-
-
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-
 
 @Component({
   selector: 'app-hall-details',
@@ -16,11 +12,21 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./hall-details.component.scss'],
 })
 export class HallDetailsComponent implements OnInit {
-  selectedCity:string='';
-  selectedTown:string='';
   features:string = '';
-
+  currentImage: string = '';
   hall: any; 
+
+  thumbnails: {thumb: string, large: string}[] = [
+    {thumb: 'https://ongineering.com/images/Articles_Aziz/wedding-hall-decoration-design.jpg', large: 'https://ongineering.com/images/Articles_Aziz/wedding-hall-decoration-design.jpg'},
+    {thumb: 'https://ongineering.com/images/Articles_Aziz/wedding-hall-decoration-design.jpg', large: 'https://ongineering.com/images/Articles_Aziz/wedding-hall-decoration-design.jpg'},
+    {thumb: 'https://ongineering.com/images/Articles_Aziz/wedding-hall-decoration-design.jpg', large: 'https://ongineering.com/images/Articles_Aziz/wedding-hall-decoration-design.jpg'},
+    {thumb: 'https://ongineering.com/images/Articles_Aziz/wedding-hall-decoration-design.jpg', large: 'https://ongineering.com/images/Articles_Aziz/wedding-hall-decoration-design.jpg'}
+    
+  ];
+
+  changeImage(imageSrc: string): void {
+    this.currentImage = imageSrc;
+  }
 
   towns: string[] = [
     'القاهرة',
@@ -126,5 +132,6 @@ export class HallDetailsComponent implements OnInit {
   ngOnInit(): void {
     const hallId = +this.route.snapshot.paramMap.get('id')!;
     this.hall = this.halls.find(h => h.id === hallId);
+    this.currentImage = this.hall.imageUrl;
   }
 }
