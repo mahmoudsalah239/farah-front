@@ -29,4 +29,25 @@ height: 30rem;
   }
 }
 
+.thumbnail-images {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.thumbnail {
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  cursor: pointer;
+  border: 2px solid #ddd;
+  transition: border-color 0.3s, transform 0.3s;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.thumbnail:hover {
+  border-color: var(--main-color);
+  transform: scale(1.05);
+}
 
