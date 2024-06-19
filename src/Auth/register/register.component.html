@@ -45,25 +45,25 @@
 
         <div class="flex">
           <div class="mb-3">
-            <select id="gove" class="form-control" formControlName="governorate">
+            <select id="gove" class="form-select" formControlName="govID">
               <option value="">اختر المحافظة</option> 
               <option *ngFor="let governorate of AllGovernments" [value]="governorate.governorateID">
                 {{ governorate.name }}
               </option>
             </select>
-            <div *ngIf="registerForm.get('governorate')?.invalid && registerForm.get('governorate')?.touched" class="text-danger">
+            <div *ngIf="registerForm.get('govID')?.invalid && registerForm.get('govID')?.touched" class="text-danger">
               المحافظة مطلوبة
             </div>
           </div>
           
           <div class="mb-3">
-            <select id="city" class="form-control" formControlName="city">
+            <select id="city" class="form-select" formControlName="cityID">
               <option value="">اختر المدينة</option>
               <option *ngFor="let city of Cites" [value]="city.id">
                 {{ city.name }}
               </option>
             </select>
-            <div *ngIf="registerForm.get('city')?.invalid && registerForm.get('city')?.touched" class="text-danger">
+            <div *ngIf="registerForm.get('cityID')?.invalid && registerForm.get('cityID')?.touched" class="text-danger">
               المدينة مطلوبة
             </div>
           </div>
