@@ -13,8 +13,14 @@ import { ForgotPasswordComponentComponent } from '../Auth/forgot-password-compon
 import { HallDetailsComponent } from '../components/hall/hall-details/hall-details.component';
 import { FavoriteComponent } from '../components/favorite/favorite.component';
 import { BookingComponent } from '../components/booking/booking.component';
+
 import { NotFoundComponent } from '../components/not-found/not-found.component';
 import { RegisterComponent } from '../Auth/register/register.component';
+
+import { CarDetailsComponent } from '../components/car/car-details/car-details.component';
+import { FavoriteCarComponent } from '../components/favorite-car/favorite-car.component';
+import { BookingCarComponent } from '../components/booking-car/booking-car.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -26,6 +32,9 @@ export const routes: Routes = [
   { path: 'photographer', component: PhotographerComponent },
   { path: 'dress', component: DressComponent },
   { path: 'car', component: CarComponent },
+  {path:'car-details/:id',component:CarDetailsComponent},
+  {path:'favorite-car',component:FavoriteCarComponent},
+  {path:'booking-car',component:BookingCarComponent},
   { path: 'beauty', component: BeautyCenterComponent },
   { path: 'Account', component: AccountComponent },
   { path: 'register', component: RegisterComponent },

@@ -1,7 +1,37 @@
 <div class="background-container">
     <div class="overlay"></div>
     <div class="content">
-        <h1>سيارات افراح </h1>
-        <p>اهلا بك في سيارات  موقع فرح </p>
+        <h1>سيارات افراح</h1>
+        <p>اهلا بك في سيارات موقع فرح</p>
+    </div>
+</div>
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-5 mt-5" *ngFor="let car of getPaginatedCars()">
+                <div class="card position-relative" tabindex="0">
+                    <div class="card_image">
+                        <img [src]="car.imageUrl" alt="">
+                        <i class="fas fa-heart" (click)="addToFavorites(car)"></i>
+                    </div>
+                    <div class="card_content">
+                        <h2 class="card_title">{{ car.price }}</h2>
+                        <p>{{ car.brand }}</p>
+                        <p>{{ truncateDescription(car.description) }}</p>
+                        <a [routerLink]="['/car-details', car.id]" class="card__button btn btn-light">مزيد من التفاصيل</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pagination mb-5 d-flex justify-content-center align-items-center">
+            <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="btn mr-2">
+                Previous
+            </button>
+            <span>{{ currentPage }}</span>
+            <button (click)="onPageChange(currentPage + 1)" class="btn ml-2">
+                Next
+            </button>
+        </div>
     </div>
 </div>
