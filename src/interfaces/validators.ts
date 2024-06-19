@@ -1,7 +1,21 @@
-import { FormGroup, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { ValidatorFn, AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
 
-export function matchPasswords(group: FormGroup): ValidationErrors | null {
-    let password = group.controls['password'].value;
-    let confirmPassword = group.controls['confirmPassword'].value;
-    return password === confirmPassword ? null : { notMatching: true };
+export function mustMatch(password: string, confirmPassword: string): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const formGroup = control as FormGroup;
+    const passControl = formGroup.controls[password];
+    const confirmPassControl = formGroup.controls[confirmPassword];
+
+    if (confirmPassControl.errors && !confirmPassControl.errors['mustMatch']) {
+      return null;
+    }
+
+    if (passControl.value !== confirmPassControl.value) {
+      confirmPassControl.setErrors({ mustMatch: true });
+    } else {
+      confirmPassControl.setErrors(null);
+    }
+
+    return null;
+  };
 }

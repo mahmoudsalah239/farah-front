@@ -1,25 +1,26 @@
+<!-- register.component.html -->
 <div class="container">
   <div class="row justify-content-center align-items-center">
     <div class="col col-md-6 col-12">
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form">
         <div class="d-flex justify-content-around">
-          <button class="btn" routerLink="/register">تسجيل مشتري </button>
-          <button class="btn" routerLink="/OwnerRegister">تسجيل بائع </button>
+          <button type="button" class="btn" routerLink="/register">تسجيل مشتري</button>
+          <button type="button" class="btn" routerLink="/OwnerRegister">تسجيل بائع</button>
         </div>
-        <p class="title"> تسجيل مشتري  </p>
+        <p class="title">تسجيل مشتري</p>
         
         <div class="flex">
           <label>
-            <span>الاسم الاول </span>
-            <input formControlName="firstName" placeholder="" type="text" class="input">
+            <span>الاسم الاول</span>
+            <input formControlName="firstName" type="text" class="input">
             <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" class="text-danger">
               الاسم الأول مطلوب
             </div>
           </label>
 
           <label>
-            <span>الاسم الاخير </span>
-            <input formControlName="lastName" placeholder="" type="text" class="input">
+            <span>الاسم الاخير</span>
+            <input formControlName="lastName" type="text" class="input">
             <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" class="text-danger">
               الاسم الأخير مطلوب
             </div>
@@ -27,16 +28,16 @@
         </div>
 
         <label>
-          <span>الرقم القومي </span>
-          <input formControlName="ssn" placeholder="" type="text" class="input">
+          <span>الرقم القومي</span>
+          <input formControlName="ssn" type="text" class="input">
           <div *ngIf="registerForm.get('ssn')?.invalid && registerForm.get('ssn')?.touched" class="text-danger">
             الرقم القومي مطلوب ويجب أن يكون 14 رقمًا
           </div>
         </label>
 
         <label>
-          <span>الايميل </span>
-          <input formControlName="email" placeholder="" type="email" class="input">
+          <span>الايميل</span>
+          <input formControlName="email" type="email" class="input">
           <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger">
             بريد إلكتروني صالح مطلوب
           </div>
@@ -69,16 +70,16 @@
         </div>
 
         <label>
-          <span>كلمه السر </span>
-          <input formControlName="password" placeholder="" type="password" class="input">
+          <span>كلمه السر</span>
+          <input formControlName="password" type="password" class="input">
           <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger">
             كلمة السر مطلوبة ويجب أن تكون 6 أحرف على الأقل
           </div>
         </label>
 
         <label>
-          <span>تأكيد كلمه السر </span>
-          <input formControlName="confirmPassword" placeholder="" type="password" class="input">
+          <span>تأكيد كلمه السر</span>
+          <input formControlName="confirmPassword" type="password" class="input">
           <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="text-danger">
             تأكيد كلمة السر مطلوب ويجب أن تتطابق مع كلمة السر
           </div>
@@ -86,15 +87,16 @@
             كلمات السر غير متطابقة
           </div>
         </label>
-aa        <label>
+
+        <label>
           <span>اسم صديقك المفضل ؟</span>
-          <input formControlName="yourFavirotePerson" placeholder="" type="text" class="input">
+          <input formControlName="yourFavirotePerson" type="text" class="input">
           <div *ngIf="registerForm.get('yourFavirotePerson')?.invalid && registerForm.get('yourFavirotePerson')?.touched" class="text-danger">
             هذا الحقل مطلوب
           </div>
         </label>
         
-        <button type="submit" class="submit">انشاء حساب </button>
+        <button type="submit" class="submit">انشاء حساب</button>
         <p class="signin">هل لديك حساب بالفعل ؟  
           <a routerLink="/Login">سجل دخول</a>
         </p>
@@ -102,7 +104,6 @@ aa        <label>
     </div>    
     <div class="col col-md-6 col-12 d-none d-lg-block">
       <img class="w-100" src="../../assets/7314118.svg" alt="">
-    </div>
+    </div> 
   </div> 
 </div>
-

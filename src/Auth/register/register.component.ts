@@ -1,21 +1,30 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { matchPasswords } from '../../interfaces/validators';
+
 import { AddressServiceService } from '../../services/address-service.service';
 import { Governorate } from '../../interfaces/governorate';
 import { City } from '../../interfaces/city';
 import { RegisterService } from '../../services/register.service';
+import { mustMatch } from '../../interfaces/validators';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule,CommonModule],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule],
 
-
-templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
   registerForm: FormGroup;
@@ -23,21 +32,23 @@ export class RegisterComponent {
   Cites: City[] = [];
   selectedGovernorate: Governorate | null = null;
 
-  constructor(private formBuilder: FormBuilder, private addressService:AddressServiceService,
-   private regservice:RegisterService
+  constructor(
+    private addressService: AddressServiceService,
+    private regservice: RegisterService
   ) {
-    this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      ssn: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      city: ['', Validators.required],
-      governorate: ['', Validators.required],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-      yourFavirotePerson : ['', Validators.required]
-    },{ validator: this.mustMatch('password', 'confirmPassword') });
+    this.registerForm = new FormGroup({
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      ssn: new FormControl('', [Validators.required, Validators.pattern(/^\d{14}$/)]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      governorate: new FormControl('', Validators.required),
+      city: new FormControl('', Validators.required),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      confirmPassword: new FormControl('', Validators.required),
+      yourFavirotePerson: new FormControl('', Validators.required),
+    }, { validators: mustMatch('password', 'confirmPassword') });
   }
+
 
   ngOnInit(): void {
     this.loadGovernorates();
@@ -49,9 +60,7 @@ export class RegisterComponent {
           this.onGovernorateChange(governorateID);
         } else {
           this.Cites = [];
-          this.registerForm
-            .get('city')
-            ?.reset({ value: '', disabled: true });
+          this.registerForm.get('city')?.reset({ value: '', disabled: true });
         }
       });
   }
@@ -71,38 +80,14 @@ export class RegisterComponent {
       });
   }
   onSubmit() {
-   
     if (this.registerForm.valid) {
       this.regservice.register(this.registerForm).subscribe({
-        next:(res)=>{
-console.log(res);
-        }
-      })
-  
+        next: (res) => {
+          console.log(res);
+        },
+      });
+
       console.log(this.registerForm.value);
     }
   }
-
-
-  mustMatch(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
-      const control = formGroup.controls[controlName];
-      const matchingControl = formGroup.controls[matchingControlName];
-
-      if (matchingControl.errors && !matchingControl.errors?.['mustMatch']) {
-        return;
-      }
-
-      if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({ mustMatch: true });
-      } else {
-        matchingControl.setErrors(null);
-      }
-    };
-  }
-
-
-
-
-
 }
