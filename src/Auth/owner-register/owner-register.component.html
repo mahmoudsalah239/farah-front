@@ -10,23 +10,23 @@
 
                 <div class="flex">
                     <label>
-                        <input required="" placeholder="" type="text" class="input">
                         <span>الاسم الاول </span>
+                        <input required="" placeholder="" type="text" class="input">
                     </label>
 
                     <label>
-                        <input required="" placeholder="" type="text" class="input">
                         <span>الاسم الاخير </span>
+                        <input required="" placeholder="" type="text" class="input">
                     </label>
                 </div>
                 <label>
-                    <input required="" placeholder="" type="text" class="input">
                     <span>الرقم القومي </span>
+                    <input required="" placeholder="" type="text" class="input">
                 </label>
 
                 <label>
-                    <input required="" placeholder="" type="email" class="input">
                     <span>الايميل </span>
+                    <input required="" placeholder="" type="email" class="input">
                 </label>
                 <label>
                     <select name="" id="" class="input">
@@ -42,53 +42,32 @@
 
                 </label>
 
-                <div class="flex">
-                    <label>
-                        <select name="" id="" class="input">
-                            <option value=""></option>
-                        </select>
-                        <input required="" placeholder="" type="text">
-                        <span> المدينه </span>
-                    </label>
-
-                    <label>
-                        <input required="" placeholder="" type="text" class="input">
-                        <span>المحافظه </span>
-                    </label>
-                </div>
-                <div class="d-flex">
-                    <div class="file-input-container">
-                        <label class="file-label" for="file-input">
-                            <i class="fa-solid fs-2 fa-camera"></i>
-                        </label>
-                        <input 
-                          type="file" 
-                          id="file-input" 
-                          class="file-input" 
-                          (change)="onFileSelected($event)">
-                        <span class="file-name">{{ fileName }}</span>
-                      </div> <div class="file-input-container">
-                        <label class="file-label" for="file-input">
-                            <i class="fa-solid fs-2 fa-camera"></i>
-                        </label>
-                        <input 
-                          type="file" 
-                          id="file-input" 
-                          class="file-input" 
-                          (change)="onFileSelected($event)">
-                        <span class="file-name">{{ fileName }}</span>
-                      </div> <div class="file-input-container">
-                        <label class="file-label" for="file-input">
-                            <i class="fa-solid fs-2 fa-camera"></i>
-                        </label>
-                        <input 
-                          type="file" 
-                          id="file-input" 
-                          class="file-input" 
-                          (change)="onFileSelected($event)">
-                        <span class="file-name">{{ fileName }}</span>
-                      </div>
-                </div>
+                
+        <div class="flex">
+            <div class="mb-3">
+              <select id="gove" class="form-control" formControlName="governorate">
+                <option value="">اختر المحافظة</option> 
+                <option *ngFor="let governorate of AllGovernments" [value]="governorate.governorateID">
+                  {{ governorate.name }}
+                </option>
+              </select>
+              <!-- <div *ngIf="registerForm.get('governorate')?.invalid && registerForm.get('governorate')?.touched" class="text-danger"> -->
+                المحافظة مطلوبة
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <select id="city" class="form-control" formControlName="city">
+                <option value="">اختر المدينة</option>
+                <option *ngFor="let city of Cites" [value]="city.id">
+                  {{ city.name }}
+                </option>
+              </select>
+              <!-- <div *ngIf="registerForm.get('city')?.invalid && registerForm.get('city')?.touched" class="text-danger"> -->
+                المدينة مطلوبة
+              </div>
+            <!-- </div> -->
+         <!-- </div> -->
                
                   
 
@@ -124,6 +103,6 @@
         <div class="col col-md-6 col-12">
             <img class="w-100" src="../../assets/7314112.svg" alt="">
         </div>
-    </div>
+    <!-- </div> -->
 
-</div>
+<!-- </div> -->
