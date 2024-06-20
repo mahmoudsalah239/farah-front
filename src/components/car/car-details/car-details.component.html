@@ -2,31 +2,30 @@
   <div class="row">
     <!-- Image Section -->
     <div class="col-lg-4 col-md-6 mb-3 position-relative">
-      <img [src]="car.imageUrl" alt="{{ car.name }}" class="car-image img-fluid">
+      <img [src]="currentImage" alt="{{ car.name }}" class="car-image img-fluid">
       <div class="coloredDiv"></div>
+      <div class="thumbnail-images mt-3">
+        <img *ngFor="let image of thumbnails" 
+             class="thumbnail" 
+             [src]="image.thumb" 
+             (click)="changeImage(image.large)">
+      </div>
     </div>
-    
+
+    <!-- Details Section -->
     <div class="col-lg-8 col-md-6 details mt-5 fs-4">
       <h2>{{ car.name }}</h2>
       <p><strong>السعر:</strong> {{ car.price }}</p>
       <p><strong>السنة:</strong> {{ car.year }}</p>
       <p><strong>الوصف:</strong> {{ car.description }}</p>
-      <div class="form-group w-25">
-        <label for="town">المحافظة:</label>
-        <select class="form-select" id="town" [(ngModel)]="car.town" name="town">
-          <option *ngFor="let town of towns" [value]="town">{{ town }}</option>
-        </select>
+      
+      <div class="row mt-3 mb-3 w-50">
+        <div class="col-md-8">
+          <label for="features">اضافة مميزات:</label>
+          <textarea id="features" class="form-control" rows="4" placeholder="اضافة مميزات" [(ngModel)]="features"></textarea>
+        </div>
       </div>
 
-      <div class="form-group w-25">
-        <label for="city">المدينة:</label>
-        <select class="form-select" id="city" [(ngModel)]="car.city" name="city">
-          <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
-        </select>
-      </div>
-
-     
-    
       <button [routerLink]="['/favorite-car']" class="btn m-2">
         أضف الى المفضلة <i class="fas fa-heart"></i>
       </button>
@@ -36,6 +35,3 @@
     </div>
   </div>
 </div>
-
-
-
