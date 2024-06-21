@@ -11,10 +11,6 @@ import { FormsModule } from '@angular/forms';
   imports: [CarouselModule, CommonModule, RouterLink, FormsModule],
   templateUrl: './car-details.component.html',
   styleUrls: ['./car-details.component.scss'],
-
-  imports: [CarouselModule, CommonModule,RouterLink,FormsModule],
-templateUrl: './car-details.component.html',
-  styleUrls: ['./car-details.component.scss']
 })
 export class CarDetailsComponent implements OnInit {
   features: string = '';
