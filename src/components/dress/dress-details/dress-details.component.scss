@@ -1,0 +1,57 @@
+.dress-image {
+  width: 100%;
+height: 30rem;
+  border-radius: 30% 70% 70% 30% / 26% 20% 80% 74%;
+  position: relative; 
+}
+
+.details .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background-color: var(--main-color);
+  color: white;
+  border: 1px solid var(--main-color);
+  transition: all 0.3s ease;
+
+  .fas {
+    color: white;
+  }
+}
+
+.details .btn:hover {
+  background-color: transparent;
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
+
+  .fas {
+    color: var(--main-color);
+  }
+}
+
+
+.thumbnail-images {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.thumbnail {
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  cursor: pointer;
+  border: 2px solid #ddd;
+  transition: border-color 0.3s, transform 0.3s;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.thumbnail:hover {
+  border-color: var(--main-color);
+  transform: scale(1.05);
+}
+
+
+
+  

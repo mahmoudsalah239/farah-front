@@ -1,16 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-beauty-center',
+  selector: 'app-favorite-center',
   standalone: true,
-  templateUrl: './beauty-center.component.html',
-  imports: [CommonModule, RouterLink, FormsModule],
-  styleUrls: ['./beauty-center.component.scss']
+  imports: [CommonModule, RouterLink],
+  templateUrl: './favorite-center.component.html',
+  styleUrls: ['./favorite-center.component.scss']
 })
-export class BeautyCenterComponent implements OnInit {
+export class FavoriteCenterComponent implements OnInit {
+
+  favoriteCenters: any[] = [];
   centers = [
     { id: 1, name: 'مركز تجميل 1', imageUrl: 'https://mostaql.hsoubcdn.com/uploads/portfolios/835649/61a1e466eb008/Beauty-Centre-2.jpg', price: 3000, description: 'الوصف', city: 'القاهرة', town: 'القاهرة' },
     { id: 2, name: 'مركز تجميل 2', imageUrl: 'https://mostaql.hsoubcdn.com/uploads/thumbnails/835649/5fb1c7c34bc0a/Beauty-Centre-1.jpg', price: 4000, description: 'الوصف', city: 'الإسكندرية', town: 'الإسكندرية' },
@@ -20,52 +21,22 @@ export class BeautyCenterComponent implements OnInit {
 
   currentPage: number = 1;
   itemsPerPage: number = 16;
-  selectedCity: string = '';
-  selectedTown: string = '';
-  maxPrice = 5000;
-  priceRange: { min: number; max: number } = { min: 1000, max: 5000 };
-  favoriteCenters: any[] = [];
-
-  towns: string[] = [
-    'القاهرة',
-    'الإسكندرية',
-    'الجيزة',
-    'بورسعيد'
-  ];
-
-  cities: string[] = [
-    'القاهرة',
-    'الإسكندرية',
-    'الجيزة',
-    'بورسعيد'
-  ];
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.filterCenters();
+    this.favoriteCenters = JSON.parse(localStorage.getItem('favoriteCenters') || '[]');
   }
-
-  get filteredCenters() {
-    return this.centers.filter(center => {
-      return (!this.selectedTown || center.town === this.selectedTown)
-        && (!this.selectedCity || center.city === this.selectedCity)
-        && (center.price <= this.maxPrice);
-    });
-  }
-
-  filterCenters() {
-    this.currentPage = 1;
-  }
-
-  addToFavorites(center: any): void {
-    if (!this.favoriteCenters.find(favCenter => favCenter.id === center.id)) {
-      this.favoriteCenters.push(center);
+  
+  addToFavorites(car: any): void {
+    if (!this.favoriteCenters.some(c => c.id === car.id)) {
+      this.favoriteCenters.push(car);
+      localStorage.setItem('favoriteCars', JSON.stringify(this.favoriteCenters));
     }
   }
 
-  navigateToFavorites(): void {
-    this.router.navigate(['/favorite-center']);
+  navigateToDetails(centerId: number): void {
+    this.router.navigate(['/beauty-details', centerId]);
   }
 
   onPageChange(pageNumber: number): void {
@@ -74,7 +45,16 @@ export class BeautyCenterComponent implements OnInit {
 
   getPaginatedCenters(): any[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredCenters.slice(startIndex, startIndex + this.itemsPerPage);
+    return this.centers.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  removeFromFavorites(center: any): void {
+    this.favoriteCenters = this.favoriteCenters.filter(c => c.id !== center.id);
+    localStorage.setItem('favoriteCenters', JSON.stringify(this.favoriteCenters));
+  }
+
+  isFavorite(center: any): boolean {
+    return this.favoriteCenters.some(c => c.id === center.id);
   }
 
   truncateDescription(description: string): string {

@@ -5,3 +5,70 @@
         <p>اهلا بك في مصور موقع فرح </p>
     </div>
 </div>
+
+
+<!-- photographer.component.html -->
+<div class="container bg-light mb-5">
+    <div class="row">
+      <div class="col-lg-4 mt-4">
+        <div class="form-group">
+          <label for="town" class="mr-2">المحافظة:</label>
+          <select class="form-select" id="town" [(ngModel)]="selectedTown" (change)="filterPhotographers()">
+            <option value="">الكل</option>
+            <option *ngFor="let town of towns" [value]="town">{{ town }}</option>
+          </select>
+        </div>
+      </div>
+  
+      <div class="col-lg-4 mt-4">
+        <div class="form-group">
+          <label for="city" class="mr-2">المدينة:</label>
+          <select class="form-select" id="city" [(ngModel)]="selectedCity" (change)="filterPhotographers()">
+            <option value="">الكل</option>
+            <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+          </select>
+        </div>
+      </div>
+  
+      <div class="col-lg-4 mt-4">
+        <div class="form-group">
+          <label for="priceRange"> حدد سعر:</label>
+          <input type="range" class="form-range" id="maxPrice" [(ngModel)]="maxPrice" (input)="filterPhotographers()" min="1000" max="5000" step="100">
+          <div class="d-flex justify-content-between w-100">
+            <span>السعر الأقصى: {{ maxPrice }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="main">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-5" *ngFor="let photographer of getPaginatedPhotographers()">
+          <div class="card position-relative" tabindex="0">
+            <div class="card_image">
+              <img [src]="photographer.imageUrl" alt="">
+              <i class="fas fa-heart"></i>
+            </div>
+            <div class="card_content">
+              <h2 class="card_title">{{photographer.price}}</h2>
+              <p>{{photographer.name}}</p>
+              <p>{{ truncateDescription(photographer.description) }}</p>
+              <a [routerLink]="['/photographer-details', photographer.id]" class="card__button btn btn-light">مزيد من التفاصيل</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pagination mb-5 d-flex justify-content-center align-items-center">
+        <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="btn mr-2">
+          السابق
+        </button>
+        <span>{{ currentPage }}</span>
+        <button (click)="onPageChange(currentPage + 1)" class="btn ml-2">
+          التالي
+        </button>
+      </div>
+    </div>
+  </div>
+  
