@@ -13,9 +13,7 @@ export class RegisterService {
 
 
   register(customerData: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    return this.http.post(this.ApiUrl, customerData,{headers});
+
+    return this.http.post(this.ApiUrl, customerData, { observe: 'response' });
   }
 }

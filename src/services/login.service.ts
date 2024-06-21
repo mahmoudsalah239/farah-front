@@ -15,11 +15,11 @@ private ApiUrl = `${environment.apiUrl}/Account/login`
 
 
   login(customerData:any):Observable<any>{ 
-  //    const headers = new HttpHeaders({
-  //   'Content-Type': 'application/json'
-  // });
-   return this.http.post<any>(this.ApiUrl,customerData)
+
+   return this.http.post(this.ApiUrl,customerData, { observe: 'response' })
   }
+
+ 
   setInformaionOfUser() {
     let userToken = JSON.stringify(localStorage.getItem("userToken"));
     let decodedToken: any = jwtDecode(userToken);
@@ -31,6 +31,8 @@ private ApiUrl = `${environment.apiUrl}/Account/login`
     console.log("----------------------------")
     console.log(nameIdentifier);
   }
+
+
 
 }
 
