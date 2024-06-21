@@ -16,6 +16,15 @@ import { BookingComponent } from '../components/booking/booking.component';
 import { CarDetailsComponent } from '../components/car/car-details/car-details.component';
 import { FavoriteCarComponent } from '../components/favorite-car/favorite-car.component';
 import { BookingCarComponent } from '../components/booking-car/booking-car.component';
+import { DressDetailsComponent } from '../components/dress/dress-details/dress-details.component';
+import { BookingDressComponent } from '../components/booking-dress/booking-dress.component';
+import { FavoriteDressComponent } from '../components/favorite-dress/favorite-dress.component';
+import { BeautyDetailsComponent } from '../components/beauty-center/beauty-details/beauty-details.component';
+import { FavoriteCenterComponent } from '../components/favorite-center/favorite-center.component';
+import { BookingCenterComponent } from '../components/booking-center/booking-center.component';
+import { PhotographerDetailsComponent } from '../components/photographer/photographer-details/photographer-details.component';
+import { FavoritePhotographerComponent } from '../components/favorite-photographer/favorite-photographer.component';
+import { BookingPhotographerComponent } from '../components/booking-photographer/booking-photographer.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -25,12 +34,21 @@ export const routes: Routes = [
   {path:'favorite',component:FavoriteComponent},
   {path:'booking',component:BookingComponent},
   { path: 'photographer', component: PhotographerComponent },
+  {path:'photographer-details/:id',component:PhotographerDetailsComponent},
+  {path:'favorite-photographer',component:FavoritePhotographerComponent},
+  {path:'booking-photographer',component:BookingPhotographerComponent},
   { path: 'dress', component: DressComponent },
+  {path:'dress-details/:id',component:DressDetailsComponent},
+  {path:'booking-dress',component:BookingDressComponent},
+  {path:'favorite-dress',component:FavoriteDressComponent},
   { path: 'car', component: CarComponent },
   {path:'car-details/:id',component:CarDetailsComponent},
   {path:'favorite-car',component:FavoriteCarComponent},
   {path:'booking-car',component:BookingCarComponent},
   { path: 'beauty', component: BeautyCenterComponent },
+  {path:'beauty-center-details/:id',component:BeautyDetailsComponent},
+  {path:'favorite-center',component:FavoriteCenterComponent},
+  {path:'booking-center',component:BookingCenterComponent},
   { path: 'Account', component: AccountComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'Login', component: LoginComponent },
