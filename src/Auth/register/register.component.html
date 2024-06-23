@@ -42,6 +42,14 @@
             بريد إلكتروني صالح مطلوب
           </div>
         </label>
+        
+        <label>
+          <span>رقم الموبايل </span>
+          <input formControlName="phoneNumber" type="tel" class="input">
+          <div *ngIf="registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched" class="text-danger">
+               ادخل رقم موبايل مصري 
+          </div>
+        </label>
 
         <div class="flex">
           <div class="mb-3">

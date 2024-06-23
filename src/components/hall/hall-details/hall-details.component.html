@@ -1,43 +1,37 @@
-<div class="container-fluid mt-5 mb-5">
+<div *ngIf="hall" class="container-fluid mt-5 mb-5">
   <div class="row">
     <!-- Image Section -->
     <div class="col-lg-4 col-md-6 mb-3 position-relative">
-      <img [src]="currentImage" alt="{{ hall.name }}" class="hall-image img-fluid">
+      <img [src]="currentImage || ('https://localhost:44322' + hall.pictureUrls[0])" alt="{{ hall.name }}"
+        class="hall-image img-fluid">
       <div class="coloredDiv"></div>
       <div class="thumbnail-images mt-3">
-        <img *ngFor="let image of thumbnails" 
-             class="thumbnail" 
-             [src]="image.thumb" 
-             (click)="changeImage(image.large)">
+        <img *ngFor="let image of hall.pictureUrls; let i = index" class="thumbnail"
+          [src]="'https://localhost:44322' + image" (click)="changeImage('https://localhost:44322' + image)"
+          [ngClass]="{'active': currentImage === ('https://localhost:44322' + image) || (!currentImage && i === 0)}">
       </div>
     </div>
-    
+
     <div class="col-lg-8 col-md-6 details mt-5 fs-4">
       <h2>{{ hall.name }}</h2>
-      <p><strong>السعر:</strong> {{ hall.price }}</p>
+      <p><strong>السعر:</strong> {{ hall.price | currency:'EGP' }}</p>
       <p><strong>السعة:</strong> {{ hall.capacity }}</p>
       <p><strong>الوصف:</strong> {{ hall.description }}</p>
 
-      <div class="row mt-3 mb-3 w-50">
-        <div class="col-md-8">
-          <label for="city">اضافة مميزات:</label>
-          <textarea class="form-control" rows="4" placeholder="اضافة مميزات" [(ngModel)]="features"></textarea>
-        </div>
-        </div>
-     
-      <button [routerLink]="['/favorite']" class="btn m-2">
+      <!-- Display Features -->
+      <div class="features mt-4">
+        <h4>المميزات:</h4>
+        <ul>
+          <li *ngFor="let feature of hall.features">{{ feature }}</li>
+        </ul>
+      </div>
+
+      <button [routerLink]="['/favorite']" class="btn btn-primary m-2">
         أضف الى المفضلة <i class="fas fa-heart"></i>
       </button>
-      <button [routerLink]="['/booking']" class="btn m-2">
+      <button [routerLink]="['/booking']" class="btn btn-success m-2">
         أحجز الان <i class="fas fa-calendar-check"></i>
       </button>
     </div>
   </div>
 </div>
-
-
-
-
-
-
-

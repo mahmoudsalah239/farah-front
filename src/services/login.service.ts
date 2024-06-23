@@ -10,7 +10,7 @@ import { jwtDecode } from 'jwt-decode';
 export class LoginService {
 
   userInfo = new BehaviorSubject(null);
-private ApiUrl = `${environment.apiUrl}/Account/login`
+private ApiUrl = `${environment.apiUrl}/Account/login`;
   constructor(private http:HttpClient) { }
 
 

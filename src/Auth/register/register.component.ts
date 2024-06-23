@@ -44,6 +44,7 @@ export class RegisterComponent {
           Validators.pattern(/^\d{14}$/),
         ]),
         email: new FormControl('', [Validators.required, Validators.email]),
+        phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^01[0-2]{1}[0-9]{8}$')]),
         govID: new FormControl('', Validators.required),
         cityID: new FormControl('', Validators.required),
         password: new FormControl('', [
@@ -91,9 +92,20 @@ export class RegisterComponent {
       console.log(this.registerForm.value);
       this._registerService.register(this.registerForm.value).subscribe({
         next: (res) => {
+          Swal.fire({
+            title: "Good job!",
+            text: "You clicked the button!",
+            icon: "success"
+          });
           console.log(res);
         },
         error: (err) => {
+         Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: "Something went wrong!",
+  footer: '<a href="#">Why do I have this issue?</a>'
+});
           console.log(err);
         },
       });
