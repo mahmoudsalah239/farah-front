@@ -8,12 +8,13 @@
           <button type="button" class="btn" routerLink="/OwnerRegister">تسجيل بائع</button>
         </div>
         <p class="title">تسجيل مشتري</p>
-        
+
         <div class="flex">
           <label>
             <span>الاسم الاول</span>
             <input formControlName="firstName" type="text" class="input">
-            <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" class="text-danger">
+            <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched"
+              class="text-danger">
               الاسم الأول مطلوب
             </div>
           </label>
@@ -21,7 +22,8 @@
           <label>
             <span>الاسم الاخير</span>
             <input formControlName="lastName" type="text" class="input">
-            <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" class="text-danger">
+            <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched"
+              class="text-danger">
               الاسم الأخير مطلوب
             </div>
           </label>
@@ -42,19 +44,20 @@
             بريد إلكتروني صالح مطلوب
           </div>
         </label>
-        
+
         <label>
           <span>رقم الموبايل </span>
           <input formControlName="phoneNumber" type="tel" class="input">
-          <div *ngIf="registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched" class="text-danger">
-               ادخل رقم موبايل مصري 
+          <div *ngIf="registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched"
+            class="text-danger">
+            ادخل رقم موبايل مصري
           </div>
         </label>
 
         <div class="flex">
           <div class="mb-3">
             <select id="gove" class="form-select" formControlName="govID">
-              <option value="">اختر المحافظة</option> 
+              <option value="">اختر المحافظة</option>
               <option *ngFor="let governorate of AllGovernments" [value]="governorate.governorateID">
                 {{ governorate.name }}
               </option>
@@ -63,7 +66,7 @@
               المحافظة مطلوبة
             </div>
           </div>
-          
+
           <div class="mb-3">
             <select id="city" class="form-select" formControlName="cityID">
               <option value="">اختر المدينة</option>
@@ -80,7 +83,8 @@
         <label>
           <span>كلمه السر</span>
           <input formControlName="password" type="password" class="input">
-          <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger">
+          <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+            class="text-danger">
             كلمة السر مطلوبة ويجب أن تكون 6 أحرف على الأقل
           </div>
         </label>
@@ -88,10 +92,12 @@
         <label>
           <span>تأكيد كلمه السر</span>
           <input formControlName="confirmPassword" type="password" class="input">
-          <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="text-danger">
+          <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
+            class="text-danger">
             تأكيد كلمة السر مطلوب ويجب أن تتطابق مع كلمة السر
           </div>
-          <div *ngIf="registerForm.errors?.['mustMatch'] && registerForm.get('confirmPassword')?.touched" class="text-danger">
+          <div *ngIf="registerForm.errors?.['mustMatch'] && registerForm.get('confirmPassword')?.touched"
+            class="text-danger">
             كلمات السر غير متطابقة
           </div>
         </label>
@@ -99,19 +105,21 @@
         <label>
           <span>اسم صديقك المفضل ؟</span>
           <input formControlName="yourFavirotePerson" type="text" class="input">
-          <div *ngIf="registerForm.get('yourFavirotePerson')?.invalid && registerForm.get('yourFavirotePerson')?.touched" class="text-danger">
+          <div
+            *ngIf="registerForm.get('yourFavirotePerson')?.invalid && registerForm.get('yourFavirotePerson')?.touched"
+            class="text-danger">
             هذا الحقل مطلوب
           </div>
         </label>
-        
+
         <button type="submit" class="submit">انشاء حساب</button>
-        <p class="signin">هل لديك حساب بالفعل ؟  
+        <p class="signin">هل لديك حساب بالفعل ؟
           <a routerLink="/Login">سجل دخول</a>
         </p>
       </form>
-    </div>    
+    </div>
     <div class="col col-md-6 col-12 d-none d-lg-block">
       <img class="w-100" src="../../assets/7314118.svg" alt="">
-    </div> 
-  </div> 
+    </div>
+  </div>
 </div>
