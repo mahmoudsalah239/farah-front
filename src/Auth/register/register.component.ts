@@ -105,12 +105,13 @@ export class RegisterComponent {
           this.promptForOtp();
         },
         error: (err) => {
+          console.log(err.error.message);
           this.spinner.hide();
           Swal.fire({
             icon: 'error',
             title: 'عذرًا...',
-            text: 'حدث خطأ ما!',
-            footer: '<a href="#">لماذا أواجه هذه المشكلة؟</a>',
+            text: `${err.error.message}`,
+            // footer: '<a href="#">لماذا أواجه هذه المشكلة؟</a>',
           });
           console.log(err);
         },
