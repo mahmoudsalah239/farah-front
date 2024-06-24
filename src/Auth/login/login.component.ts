@@ -10,35 +10,37 @@ import { LoginService } from '../../services/login.service';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 
-import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
+// import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { SendOtpService } from '../../services/send-otp.service';
-
+import { ResetPasswordService } from '../../services/reset-password.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, CommonModule,NgxSpinnerModule],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule],
 
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
   isLoading = false;
-  errorMessage:string='';
+  errorMessage: string = '';
   loginForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [Validators.required]),
+    rememberMe: new FormControl(false),
   });
   constructor(
     private router: Router,
     private _loginService: LoginService,
-    private spinner: NgxSpinnerService,
-    private sendOtpService:SendOtpService,
-
+    private sendOtpService: SendOtpService,
+    private resetPasswordService: ResetPasswordService
   ) {}
 
   ngOnInit(): void {
-  
+    if (this.loginForm.invalid || this.isLoading) {
+      return;
+    }
   }
 
   onSubmit(): void {
@@ -46,29 +48,46 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    this.spinner.show();
     const formData = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
+      rememberMe: !!this.loginForm.value.rememberMe,
     };
 
-
-    if (typeof formData.email === 'string' && typeof formData.password === 'string') {
+    if (
+      typeof formData.email === 'string' &&
+      typeof formData.password === 'string'
+    ) {
       this._loginService.login(formData).subscribe({
-        next:(response)=>{
-          this.spinner.hide();
+        next: (response) => {
           this.isLoading = false;
           console.log(response);
-          
+          console.log(response.body);
+          console.log(response.body.succeeded);
+          console.log(response.body.data.token);
+
           if (response && response.body.succeeded && response.body.data.token) {
             const token = response.body.data.token;
             const role = response.body.data.role;
-            const accountStatus = response.body.data.accountStatus;
             const isConfirmed = response.body.data.isEmailConfirmed;
+            localStorage.setItem('token', token);
+            if (role === 'Admin' || role === 'Owner') {
+              console.log('this is an owner');
+              Swal.fire({
+                icon: 'error',
+                title: 'ممنوع الدخول',
+                text: 'لا يمكنك الدخول هنا. يرجى تسجيل الدخول إلى لوحة التحكم.',
+                confirmButtonText: 'حسنًا',
+              }).then(() => {
+                localStorage.clear();
+                sessionStorage.clear();
+                this.router.navigate(['/dashboard-login']);
+              });
+            } else if (role === 'Customer') {
+              console.log('this DONE');
 
-            localStorage.setItem('token', token); 
-            if(role=='customer'){
-              if(!isConfirmed){
+              if (!isConfirmed) {
+                console.log('this is customer -> but not confirmed');
                 this.sendOtpService.resendOTP().subscribe({
                   next: () => {
                     Swal.fire({
@@ -103,7 +122,7 @@ export class LoginComponent implements OnInit {
                               });
                             }
                           },
-                          error: (error) => {
+                          error: () => {
                             Swal.fire({
                               icon: 'error',
                               title: 'خطأ',
@@ -114,7 +133,7 @@ export class LoginComponent implements OnInit {
                       }
                     });
                   },
-                  error: (error) => {
+                  error: () => {
                     Swal.fire({
                       icon: 'error',
                       title: 'خطأ',
@@ -122,42 +141,35 @@ export class LoginComponent implements OnInit {
                     });
                   },
                 });
-
+              } else {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'تم الدخول بنجاح',
+                  text: 'تم تسجيل الدخول بنجاح',
+                  confirmButtonText: 'حسنًا',
+                }).then(() => {
+                  this.router.navigate(['/home']);
+                });
               }
             }
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'خطأ',
+              text: 'حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.',
+            });
           }
-
-        }
-      })
+        },
+        error: () => {
+          this.isLoading = false;
+          Swal.fire({
+            icon: 'error',
+            title: 'خطأ',
+            text: 'حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.',
+          });
+        },
+      });
     }
-    
-    // if (this.loginForm.valid) {
-    //   const formData = {
-    //     email: this.loginForm.value.email,
-    //     password: this.loginForm.value.password,
-    //   };
-      
-    //   this._loginService.login(formData).subscribe(
-    //     {
-    //       next: (respons) => {
-    //         if (respons.succeeded == true) {
-    //           console.log("-------success=True----------")
-    //           console.log(respons)
-    //           localStorage.setItem("userToken",respons.data.token);
-    //           this._loginService.setInformaionOfUser();
-    //           this.router.navigate(["/home"]);
-    //         }
-    //         else {
-    //           console.log("-----success=False-----")
-    //         }
-    //       },
-    //       error:(err)=>{
-    //         console.log(err.error)
-    //         this.errorMessage=err.error.message;
-    //       }
-    //     });
-    //   console.log(this.loginForm);
-    // }
   }
 
   goToRegister(type: string): void {
@@ -167,5 +179,4 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/OwnerRegister']);
     }
   }
-
 }
