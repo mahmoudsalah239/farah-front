@@ -32,13 +32,17 @@
 
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/wowjs/css/libs/animate.css",
+
+
               "node_modules/ngx-spinner/animations/square-jelly-box.css",
+
 
               "src/styles.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+
               "node_modules/swiper/swiper-bundle.min.js",
 
               "node_modules/@fortawesome/fontawesome-free/js/all.min.js",

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import Typed from 'typed.js';
 
 @Component({
   selector: 'app-slider',
