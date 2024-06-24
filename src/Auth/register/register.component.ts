@@ -9,7 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import Swal from 'sweetalert2';
+// import Swal from 'sweetalert2';
 import { AddressServiceService } from '../../services/address-service.service';
 import { Governorate } from '../../interfaces/governorate';
 import { City } from '../../interfaces/city';
