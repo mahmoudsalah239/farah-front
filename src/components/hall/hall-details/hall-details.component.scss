@@ -1,53 +1,235 @@
-.hall-image {
-  width: 100%;
-height: 30rem;
-  border-radius: 30% 70% 70% 30% / 26% 20% 80% 74%;
-  position: relative; 
+
+#header-carousel .carousel-item {
+  height: 100vh; /* Full height of the viewport */
 }
 
-.details .btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background-color: var(--main-color);
-  color: white;
-  border: 1px solid var(--main-color);
-  transition: all 0.3s ease;
 
-  .fas {
-    color: white;
-  }
+.carousel-caption {
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.details .btn:hover {
-  background-color: transparent;
-  color: var(--main-color);
-  border: 1px solid var(--main-color);
 
-  .fas {
-    color: var(--main-color);
-  }
-}
-
-.thumbnail-images {
+.details {
+//  min-height: 100vh; /* Minimum height of viewport */
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  flex-wrap: wrap;
 }
 
-.thumbnail {
-  width: 100px;
-  height: 100px;
-  margin: 5px;
-  cursor: pointer;
-  border: 2px solid #ddd;
-  transition: border-color 0.3s, transform 0.3s;
+
+.itemImage{
+  height: 800px;
+}
+.custom-carousel-control {
+  background-color: #4f1649; /* اللون الخلفي للأزرار */
+  border: none; /* إزالة الحدود الافتراضية */
+  width: 50px; /* عرض الأزرار */
+  height: 50px; /* ارتفاع الأزرار */
+  border-radius: 50%; /* جعل الأزرار دائرية */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7; /* شفافية الأزرار */
+  position: absolute; /* تموضع مطلق */
+  top: 50%; /* تموضع في المنتصف عموديًا */
+  transform: translateY(-50%); /* ضبط الترجمة لتموضع الأزرار في المنتصف */
+  transition: opacity 0.3s;
+  z-index: 1; /* التأكد من ظهور الأزرار فوق الصور */
+  margin: 0 10px;
+}
+
+.custom-carousel-control:hover {
+  opacity: 1; /* إظهار الأزرار بشكل كامل عند التمرير */
+}
+
+.custom-carousel-icon {
+  background-color: transparent; /* إزالة اللون الخلفي الافتراضي للرموز */
+  background-size: 100%, 100%; /* ضبط حجم الرموز */
+  width: 20px; /* عرض الرموز */
+  height: 20px; /* ارتفاع الرموز */
+}
+
+
+.details {
+  background-color: #f9f9f9;
+  padding: 20px;
   border-radius: 10px;
-  object-fit: cover;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
 }
 
-.thumbnail:hover {
-  border-color: var(--main-color);
+.details h2 {
+  color: #4f1649;
+}
+
+.features ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.custom-btn {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border-radius: 30px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-btn:hover {
+  background-color: #fff;
+  color: #4f1649;
+  border: 1px solid #4f1649;
+}
+
+.details {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.details .hall-name {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  position: relative;
+  display: inline-block;
+  animation: fadeIn 2s ease-out, slideIn 2s ease-out;
+}
+
+.details .hall-name::before,
+.details .hall-name::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #4f1649;
+  top: 50%;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: center;
+}
+
+// .details .hall-name::before {
+//   animation: slideInBefore 2s ease-out;
+// }
+
+// .details .hall-name::after {
+//   top: calc(50% + 30px);
+//   animation: slideInAfter 2s ease-out;
+// }
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideIn {
+  0% { transform: translateX(-50px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes slideInBefore {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+@keyframes slideInAfter {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+.info-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.info-item {
+  flex: 1 1 300px;
+  margin: 10px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.info-item i {
+  font-size: 2.5rem;
+  color: #3498db;
+  margin-bottom: 10px;
+}
+
+.info-item p {
+  color: #34495e;
+  font-size: 1.2rem;
+}
+
+.features {
+  background-color: #eaeaea;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+}
+
+.features h4 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 10px;
+  padding: 10px 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.feature-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.feature-icon {
+  color: #e74c3c;
+  margin-right: 10px;
+  font-size: 1.5rem;
+}
+
+.feature-item span {
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+
+.custom-btn {
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.custom-btn:hover {
   transform: scale(1.05);
 }
 
+.btn-primary.custom-btn {
+  background-color: #4f1649;
+  border-color: #4f1649;
+}
+
+.btn-primary.custom-btn:hover {
+  background-color: #661a5e;
+  border-color: #661a5e;
+}
+
+.btn-success.custom-btn {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-success.custom-btn:hover {
+  background-color: #218838;
+  border-color: #218838;
+}
