@@ -1,43 +1,69 @@
-<div class="container-fluid mt-5 mb-5">
+<div class="container-fluid">
   <div class="row">
-    <!-- Image Section -->
-    <div class="col-lg-4 col-md-6 mb-3 position-relative">
-      <img [src]="currentImage" alt="{{ hall.name }}" class="hall-image img-fluid">
-      <div class="coloredDiv"></div>
-      <div class="thumbnail-images mt-3">
-        <img *ngFor="let image of thumbnails" 
-             class="thumbnail" 
-             [src]="image.thumb" 
-             (click)="changeImage(image.large)">
+    <!-- Carousel Section -->
+    <div class="col-lg-12  position-relative">
+      <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item" *ngFor="let image of images; let i = index" 
+            [ngClass]="{'active': i === activeSlideIndex}">
+            <img class="d-block w-100 itemImage" [src]="image.path" [alt]="image.caption">
+            <div class="carousel-caption d-none d-md-block">
+              <h1 class="fw-bold">{{ image.caption }}</h1>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev custom-carousel-control" type="button" data-bs-target="#header-carousel" (click)="prevSlide()">
+          <span class="carousel-control-prev-icon custom-carousel-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next custom-carousel-control" type="button" data-bs-target="#header-carousel" (click)="nextSlide()">
+          <span class="carousel-control-next-icon custom-carousel-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="col-lg-12 details fs-4">
+      <h2 class="text-center hall-name"><strong>اسم لقاعه :</strong> {{ hall.name }}</h2>
+      <div class="text-center mt-3 info-grid">
+        <div class="info-item">
+          <i class="fas fa-money-bill-wave info-icon"></i>
+          <p><strong>السعر:</strong> {{ hall.price | currency:'EGP' }}</p>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-chair info-icon"></i>
+          <p><strong>السعة:</strong> {{ hall.capacity }}</p>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-align-left info-icon"></i>
+          <p><strong>الوصف:</strong> {{ hall.description }}</p>
+        </div>
+      </div>
+    
+      <div class="features mt-4">
+        <h4 class="text-center"><i class="fas fa-star feature-icon"></i> المميزات:</h4>
+        <div class="d-flex flex-wrap justify-content-center">
+          <div class="feature-item" *ngFor="let feature of hall.features">
+            <i class="fas fa-check-circle feature-icon mx-2"></i>
+            <span>{{ feature }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Buttons -->
+      <div class="text-center mt-4">
+        <button [routerLink]="['/favorite']" class="btn btn-primary m-2 custom-btn">
+          أضف الى المفضلة <i class="fas fa-heart"></i>
+        </button>
+        <button [routerLink]="['/booking']" class="btn btn-success m-2 custom-btn">
+          أحجز الان <i class="fas fa-calendar-check"></i>
+        </button>
       </div>
     </div>
     
-    <div class="col-lg-8 col-md-6 details mt-5 fs-4">
-      <h2>{{ hall.name }}</h2>
-      <p><strong>السعر:</strong> {{ hall.price }}</p>
-      <p><strong>السعة:</strong> {{ hall.capacity }}</p>
-      <p><strong>الوصف:</strong> {{ hall.description }}</p>
+      
 
-      <div class="row mt-3 mb-3 w-50">
-        <div class="col-md-8">
-          <label for="city">اضافة مميزات:</label>
-          <textarea class="form-control" rows="4" placeholder="اضافة مميزات" [(ngModel)]="features"></textarea>
-        </div>
-        </div>
-     
-      <button [routerLink]="['/favorite']" class="btn m-2">
-        أضف الى المفضلة <i class="fas fa-heart"></i>
-      </button>
-      <button [routerLink]="['/booking']" class="btn m-2">
-        أحجز الان <i class="fas fa-calendar-check"></i>
-      </button>
-    </div>
-  </div>
+    
+    
+    
 </div>
-
-
-
-
-
-
-

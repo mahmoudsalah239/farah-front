@@ -8,6 +8,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     importProvidersFrom(HttpClientModule),
-    provideRouter(routes), provideHttpClient()
-  ]
+    provideRouter(routes),
+    provideHttpClient(),
+  ],
 };

@@ -4,15 +4,15 @@ import { environment } from '../environments/environment.development';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SendOtpService {
-
   private baseUrl = `${environment.apiUrl}/Account`;
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   resendOTP(): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token =
+      localStorage.getItem('token') || sessionStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const url = `${this.baseUrl}/resendOTP`;
 
@@ -20,7 +20,8 @@ export class SendOtpService {
   }
 
   confirmEmail(otp: string): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token =
+      localStorage.getItem('token') || sessionStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const url = `${this.baseUrl}/confirmEmail?otp=${otp}`;
 
@@ -30,6 +31,4 @@ export class SendOtpService {
   removeToken() {
     localStorage.removeItem('token');
   }
-
-
 }

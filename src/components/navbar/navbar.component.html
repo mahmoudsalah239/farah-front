@@ -3,9 +3,9 @@
     <nav class="navbar navbar-expand-lg bg-dark ">
       <a class="navbar-brand" href="#"><img src="../../assets/logo-sidebar.png" alt=""></a>
 
-      <button class="navbar-toggler collapsed text-white " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      <button class="navbar-toggler collapsed text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon "></span>
+        <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarNav">
@@ -28,13 +28,10 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/beauty" routerLinkActive="active">بيوتي سنتر</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="#" routerLinkActive="active">اتصل بنا</a>
-          </li>
         </ul>
-        <ul *ngIf="!IsLogin ;else logined " class="navbar-nav m-auto">
+        <ul *ngIf="!IsLogin; else logined" class="navbar-nav m-auto">
           <li class="nav-item">
-            <a class="nav-link" routerLink="register" routerLinkActive="active">انضم إلينا</a>
+            <a class="nav-link" routerLink="Login" routerLinkActive="active">انضم إلينا</a>
           </li>
         </ul>
         <ng-template #logined>
@@ -42,22 +39,17 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-
-                clirk <img class="rounded rounded-circle loginUserImg " src="assets/ts-1.jpg" alt="">
+                {{ userInfo?.email }} <img class="rounded rounded-circle loginUserImg" src="assets/ts-1.jpg" alt="">
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" routerLink="#"><i class="fa fa-user"></i> Profile</a>
-                </li>
-                <li><a class="dropdown-item" routerLink="LayOut"><i class="fa fa-list"></i> DashBoard</a>
-                </li>
-                <li><a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i>Logout</a>
-                </li>
+                <li><a class="dropdown-item" routerLink="/">بروفايلي <i class="fa fa-user"></i></a></li>
+                <li><a class="dropdown-item" routerLink="/">طلباتي <i class="fa fa-list"></i></a></li>
+                <li><a class="dropdown-item" routerLink="/">المفضلة <i class="fa fa-list"></i></a></li>
+                <li><a class="dropdown-item" (click)="logout()">تسجيل الخروج <i class="fa fa-sign-out"></i></a></li>
               </ul>
             </li>
           </ul>
-
         </ng-template>
-
       </div>
     </nav>
   </div>

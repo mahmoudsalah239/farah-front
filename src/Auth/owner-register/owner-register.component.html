@@ -1,108 +1,114 @@
-<div class="container    ">
+<div class="container">
     <div class="row">
         <div class="col col-md-6 col-12">
-            <form class="form">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form">
                 <div class="d-flex justify-content-around">
-                    <button class="btn" routerLink="/register">تسجيل مشتري </button>
-                    <button class="btn" routerLink="/OwnerRegister">تسجيل بائع </button>
+                    <button type="button" class="btn" routerLink="/register">تسجيل مشتري</button>
+                    <button type="button" class="btn" routerLink="/OwnerRegister">تسجيل بائع</button>
                 </div>
-                <p class="title"> تسجيل صاحب خدمه </p>
+                <p class="title">تسجيل صاحب خدمة</p>
 
                 <div class="flex">
                     <label>
-                        <span>الاسم الاول </span>
-                        <input required="" placeholder="" type="text" class="input">
+                        <span>الاسم الاول</span>
+                        <input formControlName="firstName" required type="text" class="input">
                     </label>
 
                     <label>
-                        <span>الاسم الاخير </span>
-                        <input required="" placeholder="" type="text" class="input">
+                        <span>الاسم الاخير</span>
+                        <input formControlName="lastName" required type="text" class="input">
                     </label>
                 </div>
+
                 <label>
-                    <span>الرقم القومي </span>
-                    <input required="" placeholder="" type="text" class="input">
+                    <span>الرقم القومي</span>
+                    <input formControlName="ssn" required type="text" class="input">
                 </label>
 
                 <label>
-                    <span>الايميل </span>
-                    <input required="" placeholder="" type="email" class="input">
+                    <span>الايميل</span>
+                    <input formControlName="email" required type="email" class="input">
                 </label>
-                <label>
-                    <select name="" id="" class="input">
 
-                        <option value="0" selected disabled class="text-black-50"> -- اختر نوع الخدمة-
-                            -</option>
+                <label>
+                    <span>نوع الخدمة</span>
+                    <select formControlName="serviceType" class="input">
+                        <option value="" selected disabled>-- اختر نوع الخدمة --</option>
                         <option value="0">قاعة افراح</option>
-                        <option value="1"> سياره </option>
-                        <option value="2">بيوتي سنتر </option>
-                        <option value="3">مصور فوتوغرافي </option>
-                        <option value="4"> تأجير فساتين </option>
+                        <option value="1">سياره</option>
+                        <option value="2">بيوتي سنتر</option>
+                        <option value="3">مصور فوتوغرافي</option>
+                        <option value="4">تأجير فساتين</option>
                     </select>
-
                 </label>
 
-                
-        <div class="flex">
-            <div class="mb-3">
-              <select id="gove" class="form-control" formControlName="governorate">
-                <option value="">اختر المحافظة</option> 
-                <option *ngFor="let governorate of AllGovernments" [value]="governorate.governorateID">
-                  {{ governorate.name }}
-                </option>
-              </select>
-              <!-- <div *ngIf="registerForm.get('governorate')?.invalid && registerForm.get('governorate')?.touched" class="text-danger"> -->
-                المحافظة مطلوبة
-              </div>
-            </div>
-            
-            <div class="mb-3">
-              <select id="city" class="form-control" formControlName="city">
-                <option value="">اختر المدينة</option>
-                <option *ngFor="let city of Cites" [value]="city.id">
-                  {{ city.name }}
-                </option>
-              </select>
-              <!-- <div *ngIf="registerForm.get('city')?.invalid && registerForm.get('city')?.touched" class="text-danger"> -->
-                المدينة مطلوبة
-              </div>
-            <!-- </div> -->
-         <!-- </div> -->
-               
-                  
+                <div class="flex">
+                    <div class="mb-3">
+                        <select id="gove" class="form-select" formControlName="govID">
+                            <option value="">اختر المحافظة</option>
+                            <option *ngFor="let governorate of AllGovernments" [value]="governorate.governorateID">
+                                {{ governorate.name }}
+                            </option>
+                        </select>
+                        <div *ngIf="registerForm.get('govID')?.invalid && registerForm.get('govID')?.touched"
+                            class="text-danger">
+                            المحافظة مطلوبة
+                        </div>
+                    </div>
 
-
-
-
+                    <div class="mb-3">
+                        <select id="city" class="form-select" formControlName="cityID">
+                            <option value="">اختر المدينة</option>
+                            <option *ngFor="let city of Cites" [value]="city.id">
+                                {{ city.name }}
+                            </option>
+                        </select>
+                        <div *ngIf="registerForm.get('cityID')?.invalid && registerForm.get('cityID')?.touched"
+                            class="text-danger">
+                            المدينة مطلوبة
+                        </div>
+                    </div>
+                </div>
 
                 <label>
-                    <input required="" placeholder="" type="password" class="input">
-                    <span>كلمه السر </span>
-                </label>
-                <label>
-                    <input required="" placeholder="" type="password" class="input">
-                    <span>تأكيد كلمه السر </span>
+                    <span>كلمه السر</span>
+                    <input formControlName="password" required type="password" class="input">
                 </label>
 
-
-
-
-
+                <!-- <label>
+                    <span>تأكيد كلمه السر</span>
+                    <input formControlName="confirmPassword" required type="password" class="input">
+                </label> -->
+                <label>
+                    <span>رقم الهاتف</span>
+                    <input formControlName="phoneNumber" required type="number" class="input">
+                </label>
 
                 <label>
-                    <input required="" placeholder="" type="text" class="input">
                     <span>اسم صديقك المفضل ؟</span>
+                    <input formControlName="yourFavirotePerson" required type="text" class="input">
                 </label>
-                <button class="submit">انشاء حساب </button>
 
+                <label>
+                    <span>صورة الملف الشخصي</span>
+                    <input type="file" (change)="onFileSelected($event, 'profileImage')" class="input">
+                </label>
 
+                <label>
+                    <span>صورة الهوية الأمامية</span>
+                    <input type="file" (change)="onFileSelected($event, 'idFrontImage')" class="input">
+                </label>
 
+                <label>
+                    <span>صورة الهوية الخلفية</span>
+                    <input type="file" (change)="onFileSelected($event, 'idBackImage')" class="input">
+                </label>
+
+                <button type="submit" class="submit">انشاء حساب</button>
             </form>
-
         </div>
         <div class="col col-md-6 col-12">
             <img class="w-100" src="../../assets/7314112.svg" alt="">
         </div>
-    <!-- </div> -->
-
-<!-- </div> -->
+    </div>
+</div>

@@ -6,6 +6,7 @@ import { BeautyCenterComponent } from '../beauty-center/beauty-center.component'
 import { DressComponent } from '../dress/dress.component';
 import { PhotographerComponent } from '../photographer/photographer.component';
 
+
 @Component({
   selector: 'app-category',
   standalone: true,
