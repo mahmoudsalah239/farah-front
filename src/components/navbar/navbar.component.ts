@@ -6,27 +6,30 @@ import { LoginService } from '../../services/login.service';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive,CommonModule],
+  imports: [RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss',
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-constructor(private _loginservice:LoginService){
-
-}
+  userInfo: any;
   IsLogin: boolean = false;
- 
+
+  constructor(private loginService: LoginService) {}
+
   ngOnInit(): void {
-    const token = localStorage.getItem('userToken');
-    if (token != null) {
-      this.IsLogin = true;
-    }
-    console.log(this._loginservice.userInfo)
+    this.loginService.userInfo.subscribe(user => {
+      this.userInfo = user;
+    });
+
+    this.loginService.isLoggedIn.subscribe(isLoggedIn => {
+      this.IsLogin = isLoggedIn;
+      console.log(this.IsLogin);
+    });
+
+    this.loginService.setInformationOfUser();
   }
 
-  logout(){
-    localStorage.removeItem("userToken");
-    this._loginservice.userInfo.next(null);
+  logout() {
+    this.loginService.logout();
   }
-
 }

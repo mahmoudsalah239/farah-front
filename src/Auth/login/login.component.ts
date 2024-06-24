@@ -1,16 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
-
-// import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { SendOtpService } from '../../services/send-otp.service';
 import { ResetPasswordService } from '../../services/reset-password.service';
 
@@ -18,9 +11,8 @@ import { ResetPasswordService } from '../../services/reset-password.service';
   selector: 'app-login',
   standalone: true,
   imports: [RouterLink, ReactiveFormsModule, CommonModule],
-
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   isLoading = false;
@@ -30,6 +22,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl(null, [Validators.required]),
     rememberMe: new FormControl(false),
   });
+
   constructor(
     private router: Router,
     private _loginService: LoginService,
@@ -37,11 +30,7 @@ export class LoginComponent implements OnInit {
     private resetPasswordService: ResetPasswordService
   ) {}
 
-  ngOnInit(): void {
-    if (this.loginForm.invalid || this.isLoading) {
-      return;
-    }
-  }
+  ngOnInit(): void {}
 
   onSubmit(): void {
     if (this.loginForm.invalid || this.isLoading) {
@@ -54,25 +43,17 @@ export class LoginComponent implements OnInit {
       rememberMe: !!this.loginForm.value.rememberMe,
     };
 
-    if (
-      typeof formData.email === 'string' &&
-      typeof formData.password === 'string'
-    ) {
+    if (typeof formData.email === 'string' && typeof formData.password === 'string') {
       this._loginService.login(formData).subscribe({
         next: (response) => {
           this.isLoading = false;
-          console.log(response);
-          console.log(response.body);
-          console.log(response.body.succeeded);
-          console.log(response.body.data.token);
-
           if (response && response.body.succeeded && response.body.data.token) {
             const token = response.body.data.token;
             const role = response.body.data.role;
             const isConfirmed = response.body.data.isEmailConfirmed;
-            localStorage.setItem('token', token);
+            this._loginService.storeToken(token);
+
             if (role === 'Admin' || role === 'Owner') {
-              console.log('this is an owner');
               Swal.fire({
                 icon: 'error',
                 title: 'ممنوع الدخول',
@@ -84,10 +65,7 @@ export class LoginComponent implements OnInit {
                 this.router.navigate(['/dashboard-login']);
               });
             } else if (role === 'Customer') {
-              console.log('this DONE');
-
               if (!isConfirmed) {
-                console.log('this is customer -> but not confirmed');
                 this.sendOtpService.resendOTP().subscribe({
                   next: () => {
                     Swal.fire({
