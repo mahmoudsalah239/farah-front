@@ -28,6 +28,7 @@ import { BookingCenterComponent } from '../components/booking-center/booking-cen
 import { PhotographerDetailsComponent } from '../components/photographer/photographer-details/photographer-details.component';
 import { FavoritePhotographerComponent } from '../components/favorite-photographer/favorite-photographer.component';
 import { BookingPhotographerComponent } from '../components/booking-photographer/booking-photographer.component';
+import { LoginComponent } from '../Auth/login/login.component';
 
 
 export const routes: Routes = [
@@ -45,7 +46,7 @@ export const routes: Routes = [
   {path:'dress-details/:id',component:DressDetailsComponent},
   {path:'booking-dress',component:BookingDressComponent},
   {path:'favorite-dress',component:FavoriteDressComponent},
-  { path: 'car', component: CarComponent },
+  {path: 'car', component: CarComponent },
   {path:'car-details/:id',component:CarDetailsComponent},
   {path:'favorite-car',component:FavoriteCarComponent},
   {path:'booking-car',component:BookingCarComponent},
@@ -55,7 +56,7 @@ export const routes: Routes = [
   {path:'booking-center',component:BookingCenterComponent},
   { path: 'Account', component: AccountComponent },
   { path: 'register', component: RegisterComponent },
-  // { path: 'Login', component: LoginComponent },
+  { path: 'Login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponentComponent },
   { path: 'OwnerRegister', component: OwnerRegisterComponent },
   { path: '**', component: NotFoundComponent },
