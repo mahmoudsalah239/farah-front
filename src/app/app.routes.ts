@@ -41,6 +41,15 @@ export const routes: Routes = [
   { path: 'favorite-photographer', component: FavoritePhotographerComponent },
   { path: 'booking-photographer', component: BookingPhotographerComponent },
   { path: 'dress', component: DressComponent },
+
+  {path:'dress-details/:id',component:DressDetailsComponent},
+  {path:'booking-dress',component:BookingDressComponent},
+  {path:'favorite-dress',component:FavoriteDressComponent},
+  {path: 'car', component: CarComponent },
+  {path:'car-details/:id',component:CarDetailsComponent},
+  {path:'favorite-car',component:FavoriteCarComponent},
+  {path:'booking-car',component:BookingCarComponent},
+
   { path: 'dress-details/:id', component: DressDetailsComponent },
   { path: 'booking-dress', component: BookingDressComponent },
   { path: 'favorite-dress', component: FavoriteDressComponent },
@@ -48,6 +57,7 @@ export const routes: Routes = [
   { path: 'car-details/:id', component: CarDetailsComponent },
   { path: 'favorite-car', component: FavoriteCarComponent },
   { path: 'booking-car', component: BookingCarComponent },
+
   { path: 'beauty', component: BeautyCenterComponent },
   { path: 'beauty-center-details/:id', component: BeautyDetailsComponent },
   { path: 'favorite-center', component: FavoriteCenterComponent },
