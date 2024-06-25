@@ -9,78 +9,21 @@
 
 
 
-<div class="container" dir="rtl">
-    <div class="row">
-      <!-- Card 1 -->
-      <div class="col-lg-4 col-md-6 col-sm-12 mb-5 mt-5">
-        <div class="nft">
-          <div class="main">
-            <img class="tokenImage" src="assets/weddingHall.jpg" alt="NFT" />
-            <h2 class="mt-2 text-light">القاعات</h2>
-            <p class="description"><button class="btn" routerLink="/hall">شاهد الكل</button></p>
-          </div>
-          <hr />
+<div class="container">
+  <div class="row justify-content-center align-items-center">
+    <div class="col col-12 col-md-6 col-lg-4  my-5" *ngFor="let category of categories">
+      <div class="nft">
+        <div class="main">
+          <img class="tokenImage" [src]="category.image" alt="NFT" />
+          <h2 class="mt-2 text-light">{{ category.title }}</h2>
+          <p class="description"><button class="btn" [routerLink]="category.link">شاهد الكل</button></p>
         </div>
-      </div>
-      <!-- Card 2 -->
-      <div class="col-lg-4 col-md-6 col-sm-12 mb-5  mt-5">
-        <div class="nft">
-          <div class="main">
-            <img class="tokenImage" src="assets/weddingCar.jpg" alt="NFT" />
-            <h2 class="mt-2 text-light">السيارات</h2>
-            <p class="description"><button class="btn" routerLink="/car">شاهد الكل</button></p>
-          </div>
-          <hr />
-        </div>
-      </div>
-      <!-- Card 3 -->
-      <div class="col-lg-4 col-md-6 col-sm-12 mb-5  mt-5">
-        <div class="nft">
-          <div class="main">
-            <img class="tokenImage" src="assets/weddingDress.jpg" alt="NFT" />
-            <h2 class="mt-2 text-light">الفساتين</h2>
-            <p class="description"><button class="btn" routerLink="/dress">شاهد الكل</button></p>
-          </div>
-          <hr />
-        </div>
-      </div>
-      
-      <!-- Card 4 -->
-      <div class="col-lg-4 col-md-6 col-sm-12 mb-5">
-        <div class="nft">
-          <div class="main">
-            <img class="tokenImage" src="assets/weddingPhotographer.jpeg" alt="NFT" />
-            <h2 class="mt-2 text-light">المصور</h2>
-            <p class="description"><button class="btn" routerLink="/photographer">شاهد الكل</button></p>
-          </div>
-          <hr />
-        </div>
-      </div>
-      <!-- Card 5 -->
-      <div class="col-lg-4 col-md-6 col-sm-12 mb-5">
-        <div class="nft">
-          <div class="main">
-            <img class="tokenImage" src="assets/beautyCenter.jpg" alt="NFT" />
-            <h2 class="mt-2 text-light">بيوتي سنتر</h2>
-            <p class="description"><button class="btn" routerLink="/beauty">شاهد الكل</button></p>
-          </div>
-          <hr />
-        </div>
-      </div>
-
-       <!-- Card 6 -->
-       <div class="col-lg-4 col-md-6 col-sm-12 mb-5">
-        <div class="nft">
-          <div class="main">
-            <img class="tokenImage" src="assets/allservices.jpg" alt="NFT" />
-            <h2 class="mt-2 text-light">جميع الخدمات</h2>
-            <p class="description"><button class="btn" routerLink="/car">شاهد الكل</button></p>
-          </div>
-          <hr />
-        </div>
+        <hr />
       </div>
     </div>
   </div>
+</div>
+
 
   
 <div class="reservation text-center text-white py-5">
