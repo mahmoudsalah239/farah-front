@@ -39,9 +39,9 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                {{ userInfo?.email }} <img class="rounded rounded-circle loginUserImg" src="assets/ts-1.jpg" alt="">
+                {{ userInfo?.email|userName }} <img class="rounded rounded-circle loginUserImg" src="assets/ts-1.jpg" alt="">
               </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <ul class="dropdown-menu text-end " aria-labelledby="navbarDropdown" dir="ltr">
                 <li><a class="dropdown-item" routerLink="/">بروفايلي <i class="fa fa-user"></i></a></li>
                 <li><a class="dropdown-item" routerLink="/">طلباتي <i class="fa fa-list"></i></a></li>
                 <li><a class="dropdown-item" routerLink="/">المفضلة <i class="fa fa-list"></i></a></li>
