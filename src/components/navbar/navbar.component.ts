@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
 
     this.loginService.isLoggedIn.subscribe((isLoggedIn) => {
       this.IsLogin = isLoggedIn;
-      console.log(this.IsLogin);
+    
     });
 
     this.loginService.setInformationOfUser();
