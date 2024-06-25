@@ -5,7 +5,7 @@
         <p>اهلا بك في سيارات موقع فرح</p>
     </div>
 </div>
-
+<!-- 
 <div class="container bg-light mb-4 mt-5">
     <div class="row">
       <div class="col-lg-4 mt-4">
@@ -56,7 +56,96 @@
                     </div>
                 </div>
             </div>
+        </div> -->
+
+
+        <div class="line-with-text mt-5">
+          <div class="line"></div>
+          <div class="fw-bold text">استكشف تشكيلتنا من السيارات</div>
+          <div class="line"></div>
         </div>
+
+
+
+        <div class="container bg-light mt-5">
+          <div class="row">
+            <div class="col-lg-4 mt-4">
+              <div class="form-group">
+                <label for="town" class="mr-2">المحافظة:</label>
+                <select class="form-select" id="town" [(ngModel)]="selectedTown" (change)="filterCars()">
+                  <option value="">الكل</option>
+                  <option *ngFor="let town of towns" [value]="town">{{ town }}</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="col-lg-4 mt-4">
+              <div class="form-group ">
+                <label for="city" class="mr-2">المدينة:</label>
+                <select class="form-select" id="city" [(ngModel)]="selectedCity" (change)="filterCars()">
+                  <option value="">الكل</option>
+                  <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="col-lg-4 mt-4">
+              <div class="form-group ">
+                <label for="priceRange" class="mr-2">حدد سعر:</label>
+                <input type="range" class="form-range mr-2" id="maxPrice" [(ngModel)]="maxPrice" (input)="filterCars()" min="1000" max="5000" step="100">
+                <span>السعر الأقصى: {{ maxPrice }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+       
+
+          
+          
+          <div class="shell">
+            <div class="container"  dir="rtl">
+              <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let car of getPaginatedCars()">
+                  <div class="wsk-cp-product">
+                    <div class="wsk-cp-img">
+                      <img  [src]="car.imageUrl" alt="Product" class="img-responsive" />
+                    </div>
+                    <div class="wsk-cp-text">
+                      <div class="category">
+                        <a [routerLink]="['/car-details', car.id]" class="card__button btn btn-light">مزيد من التفاصيل</a>
+                      </div>
+                      <div class="title-product">
+                      </div>
+                      <p>{{ car.brand }}</p>
+                      
+                        <p>{{ truncateDescription(car.description) }}</p>
+                     
+                      <div class="card-footer">
+                        <div><span class="price">السعر:{{ car.price }} </span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <div class="pagination mb-5 d-flex justify-content-center align-items-center">
             <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="btn mr-2">
                 Previous
@@ -66,5 +155,4 @@
                 Next
             </button>
         </div>
-    </div>
-</div>
+   
