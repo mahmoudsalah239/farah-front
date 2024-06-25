@@ -63,17 +63,6 @@ img {
     filter: blur(7px);
     animation: ghost-shadow 2s infinite alternate; }
 
-@keyframes ghost-float {
-    0% {
-        transform: translateY(0); }
-    100% {
-        transform: translateY(15px); } }
-
-@keyframes ghost-shadow {
-    0% {
-        transform: scale(1, 1); }
-    100% {
-        transform: scale(1, 1.5); } }
 
 @media screen and (min-width: 1024px) {
     :root {
