@@ -1,6 +1,6 @@
-<div class="container-fluid mt-5 mb-5">
+<!-- <div class="container-fluid mt-5 mb-5">
   <div class="row">
-    <!-- Image Section -->
+
     <div class="col-lg-4 col-md-6 mb-3 position-relative">
       <img [src]="currentImage" alt="{{ car.name }}" class="car-image img-fluid">
       <div class="coloredDiv"></div>
@@ -13,14 +13,6 @@
     </div>
 
 
-
-   
-    
-    
-
-
-
-    <!-- Details Section -->
     <div class="col-lg-8 col-md-6 details mt-5 fs-4">
       <h2>{{ car.name }}</h2>
       <p><strong>السعر:</strong> {{ car.price }}</p>
@@ -44,4 +36,40 @@
   </div>
 </div>
 
+ -->
 
+
+
+
+ <div class="container">
+  <div class="detail">
+      <div class="image">
+          <img [src]="currentImage" alt="{{ car.name }}">
+      </div>
+      <div class="content">
+        <div class="price">النوع:{{ car.brand }}</div>
+          <div class="price">السعر:{{ car.price }}</div>
+          <div class="price">السنة:{{ car.price }}</div>
+          
+          
+          <div class="buttons">
+              <button [routerLink]="['/favorite-car']" class="btn m-2">
+                  أضف الى المفضلة <i class="fas fa-heart"></i>
+              </button>
+              <button [routerLink]="['/booking-car']" class="btn m-2">
+                   أحجز الان <i class="fas fa-calendar-check"></i>
+              </button> 
+          </div>
+          <div class="description" dir="rtl">
+            هذه السيارة مثالية للأفراد والعائلات الذين يبحثون عن الراحة والأداء الممتاز. تتميز السيارة بمحرك قوي وفعال يضمن لك رحلة سلسة واقتصادية. تصميمها الداخلي أنيق ومريح، مزود بأحدث التقنيات لضمان تجربة قيادة مميزة. كما تتمتع السيارة بميزات أمان متقدمة لضمان سلامتك وسلامة أحبائك.
+        </div>
+      </div>
+  </div>
+
+  <div class="title"> مزيد من الصور</div>
+  <div class="thumbnail-images">
+      <div class="thumbnail" *ngFor="let image of thumbnails">
+          <img [src]="image.thumb" (click)="changeImage(image.large)">
+      </div>
+  </div>
+</div>

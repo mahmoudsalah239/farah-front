@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from '../components/home/home.component';
 import { AccountComponent } from '../Auth/account/account.component';
-// import { LoginComponent } from '../Auth/login/login.component';
+import { LoginComponent } from '../Auth/login/login.component';
 import { OwnerRegisterComponent } from '../Auth/owner-register/owner-register.component';
 import { HallComponent } from '../components/hall/hall.component';
 import { PhotographerComponent } from '../components/photographer/photographer.component';
@@ -28,8 +28,6 @@ import { BookingCenterComponent } from '../components/booking-center/booking-cen
 import { PhotographerDetailsComponent } from '../components/photographer/photographer-details/photographer-details.component';
 import { FavoritePhotographerComponent } from '../components/favorite-photographer/favorite-photographer.component';
 import { BookingPhotographerComponent } from '../components/booking-photographer/booking-photographer.component';
-import { LoginComponent } from '../Auth/login/login.component';
-
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -39,10 +37,11 @@ export const routes: Routes = [
   { path: 'favorite', component: FavoriteComponent },
   { path: 'booking', component: BookingComponent },
   { path: 'photographer', component: PhotographerComponent },
-  {path:'photographer-details/:id',component:PhotographerDetailsComponent},
-  {path:'favorite-photographer',component:FavoritePhotographerComponent},
-  {path:'booking-photographer',component:BookingPhotographerComponent},
+  { path: 'photographer-details/:id', component: PhotographerDetailsComponent },
+  { path: 'favorite-photographer', component: FavoritePhotographerComponent },
+  { path: 'booking-photographer', component: BookingPhotographerComponent },
   { path: 'dress', component: DressComponent },
+
   {path:'dress-details/:id',component:DressDetailsComponent},
   {path:'booking-dress',component:BookingDressComponent},
   {path:'favorite-dress',component:FavoriteDressComponent},
@@ -50,10 +49,19 @@ export const routes: Routes = [
   {path:'car-details/:id',component:CarDetailsComponent},
   {path:'favorite-car',component:FavoriteCarComponent},
   {path:'booking-car',component:BookingCarComponent},
+
+  { path: 'dress-details/:id', component: DressDetailsComponent },
+  { path: 'booking-dress', component: BookingDressComponent },
+  { path: 'favorite-dress', component: FavoriteDressComponent },
+  { path: 'car', component: CarComponent },
+  { path: 'car-details/:id', component: CarDetailsComponent },
+  { path: 'favorite-car', component: FavoriteCarComponent },
+  { path: 'booking-car', component: BookingCarComponent },
+
   { path: 'beauty', component: BeautyCenterComponent },
-  {path:'beauty-center-details/:id',component:BeautyDetailsComponent},
-  {path:'favorite-center',component:FavoriteCenterComponent},
-  {path:'booking-center',component:BookingCenterComponent},
+  { path: 'beauty-center-details/:id', component: BeautyDetailsComponent },
+  { path: 'favorite-center', component: FavoriteCenterComponent },
+  { path: 'booking-center', component: BookingCenterComponent },
   { path: 'Account', component: AccountComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'Login', component: LoginComponent },
