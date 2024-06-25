@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from '../components/home/home.component';
 import { AccountComponent } from '../Auth/account/account.component';
-import { LoginComponent } from '../Auth/login/login.component';
+// import { LoginComponent } from '../Auth/login/login.component';
 import { OwnerRegisterComponent } from '../Auth/owner-register/owner-register.component';
 import { HallComponent } from '../components/hall/hall.component';
 import { PhotographerComponent } from '../components/photographer/photographer.component';
@@ -55,7 +55,7 @@ export const routes: Routes = [
   {path:'booking-center',component:BookingCenterComponent},
   { path: 'Account', component: AccountComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'Login', component: LoginComponent },
+  // { path: 'Login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponentComponent },
   { path: 'OwnerRegister', component: OwnerRegisterComponent },
   { path: '**', component: NotFoundComponent },
