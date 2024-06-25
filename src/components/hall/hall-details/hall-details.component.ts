@@ -23,28 +23,32 @@ export class HallDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const hallId:any = this.route.snapshot.paramMap.get('id'); // Assuming id is passed via route parameter
-console.log(hallId);
+    const hallId: any = this.route.snapshot.paramMap.get('id'); // Assuming id is passed via route parameter
+    console.log(hallId);
 
     // Example: Fetch hall details including images from API
     this.hallService.GetHallById(hallId).subscribe({
-     next: (data: any) => {
-      this.hall = data.data; // Assuming API response structure matches the provided JSON
-      console.log(data.pictureUrls);
-      
-      this.images = this.hall.pictureUrls?.map((url: string) => ({
-        path: 'https://localhost:44322' + url,
-        caption: this.hall.name 
-      }) );
-      console.log(this.images);
-      
-    },error: (error) => {
-      console.error('Error fetching hall details', error);
-    }});
+      next: (data: any) => {
+        this.hall = data.data; // Assuming API response structure matches the provided JSON
+        console.log(data.pictureUrls);
+
+        this.images = this.hall.pictureUrls?.map((url: string) => ({
+          path: 'https://localhost:44322' + url,
+          caption: this.hall.name,
+        }));
+        console.log(this.images);
+      },
+      error: (error) => {
+        console.error('Error fetching hall details', error);
+      },
+    });
   }
 
   prevSlide(): void {
-    this.activeSlideIndex = this.activeSlideIndex === 0 ? this.images.length - 1 : this.activeSlideIndex - 1;
+    this.activeSlideIndex =
+      this.activeSlideIndex === 0
+        ? this.images.length - 1
+        : this.activeSlideIndex - 1;
   }
 
   // Function to navigate to next slide

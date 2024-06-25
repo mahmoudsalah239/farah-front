@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-car-details',
   standalone: true,
-
-  imports: [CarouselModule, CommonModule, RouterLink, FormsModule],
+  imports: [ CommonModule, RouterLink, FormsModule],
   templateUrl: './car-details.component.html',
   styleUrls: ['./car-details.component.scss'],
 })
 export class CarDetailsComponent implements OnInit {
+
+
+
+
   features: string = '';
   currentImage: string = '';
   car: any; 

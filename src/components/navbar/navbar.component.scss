@@ -56,7 +56,7 @@
 
 
 .active{
-color: #FF385A;
+color: #050404;
 
 }
 .loginUserImg{
@@ -66,3 +66,14 @@ color: #FF385A;
 }
 
 
+.dropdown-menu {
+  background-color: var(--main-color);
+ 
+}
+.dropdown-menu a {
+ color: aliceblue;
+}
+.dropdown-menu a:hover {
+  color: rgb(9, 10, 10);
+ }
+ 

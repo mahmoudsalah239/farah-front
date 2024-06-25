@@ -11,54 +11,7 @@
     cursor: pointer;
   }
   
-//   .container .box .for-sale {
-//     background-color: #6449e7;
-//     color: white;
-//     font-size: 13px;
-//     font-weight: bold;
-//     padding: 4px 10px;
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     transform: translateY(-50%);
-//     z-index: 1;
-//   }
-  
-//   .container .box .top:before {
-//     content: "";
-//     width: 100%;
-//     height: 100%;
-//     background-color: #6349e77a;
-//     position: absolute;
-//     left: 0;
-//     top: 0;
-//     transition: 0.3s;
-//     opacity: 0;
-//   }
-  
-//   .container .box .top button.view-property-btn {
-//     background-color: white;
-//     color: #6449e7;
-//     font-size: 12px;
-//     padding: 10px;
-//     border: 1px solid white;
-//     position: absolute;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(-50%, -50%);
-//     cursor: pointer;
-//     transition: 0.3s;
-//     transition-delay: 0.08s;
-//     opacity: 0;
-//     border-radius: 15px;
-//     font-weight: bold;
-//     z-index: 10;
-//   }
-  
-//   .container .box .top:hover button.view-property-btn {
-//     opacity: 1;
-//   }
-  
+
   .container .box .top img {
     
      height: 320px;
@@ -72,63 +25,7 @@
     transform: scale(.9);
   }
   
-//   .container .box .top span {
-//     position: absolute;
-//     right: 20px;
-//     bottom: 15px;
-//     color: white;
-//     font-size: 20px;
-//   }
-//   
-//   .container .box .top span i {
-//     margin-left: 5px;
-//   }
-  
-//   .container .box .bottom {
-//     padding: 20px 15px;
-//     position: relative;
-//   }
-  
-//   .container .box .bottom {
-//     padding: 20px 15px;
-//     position: relative;
-//   }
-  
-//   .container .box .top {
-//     position: relative;
-//   }
-//   .container .box .bottom h3 {
-//     font-size: 15px;
-//   }
-  
-//   .container .box .bottom > p {
-//     margin: 15px 0;
-//     font-size: 13px;
-//     line-height: 1.4;
-//     color: #777;
-//   }
-  
 
-
- 
-  
-  
-  
-//   .container .box .price {
-//     position: absolute;
-//     top: 0;
-//     right: 0;
-//     background-color: #6449e7;
-//     color: white;
-//     font-size: 1rem;
-//     padding: 4px 10px;
-//     transform: translateY(-50%);
-//     z-index: 1;
-//     border-radius: 5px;
-//     font-weight: bold;
-//     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
-//   }
-  
   .apartment-title {
     font-size: 1.5rem;
     font-weight: bold;
@@ -328,3 +225,231 @@
     background-color: #fff;
   }
   
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the cards horizontally */
+    gap: 20px;
+
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 350px; /* Increased height */
+    width: 250px;  /* Increased width */
+    background-color: var(--main-color);
+    border-radius: 10px;
+    box-shadow: -1rem 0 3rem #00000044;
+    transition: 0.4s ease-out;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-20px);
+    transition: 0.4s ease-out;
+    text-shadow: 2px 2px 8px #6e5b94;
+}
+
+.card:hover ~ .card {
+    transform: rotateX(-15deg) rotateY(10deg);
+    transition: 0.4s ease-out;
+}
+
+.title-1 {
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 800;
+  margin-top: 15px; /* Adjust margin for better spacing */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px; /* Set a height to center vertically */
+  width: 100%;
+}
+
+
+.btn {
+    position: absolute;
+    top: 265px; /* Adjusted to accommodate increased card height */
+    margin: 0 20px;
+    width: 150px; /* Adjusted width */
+    height: 40px; /* Adjusted height */
+    border-radius: 8px;
+    border: none;
+    background-color: #923673;
+    color: #fff;
+    transition: 0.4s ease-out;
+}
+
+.btn:hover {
+    background-color: #d072d1;
+    color: #ffffff;
+    box-shadow: 0px 0px 20px rgba(252, 71, 255, 0.5),
+                0px 5px 5px -1px rgba(233, 58, 213, 0.25),
+                inset 4px 4px 8px rgba(219, 175, 255, 0.5),
+                inset -4px -4px 8px rgba(216, 19, 196, 0.35);
+}
+
+
+.content img {
+  width: 100%;
+  padding: 0;
+  height: 100%;
+ 
+}
+
+.bar {
+    position: absolute;
+    top: 315px; /* Adjusted to accommodate increased card height */
+    height: 5px;
+    width: 100%;
+}
+
+.emptybar {
+    background-color: #923673;
+    width: 100%;
+    height: 100%;
+}
+
+.filledbar {
+    position: absolute;
+    top: 0;
+    z-index: 3;
+    width: 0;
+    height: 100%;
+    background: #d059ff;
+    background: linear-gradient(90deg, #e684c5, #eb89cb 100%);
+    transition: 0.6s ease-out;
+}
+
+.card:hover .filledbar {
+    width: 100%;
+    transition: 0.4s ease-out;
+}
+
+.content {
+    position: absolute;
+    padding: 20px;
+    top: 60px;
+    color: #eae0fd;
+    font-size: 0.9rem; /* Adjusted font size */
+}
+
+.stroke {
+    stroke: white;
+    stroke-dasharray: 360;
+    stroke-dashoffset: 360;
+    transition: 0.6s ease-out;
+}
+
+.card:hover .stroke {
+    stroke-dashoffset: 100;
+    transition: 0.6s ease-out;
+}
+
+.col-lg-3 {
+  margin-top: 100px;
+}
+
+.nft {
+  user-select: none;
+  max-width: 320px;
+  border: 1px solid #ffffff22;
+  background-color: #282c34;
+  background: linear-gradient(0deg, rgb(77, 14, 67) 0%, rgba(121, 24, 102, 0.5) 100%);
+  box-shadow: 0 7px 20px 5px #00000088;
+  border-radius: 0.7rem;
+  backdrop-filter: blur(7px);
+  overflow: hidden;
+  transition: 0.5s all;
+
+  margin: auto;
+}
+
+.nft hr {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #88888855;
+  margin-top: 0;
+}
+
+.nft .main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1rem;
+}
+
+.nft .tokenImage {
+  border-radius: .5rem;
+  max-width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.nft .description {
+  margin-top: 1rem;
+}
+
+.nft .btn {
+  margin-right: 0;
+  align-self: center;
+  justify-content: center;
+  margin-top: 4rem;
+  background-color: #932593; /* New button color */
+  color: white;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.nft .btn:hover {
+  background-color: #9c1c9c; /* New hover button color */
+}
+
+.nft::before {
+  position: fixed;
+  content: "";
+  box-shadow: 0 0 100px 40px #be29be08;
+  top: -10%;
+  left: -100%;
+  transform: rotate(-45deg);
+  height: 60rem;
+  transition: 0.7s all;
+}
+
+.nft:hover {
+  border: 1px solid #ffffff44;
+  box-shadow: 0 7px 30px 10px #000000aa;
+  transform: scale(1.015);
+}
+
+.nft:hover::before {
+  top: -100%;
+  left: 200%;
+}
+
+.bg {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bg h1 {
+  font-size: 20rem;
+  filter: opacity(0.5);
+}

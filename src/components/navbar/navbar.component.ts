@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { LoginService } from '../../services/login.service';
+import { UserNamePipe } from '../../Pipes/user-name.pipe';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, CommonModule],
+  imports: [RouterLink, RouterLinkActive, CommonModule,UserNamePipe],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
