@@ -12,6 +12,8 @@ import Swal from 'sweetalert2';
 import { SendOtpService } from '../../services/send-otp.service';
 import { ResetPasswordService } from '../../services/reset-password.service';
 import { PromptMomentNotification, CredentialResponse } from 'google-one-tap';
+import { CustomResponse } from '../../interfaces/custom-response';
+import { AuthUserDTO } from '../../interfaces/auth-user-dto';
 
 @Component({
   selector: 'app-login',
@@ -66,10 +68,12 @@ export class LoginComponent implements OnInit {
   }
 
   async handleCredentialResponse(response: CredentialResponse) {
+    console.log('Send From Front-->', response);
     this._loginService.googleLogin(response.credential).subscribe(
-      (res: any) => {
+      (res: CustomResponse<AuthUserDTO>) => {
+        console.log('Response', res);
+
         if (res.succeeded) {
-          console.log(res);
           localStorage.setItem('token', res.data.token);
           this.ngZone.run(() => {
             Swal.fire({
@@ -108,6 +112,7 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
   onSubmit(): void {
     if (this.loginForm.invalid || this.isLoading) {
       return;

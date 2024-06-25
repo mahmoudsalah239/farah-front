@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { CustomResponse } from '../interfaces/custom-response';
+import { AuthUserDTO } from '../interfaces/auth-user-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -48,12 +50,20 @@ export class LoginService {
     this.isLoggedIn.next(false);
   }
 
-  googleLogin(response: string): Observable<any> {
-    const header = new HttpHeaders().set('content-type', 'application/json');
-    return this.http.post(
-      `${environment.apiUrl}/Account/googleLogin`,
-      JSON.stringify(response),
-      { headers: header }
-    );
+  googleLogin(response: string): Observable<CustomResponse<AuthUserDTO>> {
+    const header = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http
+      .post<CustomResponse<AuthUserDTO>>(
+        `${environment.apiUrl}/Account/googleLogin`,
+        { googleToken: response },
+        { headers: header }
+      )
+      .pipe(
+        tap((res: CustomResponse<AuthUserDTO>) => {
+          if (res.succeeded && res.data.token) {
+            this.storeToken(res.data.token);
+          }
+        })
+      );
   }
 }

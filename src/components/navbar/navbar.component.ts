@@ -7,7 +7,7 @@ import { UserNamePipe } from '../../Pipes/user-name.pipe';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, CommonModule,UserNamePipe],
+  imports: [RouterLink, RouterLinkActive, CommonModule, UserNamePipe],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
@@ -18,11 +18,11 @@ export class NavbarComponent implements OnInit {
   constructor(private loginService: LoginService) {}
 
   ngOnInit(): void {
-    this.loginService.userInfo.subscribe(user => {
+    this.loginService.userInfo.subscribe((user) => {
       this.userInfo = user;
     });
 
-    this.loginService.isLoggedIn.subscribe(isLoggedIn => {
+    this.loginService.isLoggedIn.subscribe((isLoggedIn) => {
       this.IsLogin = isLoggedIn;
       console.log(this.IsLogin);
     });
