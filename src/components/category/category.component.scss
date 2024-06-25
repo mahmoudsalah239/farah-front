@@ -365,7 +365,7 @@
 
 .nft {
   user-select: none;
-  max-width: 300px;
+  max-width: 320px;
   border: 1px solid #ffffff22;
   background-color: #282c34;
   background: linear-gradient(0deg, rgb(77, 14, 67) 0%, rgba(121, 24, 102, 0.5) 100%);
@@ -374,6 +374,8 @@
   backdrop-filter: blur(7px);
   overflow: hidden;
   transition: 0.5s all;
+
+  margin: auto;
 }
 
 .nft hr {
