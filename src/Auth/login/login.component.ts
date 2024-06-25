@@ -1,12 +1,17 @@
-
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnInit, NgZone } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { SendOtpService } from '../../services/send-otp.service';
 import { ResetPasswordService } from '../../services/reset-password.service';
+import { PromptMomentNotification, CredentialResponse } from 'google-one-tap';
 
 @Component({
   selector: 'app-login',
@@ -28,11 +33,81 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private _loginService: LoginService,
     private sendOtpService: SendOtpService,
+    private ngZone: NgZone,
     private resetPasswordService: ResetPasswordService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    //@ts-ignore
+    window.onload = () => {
+      //@ts-ignore
+      google.accounts.id.initialize({
+        client_id:
+          '808137901632-58vcgh80pl4h70h11re5v243rqpgeptt.apps.googleusercontent.com',
+        callback: this.handleCredentialResponse.bind(this),
+        auto_select: false,
+        cancel_on_tap_outside: true,
+      });
+      //@ts-ignore
+      google.accounts.id.renderButton(
+        //@ts-ignore
+        document.getElementById('google-login-button'),
+        {
+          theme: 'dark',
+          size: 'large',
+          type: 'standard',
+          text: 'تسجيل الدخول باستخدام Google',
+          width: '100%',
+        }
+      );
+      //@ts-ignore
+      google.accounts.id.prompt((notification: PromptMomentNotification) => {});
+    };
+  }
 
+  async handleCredentialResponse(response: CredentialResponse) {
+    this._loginService.googleLogin(response.credential).subscribe(
+      (res: any) => {
+        if (res.succeeded) {
+          console.log(res);
+          localStorage.setItem('token', res.data.token);
+          this.ngZone.run(() => {
+            Swal.fire({
+              title: 'تم تسجيل الدخول بنجاح!',
+              text:
+                res.message || 'لقد قمت بتسجيل الدخول بنجاح باستخدام Google.',
+              icon: 'success',
+              confirmButtonText: 'موافق',
+            }).then(() => {
+              this.router.navigate(['/home']);
+            });
+          });
+        } else {
+          this.ngZone.run(() => {
+            Swal.fire({
+              title: 'فشل تسجيل الدخول',
+              text:
+                res.message ||
+                'حدث خطأ أثناء تسجيل الدخول باستخدام Google. يرجى المحاولة مرة أخرى.',
+              icon: 'error',
+              confirmButtonText: 'موافق',
+            });
+          });
+        }
+      },
+      (error: any) => {
+        console.log(error);
+        this.ngZone.run(() => {
+          Swal.fire({
+            title: 'فشل تسجيل الدخول',
+            text: 'حدث خطأ أثناء تسجيل الدخول باستخدام Google. يرجى المحاولة مرة أخرى.',
+            icon: 'error',
+            confirmButtonText: 'موافق',
+          });
+        });
+      }
+    );
+  }
   onSubmit(): void {
     if (this.loginForm.invalid || this.isLoading) {
       return;
@@ -44,7 +119,10 @@ export class LoginComponent implements OnInit {
       rememberMe: !!this.loginForm.value.rememberMe,
     };
 
-    if (typeof formData.email === 'string' && typeof formData.password === 'string') {
+    if (
+      typeof formData.email === 'string' &&
+      typeof formData.password === 'string'
+    ) {
       this._loginService.login(formData).subscribe({
         next: (response) => {
           this.isLoading = false;
@@ -159,4 +237,3 @@ export class LoginComponent implements OnInit {
     }
   }
 }
-
