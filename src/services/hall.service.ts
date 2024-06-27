@@ -11,10 +11,12 @@ export class HallService {
   constructor(private http: HttpClient) {}
 
 
-  getAllHalls(page: number, pageSize: number, priceRange: string = 'all'): Observable<any> {
-    const url = `${this.ApiUrl}/Hall/AllHalls?page=${page}&pageSize=${pageSize}&priceRange=${priceRange}`;
+  getAllHalls(page: number, pageSize: number, priceRange: string, govId: number, cityId: number): Observable<any> {
+    const url = `${this.ApiUrl}/Hall/AllHalls?page=${page}&pageSize=${pageSize}&priceRange=${priceRange}&govId=${govId}&cityId=${cityId}`;
+    
     return this.http.get<any>(url);
   }
+
    GetHallById(id:number):Observable<any>{
     const url = `${this.ApiUrl}/Hall/CarByID?id=${id}`;
     return this.http.get<any>(url);

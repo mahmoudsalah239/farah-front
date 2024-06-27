@@ -6,6 +6,7 @@ import { AddressServiceService } from '../../services/address-service.service';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -14,6 +15,7 @@ import { RegisterService } from '../../services/register.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SendOtpService } from '../../services/send-otp.service';
 import Swal from 'sweetalert2';
+import { mustMatch } from '../../interfaces/validators';
 
 @Component({
   selector: 'app-owner-register',
@@ -21,7 +23,7 @@ import Swal from 'sweetalert2';
   imports: [RouterLink, CommonModule, ReactiveFormsModule],
   templateUrl: './owner-register.component.html',
   styleUrls: ['./owner-register.component.scss'],
-})
+})  
 export class OwnerRegisterComponent implements OnInit {
   registerForm: FormGroup;
   AllGovernments: Governorate[] = [];
@@ -39,21 +41,22 @@ export class OwnerRegisterComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private router: Router
   ) {
-    this.registerForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      ssn: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      serviceType: ['', Validators.required],
-      govID: ['', Validators.required],
-      cityID: [{ value: '', disabled: true }, Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      yourFavirotePerson: ['', Validators.required],
-      profileImage: [null, Validators.required],
-      idFrontImage: [null, Validators.required],
-      idBackImage: [null, Validators.required],
-      phoneNumber: ['', Validators.required],
-    });
+    this.registerForm = new FormGroup({
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      ssn: new FormControl('', [Validators.required, Validators.minLength(14), Validators.maxLength(14)]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      serviceType: new FormControl('', Validators.required),
+      govID: new FormControl('', Validators.required),
+      cityID: new FormControl('', Validators.required),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      confirmPassword: new FormControl('', Validators.required),
+      phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
+      yourFavirotePerson: new FormControl('', Validators.required),
+      profileImage: new FormControl('', Validators.required),
+      idFrontImage: new FormControl('', Validators.required),
+      idBackImage: new FormControl('', Validators.required)
+    },   { validators: mustMatch('password', 'confirmPassword') });
   }
 
   ngOnInit(): void {
@@ -74,8 +77,7 @@ export class OwnerRegisterComponent implements OnInit {
       this.AllGovernments = response.data;
     });
   }
-
-  onGovernorateChange(governorateID: number): void {
+    onGovernorateChange(governorateID: number): void {
     this.addressService
       .getCitiesByGovId(governorateID)
       .subscribe((response: any) => {
@@ -113,7 +115,7 @@ export class OwnerRegisterComponent implements OnInit {
         }
       }
 
-      formData.forEach((value, key) => {
+      formData.forEach(( key,value) => {
         console.log(`${key}: ${value}`);
       });
       this.registerService.OwnerRegister(formData).subscribe({

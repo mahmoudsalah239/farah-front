@@ -5,69 +5,78 @@
         <p>اهلا بك في فساتين  موقع فرح </p>
     </div>
 </div>
+   
 
+<div class="container bg-light mb-4 mt-5">
+  <div class="row">
+    <div class="col-lg-4 mt-4">
+      <div class="form-group">
+        <label for="town" class="mr-2">المحافظة:</label>
+        <select class="form-select" id="town" [(ngModel)]="selectedTown" (ngModelChange)="onGovernorateChange($event)">
+          <option value="">الكل</option>
+          <option *ngFor="let town of AllGovernments" [value]="town.governorateID">{{ town.name }}</option>
+        </select>
+      </div>
+    </div>
 
-<div class="container bg-light mb-5">
+    <div class="col-lg-4 mt-4">
+      <div class="form-group">
+        <label for="city" class="mr-2">المدينة:</label>
+        <select class="form-select" id="city" [(ngModel)]="selectedCity" (ngModelChange)="filterShop()">
+          <option value="">الكل</option>
+          <option *ngFor="let city of Cites" [value]="city.id">{{ city.name }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-lg-4 mt-4">
+      <div class="form-group">
+        <label for="priceRange" class="mr-2">حدد سعر:</label>
+        <select class="form-select" id="priceRange" [(ngModel)]="selectedPriceRange" (change)="filterShop()">
+          <option value="all">الكل</option>
+          <option value="<100">أقل من 100 دولار</option>
+          <option value="100-500">100 - 500 دولار</option>
+          <option value="500-1000">500 - 1000 دولار</option>
+          <option value="1000-5000">1000 - 5000 دولار</option>
+          <option value=">5000">أكثر من 5000 دولار</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="container">
     <div class="row">
-      <div class="col-lg-4 mt-4">
-        <div class="form-group">
-          <label for="town" class="mr-2">المحافظة:</label>
-          <select class="form-select" id="town" [(ngModel)]="selectedTown" (change)="filterDresses()">
-            <option value="">الكل</option>
-            <option *ngFor="let town of towns" [value]="town">{{ town }}</option>
-          </select>
-        </div>
+      <div *ngIf="nodressMessage" class="col-12 text-center">
+        <p>{{ nodressMessage }}</p>
       </div>
-  
-      <div class="col-lg-4 mt-4">
-        <div class="form-group">
-          <label for="city" class="mr-2">المدينة:</label>
-          <select class="form-select" id="city" [(ngModel)]="selectedCity" (change)="filterDresses()">
-            <option value="">الكل</option>
-            <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
-          </select>
-        </div>
-      </div>
-  
-      <div class="col-lg-4 mt-4">
-        <div class="form-group">
-          <label for="priceRange">حدد سعر:</label>
-          <input type="range" class="form-range" id="maxPrice" [(ngModel)]="maxPrice" (input)="filterDresses()" min="1000" max="5000" step="100">
-          <div class="d-flex justify-content-between w-100">
-            <span>السعر الأقصى: {{ maxPrice }}</span>
+      <div class="col-lg-3 col-md-4 col-sm-6 mb-5" *ngFor="let hall of getPaginateddress()">
+        <div class="card position-relative" tabindex="0">
+          <div class="card_image">
+            <img [src]="'https://localhost:44322' + hall.pictureUrls[0]" alt="{{ hall.name }}" />
+            <i class="fas fa-heart"></i>
+          </div>
+          <div class="card_content">
+            <h2 class="card_title">{{ hall.price | currency:'EGP' }}</h2>
+            <p>{{ hall.name }}</p>
+            <p>{{ hall.description | dots }}</p>
+            <a [routerLink]="['/app-dress-details', hall.hallID]" class="card__button btn btn-light">مزيد من التفاصيل</a>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  
-  <div class="main">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-5" *ngFor="let dress of getPaginatedDresses()">
-          <div class="card position-relative" tabindex="0">
-            <div class="card_image">
-              <img [src]="dress.imageUrl" alt="{{ dress.name }}">
-              <i class="fas fa-heart"></i>
-            </div>
-            <div class="card_content">
-              <h2 class="card_title">{{dress.price}}</h2>
-              <p>{{dress.name}}</p>
-              <p>{{ truncateDescription(dress.description) }}</p>
-              <a [routerLink]="['/dress-details', dress.id]" class="card__button btn btn-light">مزيد من التفاصيل</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="pagination mb-5 d-flex justify-content-center align-items-center">
-        <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="btn mr-2">
-          Previous
-        </button>
-        <span>{{ currentPage }}</span>
-        <button (click)="onPageChange(currentPage + 1)" class="btn ml-2">
-          Next
-        </button>
-      </div>
+    <app-spinner *ngIf="isload"></app-spinner>
+    <div *ngIf="!nodressMessage" class="pagination mb-5 d-flex justify-content-center align-items-center">
+      <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="btn mr-2">
+        السابق
+      </button>
+      <span>الصفحة {{ currentPage }} من {{ totalPages }}</span>
+      <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages" class="btn ml-2">
+        التالي
+      </button>
     </div>
   </div>
-  
+</div>
+
+ 

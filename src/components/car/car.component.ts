@@ -1,87 +1,118 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
+import { CarService } from '../../services/car.service';
+// import { Car } from '../../interfaces/car';
+import { DotsPipe } from '../../Pipes/dots.pipe';
+import { AddressServiceService } from '../../services/address-service.service';
+import { SpinnerComponent } from '../spinner/spinner.component';
+
 
 @Component({
   selector: 'app-car',
   standalone: true,
   templateUrl: './car.component.html',
-  imports: [CommonModule, RouterLink, FormsModule],
-  styleUrls: ['./car.component.scss']
+  imports: [CommonModule, RouterLink, FormsModule, DotsPipe,SpinnerComponent],
+  styleUrls: ['./car.component.scss'],
 })
 export class CarComponent implements OnInit {
-  cars = [
-    { id: 1, year: 2021, imageUrl: 'https://www.topgear.com/sites/default/files/2023/08/P90492179_highRes_bmw-i7-xdrive60-m-sp%20%281%29.jpg', price: 3000, brand: 'العلامة التجارية', description: 'الوصف', city: 'القاهرة', town: 'القاهرة' },
-    { id: 2, year: 2010, imageUrl: 'https://carwow-uk-wp-3.imgix.net/front-1-RS6-Etron-2-e1674560152374.png?auto=format&cs=tinysrgb&fit=crop&h=800&ixlib=rb-1.1.0&q=60&w=1600', price: 4000, brand: 'العلامة التجارية', description: 'الوصف', city: 'الإسكندرية', town: 'الإسكندرية' },
-    { id: 3, year: 2020, imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/2022-kia-forte-gt-104-1633972551.jpg?crop=0.686xw:0.515xh;0.0943xw,0.217xh&resize=1200:*', price: 5000, brand: 'العلامة التجارية', description: 'الوصف', city: 'الجيزة', town: 'الجيزة' },
-    { id: 4, year: 2011, imageUrl: 'https://www.egy-car.com/wp-content/uploads/2020/09/%D9%87%D9%8A%D9%88%D9%86%D8%AF%D8%A7%D9%8A-%D8%A7%D9%84%D9%86%D8%AA%D8%B1%D8%A7-CN7-1-600x400.jpg', price: 2000, brand: 'العلامة التجارية', description: 'الوصف', city: 'بورسعيد', town: 'بورسعيد' }
-  ];
-
-  currentPage: number = 1;
-  itemsPerPage: number = 16;
-  selectedCity: string = '';
+  AllGovernments: any[] = [];
+  Cites: any[] = [];
   selectedTown: string = '';
-  maxPrice = 5000;
-  priceRange: { min: number; max: number } = { min: 1000, max: 5000 };
-  favoriteCars: any[] = [];
+  selectedCity: number = 0;
+  selectedPriceRange: string = 'all';
+  cars: any[] = [];
+  currentPage: number = 1;
+  pageSize: number = 6;
+  totalPages: number = 1;
+  noCarsMessage: string = '';
+  isload: boolean = false;
+  registerForm: FormGroup;
 
-  towns: string[] = [
-    'القاهرة',
-    'الإسكندرية',
-    'الجيزة',
-    'بورسعيد'
-  ];
-
-  cities: string[] = [
-    'القاهرة',
-    'الإسكندرية',
-    'الجيزة',
-    'بورسعيد'
-  ];
-
-  constructor(private router: Router) { }
-
-  ngOnInit(): void {
-    this.filterCars();
-  }
-
-  get filteredCars() {
-    return this.cars.filter(car => {
-      return (!this.selectedTown || car.town === this.selectedTown)
-        && (!this.selectedCity || car.city === this.selectedCity)
-        && (car.price <= this.maxPrice);
+  constructor(
+    private carService: CarService,
+    private addressService: AddressServiceService,
+    private fb: FormBuilder
+  ) {
+    this.registerForm = this.fb.group({
+      govID: [''],
+      cityID: [{ value: '', disabled: true }],
     });
   }
 
-  filterCars() {
-    this.currentPage = 1; 
+  ngOnInit(): void {
+    this.loadGovernorates();
+
+    this.registerForm.get('govID')?.valueChanges.subscribe((governorateID: number) => {
+      if (governorateID) {
+        this.onGovernorateChange(governorateID);
+      } else {
+        this.Cites = [];
+        this.registerForm.get('cityID')?.reset({ value: '', disabled: true });
+      }
+    });
+
+    this.filterCars();
   }
 
-  addToFavorites(car: any): void {
-    if (!this.favoriteCars.find(favCar => favCar.id === car.id)) {
-      this.favoriteCars.push(car);
+  loadGovernorates(): void {
+    this.addressService.getGovernorates().subscribe((response: any) => {
+      this.AllGovernments = response.data;
+    });
+  }
+
+  onGovernorateChange(governorateID: number): void {
+    if (governorateID) {
+      this.addressService.getCitiesByGovId(governorateID).subscribe((response: any) => {
+        this.Cites = response.data;
+        this.registerForm.get('cityID')?.enable();
+        this.selectedCity = 0;
+        this.filterCars(); // Filter cars when governorate changes
+      });
+    } else {
+      this.Cites = [];
+      this.selectedCity = 0;
+      this.registerForm.get('cityID')?.disable();
+      this.filterCars(); // Filter cars when governorate changes
     }
   }
 
-  navigateToFavorites(): void {
-    this.router.navigate(['/favorite-car']);
+  filterCars(): void {
+    const govId = this.registerForm.get('govID')?.value || 0;
+    const cityId = this.selectedCity || 0;
+
+    this.isload = true;
+    this.carService.getAllCars(this.currentPage, this.pageSize, this.selectedPriceRange, govId, cityId)
+      .subscribe({
+        next:  (data) => {
+        this.isload = false;
+        this.cars = data.data;
+        this.totalPages = data.paginationInfo.totalPages;
+        this.noCarsMessage = data.data.length === 0 ? 'No cars found' : '';
+      },
+      error: (error) => {
+        this.isload = false;
+        this.noCarsMessage = 'Error fetching data';
+      }
+      }
+      );
   }
 
-  onPageChange(pageNumber: number): void {
-    this.currentPage = pageNumber;
+  onPageChange(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.filterCars();
+    }
   }
 
   getPaginatedCars(): any[] {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredCars.slice(startIndex, startIndex + this.itemsPerPage);
+    return this.cars;
   }
+  addToFavorites(){
 
+  }
   truncateDescription(description: string): string {
-    const words = description.split(' ');
-    if (words.length > 10) {
-      return words.slice(0, 10).join(' ') + '...';
-    }
-    return description;
+    return description.length > 100 ? description.substring(0, 100) + '...' : description;
   }
 }

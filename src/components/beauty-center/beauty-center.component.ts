@@ -1,87 +1,137 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
+import { Hall } from '../../interfaces/hall';
+import { DotsPipe } from '../../Pipes/dots.pipe';
+import { AddressServiceService } from '../../services/address-service.service';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { BeautyService } from '../../services/beauty.service';
 
 @Component({
   selector: 'app-beauty-center',
   standalone: true,
   templateUrl: './beauty-center.component.html',
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, DotsPipe, SpinnerComponent],
   styleUrls: ['./beauty-center.component.scss']
 })
 export class BeautyCenterComponent implements OnInit {
-  centers = [
-    { id: 1, name: 'مركز تجميل 1', imageUrl: 'https://mostaql.hsoubcdn.com/uploads/portfolios/835649/61a1e466eb008/Beauty-Centre-2.jpg', price: 3000, description: 'الوصف', city: 'القاهرة', town: 'القاهرة' },
-    { id: 2, name: 'مركز تجميل 2', imageUrl: 'https://mostaql.hsoubcdn.com/uploads/thumbnails/835649/5fb1c7c34bc0a/Beauty-Centre-1.jpg', price: 4000, description: 'الوصف', city: 'الإسكندرية', town: 'الإسكندرية' },
-    { id: 3, name: 'مركز تجميل 3', imageUrl: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/bc1bfb70157027.5b99e26e3d2f2.jpg', price: 5000, description: 'الوصف', city: 'الجيزة', town: 'الجيزة' },
-    { id: 4, name: 'مركز تجميل 4', imageUrl: 'https://i.pinimg.com/736x/e1/ba/c4/e1bac453a27eb88be3fb05fd64bcf3b6.jpg', price: 2000, description: 'الوصف', city: 'بورسعيد', town: 'بورسعيد' }
-  ];
-
-  currentPage: number = 1;
-  itemsPerPage: number = 16;
-  selectedCity: string = '';
+  AllGovernments: any[] = [];
+  Cites: any[] = [];
   selectedTown: string = '';
-  maxPrice = 5000;
-  priceRange: { min: number; max: number } = { min: 1000, max: 5000 };
-  favoriteCenters: any[] = [];
-
-  towns: string[] = [
-    'القاهرة',
-    'الإسكندرية',
-    'الجيزة',
-    'بورسعيد'
-  ];
-
-  cities: string[] = [
-    'القاهرة',
-    'الإسكندرية',
-    'الجيزة',
-    'بورسعيد'
-  ];
-
-  constructor(private router: Router) { }
-
-  ngOnInit(): void {
-    this.filterCenters();
-  }
-
-  get filteredCenters() {
-    return this.centers.filter(center => {
-      return (!this.selectedTown || center.town === this.selectedTown)
-        && (!this.selectedCity || center.city === this.selectedCity)
-        && (center.price <= this.maxPrice);
+  selectedCity: number = 0;
+  selectedPriceRange: string = 'all';
+  beauty: any= [];
+  currentPage: number = 1;
+  pageSize: number = 6;
+  totalPages: number = 1;
+  noBeautyMessage: string = '';
+  registerForm: FormGroup;
+  isload: boolean = false;
+  constructor(
+    private beautyService: BeautyService,
+    private addressService: AddressServiceService,
+    private fb: FormBuilder
+  ) {
+    this.registerForm = this.fb.group({
+      govID: [''],
+      cityID: [{ value: '', disabled: true }],
     });
   }
 
-  filterCenters() {
-    this.currentPage = 1;
+  ngOnInit(): void {
+    this.loadGovernorates();
+
+    this.registerForm
+      .get('govID')
+      ?.valueChanges.subscribe((governorateID: number) => {
+        if (governorateID) {
+          this.onGovernorateChange(governorateID);
+        } else {
+          this.Cites = [];
+          this.registerForm.get('cityID')?.reset({ value: '', disabled: true });
+        }
+      });
+
+    this.filterBeauty();
   }
 
-  addToFavorites(center: any): void {
-    if (!this.favoriteCenters.find(favCenter => favCenter.id === center.id)) {
-      this.favoriteCenters.push(center);
+  loadGovernorates(): void {
+    this.isload = true;
+    this.addressService.getGovernorates().subscribe((response: any) => {
+      this.AllGovernments = response.data;
+      this.isload = false;
+    });
+  }
+
+  onGovernorateChange(governorateID: number): void {
+    if (governorateID) {
+      this.addressService
+        .getCitiesByGovId(governorateID)
+        .subscribe((response: any) => {
+          this.Cites = response.data;
+          this.registerForm.get('cityID')?.enable();
+          this.selectedCity = 0;
+          this.selectedTown = governorateID.toString(); // تحديث المحافظة المختارة
+          this.currentPage = 1; // إعادة تعيين الصفحة الحالية إلى 1 عند تغيير المحافظة
+          this.filterBeauty();
+        });
+    } else {
+      this.Cites = [];
+      this.selectedCity = 0;
+      this.registerForm.get('cityID')?.disable();
+      this.currentPage = 1; // إعادة تعيين الصفحة الحالية إلى 1 عند إلغاء تحديد المحافظة
+      this.filterBeauty();
     }
   }
 
-  navigateToFavorites(): void {
-    this.router.navigate(['/favorite-center']);
+  filterBeauty(): void {
+    const govId = this.selectedTown ? Number(this.selectedTown) : 0;
+    const cityId = this.selectedCity || 0;
+this.isload=true;
+    this.beautyService.getAllBeauty
+      (
+        this.currentPage,
+        this.pageSize,
+        this.selectedPriceRange,
+        govId,
+        cityId
+      )
+      .subscribe({
+        
+        next: (data) => {
+          this.isload=false;
+          this.beauty = data.data;
+          this.totalPages = data.paginationInfo.totalPages;
+          this.noBeautyMessage = '';
+        },
+        error: (error) => {
+          this.isload=false;
+          if (error.status === 404) {
+            this.beauty = [];
+            this.noBeautyMessage = 'No beauty Found';
+          } else {
+            console.error('An error occurred:', error);
+            this.noBeautyMessage = 'An error occurred while fetching the data.';
+          }
+        },
+      });
   }
 
-  onPageChange(pageNumber: number): void {
-    this.currentPage = pageNumber;
+  onPageChange(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.filterBeauty();
+    }
   }
 
-  getPaginatedCenters(): any[] {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredCenters.slice(startIndex, startIndex + this.itemsPerPage);
+  getPaginatedBeauty(): Hall[] {
+    return this.beauty;
   }
 
   truncateDescription(description: string): string {
-    const words = description.split(' ');
-    if (words.length > 10) {
-      return words.slice(0, 10).join(' ') + '...';
-    }
-    return description;
+    return description.length > 100
+      ? description.substring(0, 100) + '...'
+      : description;
   }
 }

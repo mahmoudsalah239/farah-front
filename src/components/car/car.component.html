@@ -1,70 +1,79 @@
 <div class="background-container">
-    <div class="overlay"></div>
-    <div class="content">
-        <h1>سيارات افراح</h1>
-        <p>اهلا بك في سيارات موقع فرح</p>
-    </div>
+  <div class="overlay"></div>
+  <div class="content">
+    <h1>سيارات افراح</h1>
+    <p>اهلا بك في سيارات موقع فرح</p>
+  </div>
 </div>
 
 <div class="container bg-light mb-4 mt-5">
-    <div class="row">
-      <div class="col-lg-4 mt-4">
-        <div class="form-group">
-          <label for="town" class="mr-2">المحافظة:</label>
-          <select class="form-select" id="town" [(ngModel)]="selectedTown" (change)="filterCars()">
-            <option value="">الكل</option>
-            <option *ngFor="let town of towns" [value]="town">{{ town }}</option>
-          </select>
-        </div>
+  <div class="row">
+    <div class="col-lg-4 mt-4">
+      <div class="form-group">
+        <label for="town" class="mr-2">المحافظة:</label>
+        <select class="form-select" id="town" [(ngModel)]="selectedTown" (ngModelChange)="onGovernorateChange($event)">
+          <option value="">الكل</option>
+          <option *ngFor="let town of AllGovernments" [value]="town.governorateID">{{ town.name }}</option>
+        </select>
       </div>
-      
-      <div class="col-lg-4 mt-4">
-        <div class="form-group ">
-          <label for="city" class="mr-2">المدينة:</label>
-          <select class="form-select" id="city" [(ngModel)]="selectedCity" (change)="filterCars()">
-            <option value="">الكل</option>
-            <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
-          </select>
-        </div>
+    </div>
+
+    <div class="col-lg-4 mt-4">
+      <div class="form-group">
+        <label for="city" class="mr-2">المدينة:</label>
+        <select class="form-select" id="city" [(ngModel)]="selectedCity" (ngModelChange)="filterCars()">
+          <option value="">الكل</option>
+          <option *ngFor="let city of Cites" [value]="city.id">{{ city.name }}</option>
+        </select>
       </div>
-      
-      <div class="col-lg-4 mt-4">
-        <div class="form-group ">
-          <label for="priceRange" class="mr-2">حدد سعر:</label>
-          <input type="range" class="form-range mr-2" id="maxPrice" [(ngModel)]="maxPrice" (input)="filterCars()" min="1000" max="5000" step="100">
-          <span>السعر الأقصى: {{ maxPrice }}</span>
-        </div>
+    </div>
+
+    <div class="col-lg-4 mt-4">
+      <div class="form-group">
+        <label for="priceRange" class="mr-2">حدد سعر:</label>
+        <select class="form-select" id="priceRange" [(ngModel)]="selectedPriceRange" (change)="filterCars()">
+          <option value="all">الكل</option>
+          <option value="<100">أقل من 100 دولار</option>
+          <option value="100-500">100 - 500 دولار</option>
+          <option value="500-1000">500 - 1000 دولار</option>
+          <option value="1000-5000">1000 - 5000 دولار</option>
+          <option value=">5000">أكثر من 5000 دولار</option>
+        </select>
       </div>
     </div>
   </div>
-  
+</div>
 
 <div class="main">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-5 mt-5" *ngFor="let car of getPaginatedCars()">
-                <div class="card position-relative" tabindex="0">
-                    <div class="card_image">
-                        <img [src]="car.imageUrl" alt="">
-                        <i class="fas fa-heart" (click)="addToFavorites(car)"></i>
-                    </div>
-                    <div class="card_content">
-                        <h2 class="card_title">{{ car.price }}</h2>
-                        <p>{{ car.brand }}</p>
-                        <p>{{ truncateDescription(car.description) }}</p>
-                        <a [routerLink]="['/car-details', car.id]" class="card__button btn btn-light">مزيد من التفاصيل</a>
-                    </div>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div *ngIf="noCarsMessage" class="col-12 text-center">
+        <p>{{ noCarsMessage }}</p>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-6 mb-5 mt-5" *ngFor="let car of getPaginatedCars()">
+        <div class="card position-relative" tabindex="0">
+          <div class="card_image">
+            <img [src]="car.imageUrl" alt="">
+            <i class="fas fa-heart" (click)="addToFavorites()"></i>
+          </div>
+          <div class="card_content">
+            <h2 class="card_title">{{ car.price }}</h2>
+            <p>{{ car.brand }}</p>
+            <p>{{ truncateDescription(car.description) }}</p>
+            <a [routerLink]="['/car-details', car.id]" class="card__button btn btn-light">مزيد من التفاصيل</a>
+          </div>
         </div>
-        <div class="pagination mb-5 d-flex justify-content-center align-items-center">
-            <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="btn mr-2">
-                Previous
-            </button>
-            <span>{{ currentPage }}</span>
-            <button (click)="onPageChange(currentPage + 1)" class="btn ml-2">
-                Next
-            </button>
-        </div>
+      </div>
     </div>
+    <app-spinner *ngIf="isload"></app-spinner>
+    <div *ngIf="!noCarsMessage" class="pagination mb-5 d-flex justify-content-center align-items-center">
+      <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="btn mr-2">
+        السابق
+      </button>
+      <span>الصفحة {{ currentPage }} من {{ totalPages }}</span>
+      <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages" class="btn ml-2">
+        التالي
+      </button>
+    </div>
+  </div>
 </div>

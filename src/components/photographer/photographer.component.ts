@@ -1,87 +1,141 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-
+import { RouterLink } from '@angular/router';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
+import { HallService } from '../../services/hall.service';
+import { Hall } from '../../interfaces/hall';
+import { DotsPipe } from '../../Pipes/dots.pipe';
+import { AddressServiceService } from '../../services/address-service.service';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { PhotographerService } from '../../services/photographer.service';
 @Component({
   selector: 'app-photographer',
   standalone: true,
   templateUrl: './photographer.component.html',
-  imports: [CommonModule, RouterLink, FormsModule],
-  styleUrls: ['./photographer.component.scss']
+  imports: [CommonModule, RouterLink, FormsModule, DotsPipe, SpinnerComponent],
+  
+styleUrls: ['./photographer.component.scss']
 })
 export class PhotographerComponent implements OnInit {
-  photographers = [
-    { id: 1, name: 'مصور 1', imageUrl: 'https://st3.depositphotos.com/12985790/16650/i/1600/depositphotos_166506298-stock-photo-male-photographer-with-digital-camera.jpg', price: 3000, description: 'الوصف', city: 'القاهرة', town: 'القاهرة' },
-    { id: 2, name: 'مصور 2', imageUrl: 'https://st2.depositphotos.com/3662505/5821/i/950/depositphotos_58212791-stock-photo-tourists.jpg', price: 4000, description: 'الوصف', city: 'الإسكندرية', town: 'الإسكندرية' },
-    { id: 3, name: 'مصور 3', imageUrl: 'https://previews.123rf.com/images/cc0collection/cc0collection2205/cc0collection220540765/186116451-people-man-photographer-photography-canon-camera-lens-kit-dslr-picture-photo.jpg', price: 5000, description: 'الوصف', city: 'الجيزة', town: 'الجيزة' },
-    { id: 4, name: 'مصور 4', imageUrl: 'https://previews.123rf.com/images/stockbroker/stockbroker1702/stockbroker170200834/71258399-studio-portrait-of-male-photographer-with-camera.jpg', price: 2000, description: 'الوصف', city: 'بورسعيد', town: 'بورسعيد' }
-  ];
-
-  currentPage: number = 1;
-  itemsPerPage: number = 16;
-  selectedCity: string = '';
+  AllGovernments: any[] = [];
+  Cites: any[] = [];
   selectedTown: string = '';
-  maxPrice = 5000;
-  priceRange: { min: number; max: number } = { min: 1000, max: 5000 };
-  favoritePhotographers: any[] = [];
-
-  towns: string[] = [
-    'القاهرة',
-    'الإسكندرية',
-    'الجيزة',
-    'بورسعيد'
-  ];
-
-  cities: string[] = [
-    'القاهرة',
-    'الإسكندرية',
-    'الجيزة',
-    'بورسعيد'
-  ];
-
-  constructor(private router: Router) { }
-
-  ngOnInit(): void {
-    this.filterPhotographers();
-  }
-
-  get filteredPhotographers() {
-    return this.photographers.filter(photographer => {
-      return (!this.selectedTown || photographer.town === this.selectedTown)
-        && (!this.selectedCity || photographer.city === this.selectedCity)
-        && (photographer.price <= this.maxPrice);
+  selectedCity: number = 0;
+  selectedPriceRange: string = 'all';
+  photographer:any = [];
+  currentPage: number = 1;
+  pageSize: number = 6;
+  totalPages: number = 1;
+  nophotographerMessage: string = '';
+  registerForm: FormGroup;
+  isload: boolean = false;
+  constructor(
+    private PhotographerS: PhotographerService,
+    private addressService: AddressServiceService,
+    private fb: FormBuilder
+  ) {
+    this.registerForm = this.fb.group({
+      govID: [''],
+      cityID: [{ value: '', disabled: true }],
     });
   }
 
-  filterPhotographers() {
-    this.currentPage = 1;
+  ngOnInit(): void {
+    this.loadGovernorates();
+
+    this.registerForm
+      .get('govID')
+      ?.valueChanges.subscribe((governorateID: number) => {
+        if (governorateID) {
+          this.onGovernorateChange(governorateID);
+        } else {
+          this.Cites = [];
+          this.registerForm.get('cityID')?.reset({ value: '', disabled: true });
+        }
+      });
+
+    this.filterphotographers();
   }
 
-  addToFavorites(photographer: any): void {
-    if (!this.favoritePhotographers.find(favPhotographer => favPhotographer.id === photographer.id)) {
-      this.favoritePhotographers.push(photographer);
+  loadGovernorates(): void {
+    this.isload = true;
+    this.addressService.getGovernorates().subscribe((response: any) => {
+      this.AllGovernments = response.data;
+      this.isload = false;
+    });
+  }
+
+  onGovernorateChange(governorateID: number): void {
+    if (governorateID) {
+      this.addressService
+        .getCitiesByGovId(governorateID)
+        .subscribe((response: any) => {
+          this.Cites = response.data;
+          this.registerForm.get('cityID')?.enable();
+          this.selectedCity = 0;
+          this.selectedTown = governorateID.toString(); // تحديث المحافظة المختارة
+          this.currentPage = 1; // إعادة تعيين الصفحة الحالية إلى 1 عند تغيير المحافظة
+          this.filterphotographers();
+        });
+    } else {
+      this.Cites = [];
+      this.selectedCity = 0;
+      this.registerForm.get('cityID')?.disable();
+      this.currentPage = 1; // إعادة تعيين الصفحة الحالية إلى 1 عند إلغاء تحديد المحافظة
+      this.filterphotographers();
     }
   }
 
-  navigateToFavorites(): void {
-    this.router.navigate(['/favorite-photographer']);
+  filterphotographers(): void {
+    const govId = this.selectedTown ? Number(this.selectedTown) : 0;
+    const cityId = this.selectedCity || 0;
+this.isload=true;
+    this.PhotographerS.getAllPhotographers
+      (
+        this.currentPage,
+        this.pageSize,
+        this.selectedPriceRange,
+        govId,
+        cityId
+      )
+      .subscribe({
+        
+        next: (data) => {
+          this.isload=false;
+          this.photographer = data.data;
+          this.totalPages = data.paginationInfo.totalPages;
+          this.nophotographerMessage = '';
+        },
+        error: (error) => {
+          this.isload=false;
+          if (error.status === 404) {
+            this.photographer = [];
+            this.nophotographerMessage = 'No Halls Found';
+          } else {
+            console.error('An error occurred:', error);
+            this.nophotographerMessage = 'An error occurred while fetching the data.';
+          }
+        },
+      });
   }
 
-  onPageChange(pageNumber: number): void {
-    this.currentPage = pageNumber;
+  onPageChange(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.filterphotographers();
+    }
   }
+  addToFavorites(){
 
-  getPaginatedPhotographers(): any[] {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredPhotographers.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+  getPaginatedphotographer(): Hall[] {
+    return this.photographer;
   }
 
   truncateDescription(description: string): string {
-    const words = description.split(' ');
-    if (words.length > 10) {
-      return words.slice(0, 10).join(' ') + '...';
-    }
-    return description;
+    return description.length > 100
+      ? description.substring(0, 100) + '...'
+      : description;
   }
+
 }
