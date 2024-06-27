@@ -1,79 +1,136 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-
+import { RouterLink } from '@angular/router';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
+import { DotsPipe } from '../../Pipes/dots.pipe';
+import { AddressServiceService } from '../../services/address-service.service';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { ShopDressService } from '../../services/shop-dress.service';
 @Component({
   selector: 'app-dress',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, DotsPipe, SpinnerComponent],
   templateUrl: './dress.component.html',
   styleUrl: './dress.component.scss'
 })
 export class DressComponent  implements OnInit  {
-
-  dresses = [
-    { id: 1, imageUrl: 'https://ae01.alicdn.com/kf/S916a1c72f07f4f779f6159f93e3eb81bR/GiayMus-Muslim-Luxury-Lace-Wedding-Dress-with-Long-Sleeves-High-Neck-Beaded-Saudi-Arabia-2024-Bridal.jpg', price: 1500, name: 'فستان 1', description: 'الوصف 1', city: 'القاهرة', town: 'القاهرة' },
-    { id: 2, imageUrl: 'https://www.inweddingdress.com/blog/wp-content/uploads/wedding-dresses-41-1.jpg', price: 3000, name: 'فستان 2', description: 'الوصف 2', city: 'الإسكندرية', town: 'الإسكندرية' },
-    { id: 3, imageUrl: 'https://static.vecteezy.com/system/resources/thumbnails/032/937/172/small_2x/fashionable-mannequin-showcases-elegant-wedding-dress-free-photo.jpg', price: 4500, name: 'فستان 3', description: 'الوصف 3', city: 'الجيزة', town: 'الجيزة' },
-    { id: 4, imageUrl: 'https://ae01.alicdn.com/kf/H99cc02fb910848a594ccbf30200c5d29d/J67224-Elegant-Sweetheart-Princess-Wedding-Dresses-2020-Appliques-Ball-Gowns-Long-Sleeve-Crystal-Lace-Up-Back.jpg', price: 5000, name: 'فستان 4', description: 'الوصف 4', city: 'بورسعيد', town: 'بورسعيد' }
-  ];
-
-  // Pagination variables
-  currentPage: number = 1;
-  itemsPerPage: number = 16;
-  selectedCity: string = '';
+  AllGovernments: any[] = [];
+  Cites: any[] = []; 
   selectedTown: string = '';
-  maxPrice: number = 5000;
-
-  towns: string[] = [
-    'القاهرة',
-    'الإسكندرية',
-    'الجيزة',
-    'بورسعيد'
-  ];
-
-  cities: string[] = [
-    'القاهرة',
-    'الإسكندرية',
-    'الجيزة',
-    'بورسعيد'
-  ];
-
-  constructor(private router: Router) { }
-
-  ngOnInit(): void {
-    this.filterDresses();
-  }
-
-  get filteredDresses() {
-    return this.dresses.filter(dress => {
-      return (!this.selectedTown || dress.town === this.selectedTown)
-        && (!this.selectedCity || dress.city === this.selectedCity)
-        && (dress.price <= this.maxPrice);
+  selectedCity: number = 0;
+  selectedPriceRange: string = 'all';
+  dress: any = [];
+  currentPage: number = 1;
+  pageSize: number = 6;
+  totalPages: number = 1;
+  nodressMessage: string = '';
+  registerForm: FormGroup;
+  isload: boolean = false;
+  constructor(
+    private shopService: ShopDressService,
+    private addressService: AddressServiceService,
+    private fb: FormBuilder
+  ) {
+    this.registerForm = this.fb.group({
+      govID: [''],
+      cityID: [{ value: '', disabled: true }],
     });
   }
 
-  filterDresses() {
-    this.currentPage = 1;  // Reset pagination to the first page after filtering
+  ngOnInit(): void {
+    this.loadGovernorates();
+
+    this.registerForm
+      .get('govID')
+      ?.valueChanges.subscribe((governorateID: number) => {
+        if (governorateID) {
+          this.onGovernorateChange(governorateID);
+        } else {
+          this.Cites = [];
+          this.registerForm.get('cityID')?.reset({ value: '', disabled: true });
+        }
+      });
+
+    this.filterShop();
   }
 
-  // Pagination methods
-  onPageChange(pageNumber: number): void {
-    this.currentPage = pageNumber;
+  loadGovernorates(): void {
+    this.isload = true;
+    this.addressService.getGovernorates().subscribe((response: any) => {
+      this.AllGovernments = response.data;
+      this.isload = false;
+    });
   }
 
-  getPaginatedDresses(): any[] {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredDresses.slice(startIndex, startIndex + this.itemsPerPage);
+  onGovernorateChange(governorateID: number): void {
+    if (governorateID) {
+      this.addressService
+        .getCitiesByGovId(governorateID)
+        .subscribe((response: any) => {
+          this.Cites = response.data;
+          this.registerForm.get('cityID')?.enable();
+          this.selectedCity = 0;
+          this.selectedTown = governorateID.toString(); // تحديث المحافظة المختارة
+          this.currentPage = 1; // إعادة تعيين الصفحة الحالية إلى 1 عند تغيير المحافظة
+          this.filterShop();
+        });
+    } else {
+      this.Cites = [];
+      this.selectedCity = 0;
+      this.registerForm.get('cityID')?.disable();
+      this.currentPage = 1; // إعادة تعيين الصفحة الحالية إلى 1 عند إلغاء تحديد المحافظة
+      this.filterShop();
+    }
+  }
+
+  filterShop(): void {
+    const govId = this.selectedTown ? Number(this.selectedTown) : 0;
+    const cityId = this.selectedCity || 0;
+this.isload=true;
+    this.shopService.getAllShopsDress
+      (
+        this.currentPage,
+        this.pageSize,
+        this.selectedPriceRange,
+        govId,
+        cityId
+      )
+      .subscribe({
+        
+        next: (data) => {
+          this.isload=false;
+          this.dress = data.data;
+          this.totalPages = data.paginationInfo.totalPages;
+          this.nodressMessage = '';
+        },
+        error: (error) => {
+          this.isload=false;
+          if (error.status === 404) {
+            this.dress = [];
+            this.nodressMessage = 'No Halls Found';
+          } else {
+            console.error('An error occurred:', error);
+            this.nodressMessage = 'An error occurred while fetching the data.';
+          }
+        },
+      });
+  }
+
+  onPageChange(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.filterShop();
+    }
+  }
+
+  getPaginateddress(): any[] {
+    return this.dress;
   }
 
   truncateDescription(description: string): string {
-    const words = description.split(' ');
-    if (words.length > 10) {
-      return words.slice(0, 10).join(' ') + '...';
-    }
-    return description;
+    return description.length > 100
+      ? description.substring(0, 100) + '...'
+      : description;
   }
 }
 
