@@ -3,18 +3,17 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { CarService } from '../../services/car.service';
-// import { Car } from '../../interfaces/car';
 import { DotsPipe } from '../../Pipes/dots.pipe';
 import { AddressServiceService } from '../../services/address-service.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
-
-
+  import { FavouritesService } from './../../services/favourites.service';
 @Component({
   selector: 'app-car',
   standalone: true,
   templateUrl: './car.component.html',
-  imports: [CommonModule, RouterLink, FormsModule, DotsPipe,SpinnerComponent],
-  styleUrls: ['./car.component.scss'],
+  imports: [CommonModule, RouterLink, FormsModule, DotsPipe, SpinnerComponent],
+
+styleUrls: ['./car.component.scss'],
 })
 export class CarComponent implements OnInit {
   AllGovernments: any[] = [];
@@ -33,7 +32,8 @@ export class CarComponent implements OnInit {
   constructor(
     private carService: CarService,
     private addressService: AddressServiceService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private _favouritesService:FavouritesService
   ) {
     this.registerForm = this.fb.group({
       govID: [''],
@@ -57,8 +57,10 @@ export class CarComponent implements OnInit {
   }
 
   loadGovernorates(): void {
+    this.isload = true;
     this.addressService.getGovernorates().subscribe((response: any) => {
       this.AllGovernments = response.data;
+      this.isload = false;
     });
   }
 
@@ -68,12 +70,15 @@ export class CarComponent implements OnInit {
         this.Cites = response.data;
         this.registerForm.get('cityID')?.enable();
         this.selectedCity = 0;
+        this.selectedTown = governorateID.toString(); // Update selected governorate
+        this.currentPage = 1; // Reset to first page on governorate change
         this.filterCars(); // Filter cars when governorate changes
       });
     } else {
       this.Cites = [];
       this.selectedCity = 0;
       this.registerForm.get('cityID')?.disable();
+      this.currentPage = 1; // Reset to first page on governorate deselection
       this.filterCars(); // Filter cars when governorate changes
     }
   }
@@ -85,18 +90,20 @@ export class CarComponent implements OnInit {
     this.isload = true;
     this.carService.getAllCars(this.currentPage, this.pageSize, this.selectedPriceRange, govId, cityId)
       .subscribe({
-        next:  (data) => {
-        this.isload = false;
-        this.cars = data.data;
-        this.totalPages = data.paginationInfo.totalPages;
-        this.noCarsMessage = data.data.length === 0 ? 'No cars found' : '';
-      },
-      error: (error) => {
-        this.isload = false;
-        this.noCarsMessage = 'Error fetching data';
-      }
-      }
-      );
+        next: (data) => {
+          this.isload = false;
+          this.cars = data.data;
+          this.totalPages = data.paginationInfo.totalPages;
+        },
+        error: (error) => {
+          this.isload = false;
+          if (error.status === 404) {
+            this.cars = [];
+          } else {
+            console.error('An error occurred:', error);
+          }
+        }
+      });
   }
 
   onPageChange(page: number): void {
@@ -109,9 +116,24 @@ export class CarComponent implements OnInit {
   getPaginatedCars(): any[] {
     return this.cars;
   }
-  addToFavorites(){
 
+  addToFavorites(id:number) {
+   this._favouritesService.addingTsoFav(id).subscribe({
+    next:(res)=>{
+console.log(res);
+alert(res)
+
+    },
+    error:(err)=>{
+      console.log(err);
+   
+      
+      
+
+    }
+   })
   }
+
   truncateDescription(description: string): string {
     return description.length > 100 ? description.substring(0, 100) + '...' : description;
   }

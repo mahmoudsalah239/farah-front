@@ -47,20 +47,21 @@
 <div class="main">
   <div class="container">
     <div class="row">
-      <div *ngIf="noCarsMessage" class="col-12 text-center">
-        <p>{{ noCarsMessage }}</p>
-      </div>
-      <div class="col-lg-3 col-md-4 col-sm-6 mb-5 mt-5" *ngFor="let car of getPaginatedCars()">
-        <div class="card position-relative" tabindex="0">
-          <div class="card_image">
-            <img [src]="car.imageUrl" alt="">
-            <i class="fas fa-heart" (click)="addToFavorites()"></i>
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">{{ car.price }}</h2>
-            <p>{{ car.brand }}</p>
-            <p>{{ truncateDescription(car.description) }}</p>
-            <a [routerLink]="['/car-details', car.id]" class="card__button btn btn-light">مزيد من التفاصيل</a>
+      <div *ngIf="cars.length > 0; else noServices">
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-5 mt-5" *ngFor="let car of getPaginatedCars()">
+          <div class="card position-relative" tabindex="0">
+            <div class="card_image">
+              <img [src]="'https://localhost:44322' + car.pictureUrls[0]" alt="">
+              <button class="btn btn-danger"(click)="addToFavorites(car.carID)"></button>
+              <i class="fas fa-heart" (click)="addToFavorites(car.carID)"></i>
+              
+            </div>
+            <div class="card_content">
+              <h2 class="card_title">{{ car.price }}</h2>
+              <p>{{ car.brand }}</p>
+              <p>{{ truncateDescription(car.description) }}</p>
+              <a [routerLink]="['/car-details', car.carID]" class="card__button btn btn-light">مزيد من التفاصيل</a>
+            </div>
           </div>
         </div>
       </div>
@@ -77,3 +78,11 @@
     </div>
   </div>
 </div>
+<ng-template #noServices>
+  <div class="row">
+    <div class="col-md-12 text-center not-found">
+      <img src="../../assets/NotFound.webp" alt="No services found" width="400" height="300">
+      <p class="display-1 fw-bold">لا توجد سيارات  متاحة</p>
+    </div>
+  </div>
+</ng-template>

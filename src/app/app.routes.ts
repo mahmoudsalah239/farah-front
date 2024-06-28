@@ -28,6 +28,7 @@ import { BookingCenterComponent } from '../components/booking-center/booking-cen
 import { PhotographerDetailsComponent } from '../components/photographer/photographer-details/photographer-details.component';
 import { FavoritePhotographerComponent } from '../components/favorite-photographer/favorite-photographer.component';
 import { BookingPhotographerComponent } from '../components/booking-photographer/booking-photographer.component';
+import { ProfileComponent } from '../components/profile/profile.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -67,5 +68,7 @@ export const routes: Routes = [
   { path: 'Login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponentComponent },
   { path: 'OwnerRegister', component: OwnerRegisterComponent },
+  { path: 'Favourites', component: FavoriteComponent },
+  { path: 'Profile', component: ProfileComponent },
   { path: '**', component: NotFoundComponent },
 ];

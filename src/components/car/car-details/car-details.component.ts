@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CarService } from '../../../services/car.service';
 
 
 @Component({
   selector: 'app-car-details',
   standalone: true,
   imports: [ CommonModule, RouterLink, FormsModule],
-  templateUrl: './car-details.component.html',
+templateUrl: './car-details.component.html',
   styleUrls: ['./car-details.component.scss'],
 })
 export class CarDetailsComponent implements OnInit {
@@ -44,7 +45,7 @@ export class CarDetailsComponent implements OnInit {
     { id: 4, year: 2011, imageUrl: 'https://www.egy-car.com/wp-content/uploads/2020/09/%D9%87%D9%8A%D9%88%D9%86%D8%AF%D8%A7%D9%8A-%D8%A7%D9%84%D9%86%D8%AA%D8%B1%D8%A7-CN7-1-600x400.jpg', price: 'السعر', brand: 'العلامة التجارية', description: 'الوصف' }
   ];
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private CarService:CarService) { }
   ngOnInit(): void {
     const carId = +this.route.snapshot.paramMap.get('id')!;
     this.car = this.cars.find(c => c.id === carId);

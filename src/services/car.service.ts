@@ -17,5 +17,10 @@ export class CarService {
     const url = `${this.baseUrl}/Car/Cars?page=${page}&pageSize=${pageSize}&priceRange=${priceRange}&govId=${govId}&cityId=${cityId}`;
     return this.http.get<any>(url);
   }
+  GetCarById(id:number):Observable<any>{
+    const url = `${this.baseUrl}/Car/CarByID?id=${id}`;
+    return this.http.get<any>(url);
+   } 
+   
 }
 

@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
-import { Hall } from '../../interfaces/hall';
 import { DotsPipe } from '../../Pipes/dots.pipe';
 import { AddressServiceService } from '../../services/address-service.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
@@ -21,13 +20,14 @@ export class BeautyCenterComponent implements OnInit {
   selectedTown: string = '';
   selectedCity: number = 0;
   selectedPriceRange: string = 'all';
-  beauty: any= [];
+  beauty: any = [];
   currentPage: number = 1;
   pageSize: number = 6;
   totalPages: number = 1;
   noBeautyMessage: string = '';
   registerForm: FormGroup;
   isload: boolean = false;
+
   constructor(
     private beautyService: BeautyService,
     private addressService: AddressServiceService,
@@ -42,16 +42,14 @@ export class BeautyCenterComponent implements OnInit {
   ngOnInit(): void {
     this.loadGovernorates();
 
-    this.registerForm
-      .get('govID')
-      ?.valueChanges.subscribe((governorateID: number) => {
-        if (governorateID) {
-          this.onGovernorateChange(governorateID);
-        } else {
-          this.Cites = [];
-          this.registerForm.get('cityID')?.reset({ value: '', disabled: true });
-        }
-      });
+    this.registerForm.get('govID')?.valueChanges.subscribe((governorateID: number) => {
+      if (governorateID) {
+        this.onGovernorateChange(governorateID);
+      } else {
+        this.Cites = [];
+        this.registerForm.get('cityID')?.reset({ value: '', disabled: true });
+      }
+    });
 
     this.filterBeauty();
   }
@@ -66,21 +64,19 @@ export class BeautyCenterComponent implements OnInit {
 
   onGovernorateChange(governorateID: number): void {
     if (governorateID) {
-      this.addressService
-        .getCitiesByGovId(governorateID)
-        .subscribe((response: any) => {
-          this.Cites = response.data;
-          this.registerForm.get('cityID')?.enable();
-          this.selectedCity = 0;
-          this.selectedTown = governorateID.toString(); // تحديث المحافظة المختارة
-          this.currentPage = 1; // إعادة تعيين الصفحة الحالية إلى 1 عند تغيير المحافظة
-          this.filterBeauty();
-        });
+      this.addressService.getCitiesByGovId(governorateID).subscribe((response: any) => {
+        this.Cites = response.data;
+        this.registerForm.get('cityID')?.enable();
+        this.selectedCity = 0;
+        this.selectedTown = governorateID.toString();
+        this.currentPage = 1;
+        this.filterBeauty();
+      });
     } else {
       this.Cites = [];
       this.selectedCity = 0;
       this.registerForm.get('cityID')?.disable();
-      this.currentPage = 1; // إعادة تعيين الصفحة الحالية إلى 1 عند إلغاء تحديد المحافظة
+      this.currentPage = 1;
       this.filterBeauty();
     }
   }
@@ -88,28 +84,22 @@ export class BeautyCenterComponent implements OnInit {
   filterBeauty(): void {
     const govId = this.selectedTown ? Number(this.selectedTown) : 0;
     const cityId = this.selectedCity || 0;
-this.isload=true;
-    this.beautyService.getAllBeauty
-      (
-        this.currentPage,
-        this.pageSize,
-        this.selectedPriceRange,
-        govId,
-        cityId
-      )
+    this.isload = true;
+
+    this.beautyService.getAllBeauty(this.currentPage, this.pageSize, this.selectedPriceRange, govId, cityId)
       .subscribe({
-        
         next: (data) => {
-          this.isload=false;
+          this.isload = false;
           this.beauty = data.data;
           this.totalPages = data.paginationInfo.totalPages;
           this.noBeautyMessage = '';
+          console.log(data);
         },
         error: (error) => {
-          this.isload=false;
+          this.isload = false;
           if (error.status === 404) {
             this.beauty = [];
-            this.noBeautyMessage = 'No beauty Found';
+            this.noBeautyMessage = 'No beauty centers found';
           } else {
             console.error('An error occurred:', error);
             this.noBeautyMessage = 'An error occurred while fetching the data.';
@@ -125,13 +115,11 @@ this.isload=true;
     }
   }
 
-  getPaginatedBeauty(): Hall[] {
+  getPaginatedBeauty(): any[] {
     return this.beauty;
   }
 
   truncateDescription(description: string): string {
-    return description.length > 100
-      ? description.substring(0, 100) + '...'
-      : description;
+    return description.length > 100 ? description.substring(0, 100) + '...' : description;
   }
 }

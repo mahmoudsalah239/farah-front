@@ -23,9 +23,9 @@ export class HallComponent implements OnInit {
   selectedPriceRange: string = 'all';
   halls: Hall[] = [];
   currentPage: number = 1;
-  pageSize: number = 6;
+  pageSize: number = 12;
   totalPages: number = 1;
-  noHallsMessage: string = '';
+
   registerForm: FormGroup;
   isload: boolean = false;
   constructor(
@@ -86,7 +86,7 @@ export class HallComponent implements OnInit {
   }
 
   filterHalls(): void {
-    const govId = this.selectedTown ? Number(this.selectedTown) : 0;
+    const govId = this.registerForm.get('govID')?.value || 0;
     const cityId = this.selectedCity || 0;
 this.isload=true;
     this.hallService
@@ -103,16 +103,16 @@ this.isload=true;
           this.isload=false;
           this.halls = data.data;
           this.totalPages = data.paginationInfo.totalPages;
-          this.noHallsMessage = '';
+    
         },
         error: (error) => {
           this.isload=false;
           if (error.status === 404) {
             this.halls = [];
-            this.noHallsMessage = 'No Halls Found';
+      
           } else {
             console.error('An error occurred:', error);
-            this.noHallsMessage = 'An error occurred while fetching the data.';
+          
           }
         },
       });
