@@ -51,7 +51,7 @@
       <div *ngFor="let beauty of getPaginatedBeauty()" class="col-lg-3 col-md-4 col-sm-6 mb-5">
         <div class="card position-relative" tabindex="0">
           <div class="card_image">
-            <img [src]="'https://localhost:44322' + beauty.imageUrls[0]" alt="{{ beauty.name }}" />
+            <img [src]="'https://localhost:44322' + beauty.imageUrls[0]" alt="{{ beauty?.name }}" />
             <i class="fas fa-heart"></i>
           </div>
           <div class="card_content">

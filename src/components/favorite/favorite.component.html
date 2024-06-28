@@ -6,7 +6,7 @@
     <div class="container mt-5">
       <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-6 mb-5" *ngFor="let car of favoriteCars">
-          <div class="card position-relative" tabindex="0" (click)="navigateToDetails(car.carID)">
+          <div class="card position-relative" tabindex="0">
             <div class="card_image">
               <img [src]="car.pictureUrls" alt="">
               <i class="fas fa-heart"></i>
@@ -16,7 +16,7 @@
               <p>{{car.brand}}</p>
               <p>{{ truncateDescription(car.description) }}</p>
             
-              <button (click)="addToFavorites(car.carID)" class="btn btn-light btn-remove">
+              <button (click)="removeService(car.carID)" class="btn btn-light btn-remove">
                 <i class="fas fa-heart-broken"></i> إزالة  
               </button>
             </div>
@@ -26,34 +26,70 @@
      
     </div>
   </div>
+  <hr>
+
+
   
-brand
-: 
-"BMW"
-carID
-: 
-2008
-city
-: 
-49
-description
-: 
-"عربيه حديثه بيضا اللون "
-governorateID
-: 
-18
-ownerID
-: 
-"769c7ccc-60e9-4574-846a-681e49bb4e68"
-pictureUrls
-: 
-[]
-pictures
-: 
-null
-price
-: 
-1500
-year
-: 
-2023
+ <div class="text-center mt-5">
+  المفضله من القاعات  
+ </div>
+<!-- <div class="main">
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-5" *ngFor="let hall of favoriteHalls">
+          <div class="card position-relative" tabindex="0">
+            <div class="card_image">
+              <img [src]="hall.pictureUrls[0]" alt="">
+              <i class="fas fa-heart"></i>
+            </div>
+            <div class="card_content">
+              <h2 class="card_title">{{hall.price}}</h2>
+              <p>{{hall.brand}}</p>
+              <p>{{ truncateDescription(hall.description) }}</p>
+            
+              <button (click)="removeService(hall.carID)" class="btn btn-light btn-remove">
+                <i class="fas fa-heart-broken"></i> إزالة  
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+  </div>  -->
+
+
+  <hr>
+
+
+
+  
+ <div class="text-center mt-5">
+  المفضله من المصورين 
+ </div>
+<div class="main">
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-5" *ngFor="let car of favoriteCars">
+          <div class="card position-relative" tabindex="0">
+            <div class="card_image">
+              <img [src]="car.pictureUrls" alt="">
+              <i class="fas fa-heart"></i>
+            </div>
+            <div class="card_content">
+              <h2 class="card_title">{{car.price}}</h2>
+              <p>{{car.brand}}</p>
+              <p>{{ truncateDescription(car.description) }}</p>
+            
+              <button (click)="removeService(car.carID)" class="btn btn-light btn-remove">
+                <i class="fas fa-heart-broken"></i> إزالة  
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+
+
