@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FavouritesService } from '../../services/favourites.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-favorite',
   standalone: true,
@@ -35,6 +36,38 @@ this.getfavSericves()
         this.favoritephotographys = res.data.favoritephotographys;
       }
     })
+   }
+
+   removeService(id:number){
+    Swal.fire({
+      title: 'هل انتا متاكد ؟',
+      text: 'تريد حذف هذه الخدمه ممن المفضله ؟',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'نعم احذفها ',
+      cancelButtonText: 'لا اتركها '
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // User confirmed deletion, call API to remove service
+        this.favService.remaoveFromFav(id).subscribe({
+          next: (res) => {
+            console.log(res);
+            // Optionally show success message
+            Swal.fire('تم الحذف ', 'success');
+            // Refresh service list or perform any necessary actions
+            this.getfavSericves();
+          },
+          error: (err) => {
+            console.error('تم :', err);
+            Swal.fire('Error!', 'Failed to delete service.', 'error');
+          }
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // User canceled deletion, do nothing or show a message
+        Swal.fire('تم الالغاء', 'خدمتك بأمان  :)');
+      }
+    });
+  
    }
 
   navigateToDetails(hallId: number): void {

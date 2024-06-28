@@ -52,9 +52,13 @@
           <div class="card position-relative" tabindex="0">
             <div class="card_image">
               <img [src]="'https://localhost:44322' + car.pictureUrls[0]" alt="">
-              <button class="btn btn-danger"(click)="addToFavorites(car.carID)"></button>
-              <i class="fas fa-heart" (click)="addToFavorites(car.carID)"></i>
+            
               
+                  <a class="btn btn-light d-flex" (click)="addToFavorites(car.carID)">
+                      <i class="fas fa-heart" > </i>  
+                  </a>
+                 
+        
             </div>
             <div class="card_content">
               <h2 class="card_title">{{ car.price }}</h2>
