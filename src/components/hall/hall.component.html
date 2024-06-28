@@ -47,10 +47,8 @@
 <div class="main">
   <div class="container">
     <div class="row">
-      <div *ngIf="noHallsMessage" class="col-12 text-center">
-        <p>{{ noHallsMessage }}</p>
-      </div>
-      <div class="col-lg-3 col-md-4 col-sm-6 mb-5" *ngFor="let hall of getPaginatedHalls()">
+      <div *ngIf="halls.length>0 ; else noServices" >
+       <div class="col-lg-3 col-md-4 col-sm-6 mb-5" *ngFor="let hall of getPaginatedHalls()">
         <div class="card position-relative" tabindex="0">
           <div class="card_image">
             <img [src]="'https://localhost:44322' + hall.pictureUrls[0]" alt="{{ hall.name }}" />
@@ -64,9 +62,11 @@
           </div>
         </div>
       </div>
+      </div>
+   
     </div>
     <app-spinner *ngIf="isload"></app-spinner>
-    <div *ngIf="!noHallsMessage" class="pagination mb-5 d-flex justify-content-center align-items-center">
+    <div class="pagination mb-5 d-flex justify-content-center align-items-center">
       <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="btn mr-2">
         السابق
       </button>
@@ -77,5 +77,13 @@
     </div>
   </div>
 </div>
+<ng-template #noServices>
+  <div class="row">
+       <div class="col-md-12 text-center not-found">
+            <img src="../../assets/NotFound.webp" alt="No services found" width="400" height="300">
+            <p class="display-1 fw-bold">لا توجد قاعات متاحة </p>
+       </div>
+  </div>
+</ng-template>
 
  

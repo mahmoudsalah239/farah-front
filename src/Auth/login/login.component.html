@@ -35,21 +35,27 @@
               يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم وحرف خاص ($!%*?&)</div>
           </div>
         </label>
+        
 
-        <div class="d-flex align-content-center justify-content-around flex-row-reverse flex-wrap">
-          <div class="rememberMe-toggle d-flex align-items-center gap-2">
+        <div class="d-flex align-content-center justify-content-between flex-wrap" >
+         <div>
+          <a href="javascript:void(0);" (click)="openForgotPasswordPopup()"
+            class=" forgetPassword">نسيت كلمة المرور؟</a>
+        </div> 
+        <div class="rememberMe-toggle d-flex align-items-center gap-2">
             <label class="toggle-switch">
               <input type="checkbox" formControlName="rememberMe">
               <div class="toggle-switch-background">
                 <div class="toggle-switch-handle"></div>
               </div>
             </label>
-            <label class="form-check-label fs-1" for="rememberMe">تذكرني</label>
-          </div>
+            <label class="form-check-label fs-5" for="rememberMe">تذكرني</label>
+          </div> 
+       
+
         </div>
 
-        <a routerLink="/forgot-password">هل نسيت كلمة السر؟</a>
-
+      
         <button type="submit" class="submit" [disabled]="loginForm.invalid">تسجيل دخول</button>
         <p class="signin">هل تريد إنشاء حساب؟
           <a routerLink="/register">إنشاء حساب</a>
@@ -64,5 +70,5 @@
     <div class="col col-md-6 col-12">
       <img class="w-75" src="../../assets/7314119.svg" alt="">
     </div>
-  </div>
+  </div> 
 </div>

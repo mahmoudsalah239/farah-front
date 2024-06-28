@@ -16,7 +16,7 @@ export class HallService {
     
     return this.http.get<any>(url);
   }
-
+ 
    GetHallById(id:number):Observable<any>{
     const url = `${this.ApiUrl}/Hall/CarByID?id=${id}`;
     return this.http.get<any>(url);

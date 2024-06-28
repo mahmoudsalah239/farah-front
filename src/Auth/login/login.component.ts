@@ -136,6 +136,8 @@ export class LoginComponent implements OnInit {
             const role = response.body.data.role;
             const isConfirmed = response.body.data.isEmailConfirmed;
             this._loginService.storeToken(token);
+            localStorage.setItem('token',token);
+            localStorage.setItem('email',formData.email)
 
             if (role === 'Admin' || role === 'Owner') {
               Swal.fire({
@@ -146,7 +148,7 @@ export class LoginComponent implements OnInit {
               }).then(() => {
                 localStorage.clear();
                 sessionStorage.clear();
-                this.router.navigate(['/dashboard-login']);
+               // this.router.navigate(['/dashboard-login']);
               });
             } else if (role === 'Customer') {
               if (!isConfirmed) {
@@ -241,4 +243,102 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/OwnerRegister']);
     }
   }
+
+  openForgotPasswordPopup() {
+    Swal.fire({
+      title: 'استعادة كلمة المرور',
+      input: 'email',
+      inputLabel: 'أدخل بريدك الإلكتروني',
+      inputPlaceholder: 'البريد الإلكتروني',
+      showCancelButton: true,
+      confirmButtonText: 'إرسال',
+      cancelButtonText: 'إلغاء',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'يرجى إدخال بريدك الإلكتروني!';
+        }
+        return null;
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const email = result.value;
+        this.sendForgotPasswordEmail(email);
+      }
+    });
+  }
+  promptForOtp(errorMessage?: string) {
+    Swal.fire({
+      icon: 'info',
+      title: 'تم إرسال رمز التفعيل',
+      text:
+        errorMessage ||
+        'تم إرسال رمز التفعيل إلى بريدك الإلكتروني. يرجى إدخال الرمز هنا لتفعيل بريدك الإلكتروني:',
+      input: 'text',
+      inputPlaceholder: 'أدخل رمز التفعيل',
+      showCancelButton: true,
+      confirmButtonText: 'تأكيد',
+      cancelButtonText: 'إلغاء',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const otp = result.value;
+        this.verifyOtp(otp);
+      }
+    });
+  }
+
+  verifyOtp(otp: string) {
+    // this.spinner.show();
+    this.sendOtpService.confirmEmail(otp).subscribe({
+      next: (verifyResponse) => {
+        // this.spinner.hide();
+        if (verifyResponse && verifyResponse.succeeded) {
+          Swal.fire({
+            icon: 'success',
+            title: 'تم التفعيل بنجاح',
+            text: 'تم تفعيل بريدك الإلكتروني بنجاح. يمكنك الآن تسجيل الدخول.',
+          }).then(() => {
+            localStorage.clear();
+            sessionStorage.clear();
+            this.router.navigate(['/login']);
+          });
+        } else {
+          this.promptForOtp(
+            'الرمز غير صحيح أو منتهي الصلاحية. يرجى المحاولة مرة أخرى.'
+          );
+        }
+      },
+      error: (error) => {
+        // this.spinner.hide();
+        this.promptForOtp('حدث خطأ أثناء التحقق من الرمز. حاول مرة أخرى.');
+      },
+    });
+  }
+
+  sendForgotPasswordEmail(email: string) {
+    
+    this.resetPasswordService.forgetPassword(email).subscribe({
+      next: (response: any) => {
+     
+        if (response && response.succeeded) {
+          Swal.fire({
+            icon: 'success',
+            title: 'تم الإرسال',
+            text: 'تم إرسال رابط استعادة كلمة المرور إلى بريدك الإلكتروني. صالح لمدة 30 يومًا.',
+          });
+        } else {
+          this.promptForOtp(
+            'الرمز غير صحيح أو منتهي الصلاحية. يرجى المحاولة مرة أخرى.'
+          );
+        }
+      },
+      error: (error) => {
+        // this.spinner.hide();
+        this.promptForOtp(
+          'الرمز غير صحيح أو منتهي الصلاحية. يرجى المحاولة مرة أخرى.'
+        );
+      },
+    });
+  }
+
+
 }
