@@ -44,26 +44,42 @@
   </div>
 </div>
 
-<div class="main">
-  <div class="container">
-    <div class="row">
-      <div *ngIf="halls.length>0 ; else noServices" >
-       <div class="col-lg-3 col-md-4 col-sm-6 mb-5" *ngFor="let hall of getPaginatedHalls()">
-        <div class="card position-relative" tabindex="0">
-          <div class="card_image">
-            <img [src]="'https://localhost:44322' + hall.pictureUrls[0]" alt="{{ hall.name }}" />
-            <i class="fas fa-heart"></i>
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">{{ hall.price | currency:'EGP' }}</h2>
+
+
+      <div class="shell">
+        <div class="container"  dir="rtl">
+          <div class="row">
+            <div *ngIf="halls.length>0 ; else noServices" >
+            <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let hall of getPaginatedHalls()">
+              <div class="wsk-cp-product">
+                <div class="wsk-cp-img">
+                  <img [src]="'https://localhost:44322' + hall.pictureUrls[0]" alt="{{ hall.name }}" class="img-responsive" />
+                  <i class="fas fa-heart"></i>
+                </div>
+                <div class="wsk-cp-text">
+                  <div class="category">
+                    <a [routerLink]="['/hall-details', hall.hallID]" class="card__button btn btn-light">مزيد من التفاصيل</a>                  </div>
+                  <div class="title-product">
+                  </div>
+                  
             <p>{{ hall.name }}</p>
             <p>{{ hall.description | dots }}</p>
-            <a [routerLink]="['/hall-details', hall.hallID]" class="card__button btn btn-light">مزيد من التفاصيل</a>
+                  <div class="card-footer">
+                    <div><span class="price">السعر:{{ hall.price | currency:'EGP' }} </span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      </div>
    
+
+
+
+
+
+      
+
     </div>
     <app-spinner *ngIf="isload"></app-spinner>
     <div class="pagination mb-5 d-flex justify-content-center align-items-center">
@@ -76,7 +92,7 @@
       </button>
     </div>
   </div>
-</div>
+
 <ng-template #noServices>
   <div class="row">
        <div class="col-md-12 text-center not-found">
