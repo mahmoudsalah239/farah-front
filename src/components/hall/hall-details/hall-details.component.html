@@ -1,69 +1,48 @@
-<div class="container-fluid">
-  <div class="row">
-    <!-- Carousel Section -->
-    <div class="col-lg-12  position-relative">
-      <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+<div class="container">
+  <div class="row rounded">
+    <!-- Main Hall Image Carousel -->
+    <div class="col-lg-6 col-md-12 mt-5 rounded">
+      <div id="hallImageCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-          <div class="carousel-item" *ngFor="let image of images; let i = index" 
-            [ngClass]="{'active': i === activeSlideIndex}">
-            <img class="d-block w-100 itemImage" [src]="image.path" [alt]="image.caption">
-            <div class="carousel-caption d-none d-md-block">
-              <h1 class="fw-bold">{{ image.caption }}</h1>
-            </div>
+          <!-- Main Hall Image -->
+          <div class="carousel-item active">
+            <img [src]="images[0]?.path" class="rounded" alt="{{ hall?.name }}">
+          </div>
+          <!-- Additional Images Carousel Items -->
+          <div class="carousel-item" *ngFor="let image of images.slice(1)">
+            <img [src]="image.path" class="rounded" alt="Additional Image">
           </div>
         </div>
-        <button class="carousel-control-prev custom-carousel-control" type="button" data-bs-target="#header-carousel" (click)="prevSlide()">
-          <span class="carousel-control-prev-icon custom-carousel-icon" aria-hidden="true"></span>
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#hallImageCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next custom-carousel-control" type="button" data-bs-target="#header-carousel" (click)="nextSlide()">
-          <span class="carousel-control-next-icon custom-carousel-icon" aria-hidden="true"></span>
+        <button class="carousel-control-next" type="button" data-bs-target="#hallImageCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
       </div>
     </div>
 
-    <div class="col-lg-12 details fs-4">
-      <h2 class="text-center hall-name"><strong>اسم لقاعه :</strong> {{ hall.name }}</h2>
-      <div class="text-center mt-3 info-grid">
-        <div class="info-item">
-          <i class="fas fa-money-bill-wave info-icon"></i>
-          <p><strong>السعر:</strong> {{ hall.price | currency:'EGP' }}</p>
-        </div>
-        <div class="info-item">
-          <i class="fas fa-chair info-icon"></i>
-          <p><strong>السعة:</strong> {{ hall.capacity }}</p>
-        </div>
-        <div class="info-item">
-          <i class="fas fa-align-left info-icon"></i>
-          <p><strong>الوصف:</strong> {{ hall.description }}</p>
-        </div>
-      </div>
-    
-      <div class="features mt-4">
-        <h4 class="text-center"><i class="fas fa-star feature-icon"></i> المميزات:</h4>
-        <div class="d-flex flex-wrap justify-content-center">
-          <div class="feature-item" *ngFor="let feature of hall.features">
-            <i class="fas fa-check-circle feature-icon mx-2"></i>
-            <span>{{ feature }}</span>
+    <!-- Hall Details and Description -->
+    <div class="col-lg-6 col-md-12 mt-5 mb-5">
+      <div class="detail">
+        <div class="content">
+          <div class="name">{{ hall?.name }}</div>
+          <div class="price">السعر: {{ hall?.price | currency:'EGP' }}</div>
+          <div class="price">السعة: {{ hall?.capacity }}</div>
+          <div class="description" dir="rtl">الوصف: {{ hall?.description }}</div>
+          <div class="buttons">
+            <button [routerLink]="['/favorites/favorite']" class="btn m-2">
+              أضف الى المفضلة <i class="fas fa-heart"></i>
+            </button>
+            <button [routerLink]="['/booking-hall']" class="btn m-2">
+              أحجز الان <i class="fas fa-calendar-check"></i>
+            </button>
           </div>
         </div>
       </div>
-      
-      <!-- Buttons -->
-      <div class="text-center mt-4">
-        <button [routerLink]="['/favorite']" class="btn btn-primary m-2 custom-btn">
-          أضف الى المفضلة <i class="fas fa-heart"></i>
-        </button>
-        <button [routerLink]="['/booking']" class="btn btn-success m-2 custom-btn">
-          أحجز الان <i class="fas fa-calendar-check"></i>
-        </button>
-      </div>
     </div>
-    
-      
-
-    
-    
-    
+  </div>
 </div>

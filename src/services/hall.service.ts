@@ -18,7 +18,7 @@ export class HallService {
   }
  
    GetHallById(id:number):Observable<any>{
-    const url = `${this.ApiUrl}/Hall/CarByID?id=${id}`;
+    const url = `${this.ApiUrl}/Hall/HallByID?id=${id}`;
     return this.http.get<any>(url);
    }
 }
