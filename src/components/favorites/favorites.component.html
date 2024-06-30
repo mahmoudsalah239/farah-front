@@ -1,1 +1,45 @@
-<p>favorites works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar Column -->
+        <div class="col-lg-2 col-md-6 col-sm-12 p-0 m-0">
+            <div class="wrapper">
+                <!-- Sidebar -->
+                <nav id="sidebar">
+                    <div class="sidebar-header">
+                        <h3>المفضلة لديك</h3>
+                    </div>
+                    <ul class="list-unstyled components">
+                        <li>
+                            <a routerLink="/favorites/favorite" routerLinkActive="active">القاعات</a>
+                        </li>
+                        <li>
+                            <a routerLink="/favorites/favorite-car" routerLinkActive="active">السيارات</a>
+                        </li>
+                        <li>
+                            <a routerLink="/favorites/favorite-photographer" routerLinkActive="active">المصور</a>
+                        </li>
+                        <li>
+                            <a routerLink="/favorites/favorite-dress" routerLinkActive="active">الفساتين</a>
+                        </li>
+                        <li>
+                            <a routerLink="/favorites/favorite-center" routerLinkActive="active">بيوتي سنتر</a>
+                        </li>
+                    </ul>
+                    <ul class="list-unstyled CTAs">
+                        <li>
+                            <a class="button" routerLink="/home">العودة للرئيسية</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main Content Column -->
+        <div class="col-lg-10 col-md-6 col-sm-12 d-flex m-0 p-0">
+            <!-- Page Content -->
+            <div id="content" class="w-100">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>
