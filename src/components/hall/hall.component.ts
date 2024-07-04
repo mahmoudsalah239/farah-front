@@ -7,6 +7,7 @@ import { Hall } from '../../interfaces/hall';
 import { DotsPipe } from '../../Pipes/dots.pipe';
 import { AddressServiceService } from '../../services/address-service.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
+import { FavouritesService } from '../../services/favourites.service';
 
 @Component({
   selector: 'app-hall',
@@ -31,7 +32,8 @@ export class HallComponent implements OnInit {
   constructor(
     private hallService: HallService,
     private addressService: AddressServiceService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private fav:FavouritesService
   ) {
     this.registerForm = this.fb.group({
       govID: [''],
@@ -103,6 +105,8 @@ this.isload=true;
           this.isload=false;
           this.halls = data.data;
           this.totalPages = data.paginationInfo.totalPages;
+          console.log(data);
+          
     
         },
         error: (error) => {
@@ -133,5 +137,15 @@ this.isload=true;
     return description.length > 100
       ? description.substring(0, 100) + '...'
       : description;
+  }
+
+  toogleFavorite(id:number){
+this.fav.toggleFavorite(id).subscribe({
+  next:(res)=>{
+    console.log(res);
+    this.filterHalls();
+  }
+})
+
   }
 }

@@ -1,80 +1,72 @@
 <div class="background-container">
   <div class="overlay"></div>
   <div class="content">
-    <h1>سيارات افراح</h1>
-    <p>اهلا بك في سيارات موقع فرح</p>
+    <h1>مصورين افراح</h1>
+    <p>اهلا بك في مصورين موقع فرح</p>
   </div>
-</div>
+</div>    
+ 
 
-<div class="container bg-light mb-4 mt-5">
-  <div class="row">
-    <div class="col-lg-4 mt-4">
-      <div class="form-group">
-        <label for="town" class="mr-2">المحافظة:</label>
-        <select class="form-select" id="town" [(ngModel)]="selectedTown" (ngModelChange)="onGovernorateChange($event)">
-          <option value="">الكل</option>
-          <option *ngFor="let town of AllGovernments" [value]="town.governorateID">{{ town.name }}</option>
-        </select>
-      </div>
-    </div>
+<div class="shell">
+  <div class="container" dir="rtl">
 
-    <div class="col-lg-4 mt-4">
-      <div class="form-group">
-        <label for="city" class="mr-2">المدينة:</label>
-        <select class="form-select" id="city" [(ngModel)]="selectedCity" (ngModelChange)="filterphotographers()">
-          <option value="">الكل</option>
-          <option *ngFor="let city of Cites" [value]="city.id">{{ city.name }}</option>
-        </select>
-      </div>
-    </div>
+      <div *ngIf="photographer.length>0 ; else noServices" class="d-flex flex-wrap">
+        <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let photo of getPaginatedphotographer()">
+          <div class="wsk-cp-product">
+            <div class="wsk-cp-img">
+              <img [src]="'https://localhost:44322' + photo.pictureUrls[0]" alt="{{ photo.description }}"
+                class="img-responsive" />
 
-    <div class="col-lg-4 mt-4">
-      <div class="form-group">
-        <label for="priceRange" class="mr-2">حدد سعر:</label>
-        <select class="form-select" id="priceRange" [(ngModel)]="selectedPriceRange" (change)="filterphotographers()">
-          <option value="all">الكل</option>
-          <option value="<100">أقل من 100 دولار</option>
-          <option value="100-500">100 - 500 دولار</option>
-          <option value="500-1000">500 - 1000 دولار</option>
-          <option value="1000-5000">1000 - 5000 دولار</option>
-          <option value=">5000">أكثر من 5000 دولار</option>
-        </select>
-      </div>
-    </div>
-  </div>
-</div>
+            </div>
+            <div class="wsk-cp-text">
+              <div class="category">
+                <a [routerLink]="['/hall-details', photo.photographyID]" class="card__button btn btn-light">مزيد من التفاصيل</a>
+              </div>
+              <div class="title-product">
+              </div>
 
-<div class="main">
-  <div class="container">
-    <div class="row">
-      <div *ngIf="nophotographerMessage" class="col-12 text-center">
-        <p>{{ nophotographerMessage }}</p>
-      </div>
-      <div class="col-lg-3 col-md-4 col-sm-6 mb-5 mt-5" *ngFor="let car of getPaginatedphotographer()">
-        <div class="card position-relative" tabindex="0">
-          <div class="card_image">
-            <img [src]="photographer.imageUrl" alt="">
-            <i class="fas fa-heart" (click)="addToFavorites()"></i>
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">{{ car.price }}</h2>
-            <p>{{ photographer.brand }}</p>
-            <p>{{ truncateDescription(photographer.description) }}</p>
-            <a [routerLink]="['/app-photographer-details', photographer.id]" class="card__button btn btn-light">مزيد من التفاصيل</a>
+              <p>{{ photo.description| dots }}</p>
+
+              <div class="card-footer d-flex align-items-center">
+                <div class="mr-auto">
+                  <!-- <span class="price">السعر:{{ photo. | currency:'EGP' }} </span> -->
+                </div>
+
+
+              </div>
+              <div class="d-flex justify-content-center">
+                <button *ngIf="!photo.isFavorite" (click)="toogleFavorite(photo.photographyID)" class="btn btn-dark m-2">
+                  أضف للمفضلة <i class="fas fa-heart"></i>
+                </button>
+                <button *ngIf="photo.isFavorite" (click)="toogleFavorite(photo.photographyID)" class="btn btn-dark m-2">
+                  حذف من المفضله <i class="fas fa-heart text-danger"></i>
+                </button>
+
+
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <app-spinner *ngIf="isload"></app-spinner>
-    <div *ngIf="!nophotographerMessage" class="pagination mb-5 d-flex justify-content-center align-items-center">
-      <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="btn mr-2">
-        السابق
-      </button>
-      <span>الصفحة {{ currentPage }} من {{ totalPages }}</span>
-      <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages" class="btn ml-2">
-        التالي
-      </button>
-    </div>
+
+  </div>
+  <app-spinner *ngIf="isload"></app-spinner>
+  <div class="pagination mb-5 d-flex justify-content-center align-items-center">
+    <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="btn mr-2">
+      السابق
+    </button>
+    <span>الصفحة {{ currentPage }} من {{ totalPages }}</span>
+    <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages" class="btn ml-2">
+      التالي
+    </button>
   </div>
 </div>
 
+<ng-template #noServices>
+  <div class="row">
+    <div class="col-md-12 text-center not-found">
+      <img src="../../assets/NotFound.webp" alt="No services found" width="400" height="300">
+      <p class="display-1 fw-bold">لا توجد قاعات متاحة </p>
+    </div>
+  </div>
+</ng-template>

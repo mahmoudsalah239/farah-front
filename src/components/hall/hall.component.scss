@@ -1,7 +1,7 @@
 .background-container {
   position: relative;
   height: 250px;
-  background-image: url('../../assets/car.jpg'); /* Update path to your image */
+  background-image: url('../../assets/hall.jpg'); /* Update path to your image */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -64,15 +64,12 @@ body {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   position: relative;
   margin: 20px auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .wsk-cp-img {
-  position: absolute;
-  top: 5px;
-  left: 50%;
-  transform: translate(-50%);
   width: 100%;
-  padding: 15px;
   transition: all 0.2s ease-in-out;
 }
 
@@ -84,7 +81,7 @@ body {
 }
 
 .wsk-cp-product:hover .wsk-cp-img {
-  top: -40px;
+  transform: translateY(-10px);
 }
 
 .wsk-cp-product:hover .wsk-cp-img img {
@@ -92,7 +89,10 @@ body {
 }
 
 .wsk-cp-text {
-  padding-top: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .wsk-cp-text .category {
@@ -150,7 +150,6 @@ body {
   margin: 0;
 }
 
-/* Truncate */
 .wsk-cp-text .description-prod {
   text-align: center;
   width: 100%;
@@ -182,7 +181,7 @@ body {
   font-size: 18px;
   font-weight: bold;
   color: #000; /* Black text */
-  margin-left: 50px;
+  margin-left: 60px;
 }
 
 .btn-dark {

@@ -5,92 +5,6 @@
     <p>اهلا بك في بيوتي سنتر موقع فرح</p>
   </div>
 </div>
-<!-- 
-<div class="container bg-light mb-4 mt-5">
-  <div class="row">
-    <div class="col-lg-4 mt-4">
-      <div class="form-group">
-        <label for="town" class="mr-2">المحافظة:</label>
-        <select class="form-select" id="town" [(ngModel)]="selectedTown" (ngModelChange)="onGovernorateChange($event)">
-          <option value="">الكل</option>
-          <option *ngFor="let town of AllGovernments" [value]="town.governorateID">{{ town.name }}</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="col-lg-4 mt-4">
-      <div class="form-group">
-        <label for="city" class="mr-2">المدينة:</label>
-        <select class="form-select" id="city" [(ngModel)]="selectedCity" (ngModelChange)="filterBeauty()">
-          <option value="">الكل</option>
-          <option *ngFor="let city of Cites" [value]="city.id">{{ city.name }}</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="col-lg-4 mt-4">
-      <div class="form-group">
-        <label for="priceRange" class="mr-2">حدد سعر:</label>
-        <select class="form-select" id="priceRange" [(ngModel)]="selectedPriceRange" (change)="filterBeauty()">
-          <option value="all">الكل</option>
-          <option value="<100">أقل من 100 دولار</option>
-          <option value="100-500">100 - 500 دولار</option>
-          <option value="500-1000">500 - 1000 دولار</option>
-          <option value="1000-5000">1000 - 5000 دولار</option>
-          <option value=">5000">أكثر من 5000 دولار</option>
-        </select>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-<div class="main">
-  <div class="container">
-    <div class="row">
-      <div *ngIf="beauty.length>0 ; else noServices" >
-      <div *ngFor="let beauty of getPaginatedBeauty()" class="col-lg-3 col-md-4 col-sm-6 mb-5">
-        <div class="card position-relative" tabindex="0">
-          <div class="card_image">
-            <img [src]="'https://localhost:44322' + beauty.imageUrls[0]" alt="{{ beauty?.name }}" />
-            <i class="fas fa-heart"></i>
-          </div>
-          <div class="card_content">
-            <h2 class="card_title">{{ beauty.services[0]?.price | currency:'EGP' }}</h2>
-            <p>{{ beauty.name }}</p>
-            <p>{{ beauty.description | dots }}</p>
-            <a [routerLink]="['/beauty-center-details', beauty.beautyCenterId]" class="card__button btn btn-light">مزيد من التفاصيل</a>
-          </div>
-        </div>
-      </div>
-      </div>
-
-
-
-      
-
-    </div>
-    <app-spinner *ngIf="isload"></app-spinner>
-    <div *ngIf="!noBeautyMessage" class="pagination mb-5 d-flex justify-content-center align-items-center">
-      <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="btn mr-2">السابق</button>
-      <span>الصفحة {{ currentPage }} من {{ totalPages }}</span>
-      <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages" class="btn ml-2">التالي</button>
-    </div>
-  </div>
-</div>
-<ng-template #noServices>
-  <div class="row">
-       <div class="col-md-12 text-center not-found">
-            <img src="../../assets/NotFound.webp" alt="No services found" width="400" height="300">
-            <p class="display-1 fw-bold">لا توجد بيوتي سنتر  متاحة </p>
-       </div>
-  </div>
-</ng-template> -->
-
-
-
 
 <div class="container bg-light mb-4 mt-5">
   <div class="row">
@@ -132,51 +46,62 @@
 
 
 
-      <div class="shell">
-        <div class="container"  dir="rtl">
-          <div class="row">
-            <div *ngIf="beauty.length>0 ; else noServices" >
-            <div class="col-lg-4 col-md-6 col-sm-12"  *ngFor="let beauty of getPaginatedBeauty()" >
-              <div class="wsk-cp-product">
-                <div class="wsk-cp-img">
-                  <img [src]="'https://localhost:44322' + beauty.imageUrls[0]" alt="{{ beauty?.name }}" />
-                  <i class="fas fa-heart"></i>
+<div class="shell">
+  <div class="container" dir="rtl">
+  
+      <div *ngIf="beauty.length>0 ; else noServices" class="d-flex flex-wrap">
+        <div class=" col col-lg-4 col-md-6 col-sm-12" *ngFor="let beauty of getPaginatedBeauty()">
+          <div class="wsk-cp-product">
+            <div class="wsk-cp-img">
+              <img [src]="'https://localhost:44322' + beauty.imageUrls[0]" alt="{{ beauty.name }}"
+                class="img-responsive" />
+
+            </div>
+            <div class="wsk-cp-text">
+              <div class="category">
+                <a [routerLink]="['/hall-details', beauty.beautyCenterId]" class="card__button btn btn-light">مزيد من التفاصيل</a>
+              </div>
+              <div class="title-product">
+              </div>
+
+              <p>{{ beauty.name }}</p>
+              <p>{{ beauty.description | dots }}</p>
+
+              <div class="card-footer d-flex align-items-center">
+                <div class="mr-auto">
+                  <!-- <span class="price">السعر:{{ beauty | currency:'EGP' }} </span> -->
                 </div>
-                <div class="wsk-cp-text">
-                  <div class="category">
-                    <a [routerLink]="['/beauty-center-details', beauty.beautyCenterId]" class="card__button btn btn-light">مزيد من التفاصيل</a>
-                    <div class="title-product">
-                  </div>
-                  <p>{{ beauty.name }}</p>
-                  <p>{{ beauty.description | dots }}</p>
-                  <div class="card-footer">
-                    <div><span class="price">السعر:{{ beauty.services[0]?.price | currency:'EGP' }} </span></div>
-                  </div>
-                </div>
+
+
+              </div>
+              <div class="d-flex justify-content-center">
+                <button *ngIf="!beauty.isFavorite" (click)="toogleFavorite(beauty.beautyCenterId)" class="btn btn-dark m-2">
+                  أضف للمفضلة <i class="fas fa-heart"></i>
+                </button>
+                <button *ngIf="beauty.isFavorite" (click)="toogleFavorite(beauty.beautyCenterId)" class="btn btn-dark m-2">
+                  حذف من المفضله <i class="fas fa-heart text-danger"></i>
+                </button>
+
+
               </div>
             </div>
           </div>
         </div>
-   
-
-
-
-
-
-      
-
-    </div>
-    <app-spinner *ngIf="isload"></app-spinner>
-    <div class="pagination mb-5 d-flex justify-content-center align-items-center">
-      <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="btn mr-2">
-        السابق
-      </button>
-      <span>الصفحة {{ currentPage }} من {{ totalPages }}</span>
-      <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages" class="btn ml-2">
-        التالي
-      </button>
-    </div>
+      </div>
+ 
+  </div> 
+  <app-spinner *ngIf="isload"></app-spinner>
+  <div class="pagination mb-5 d-flex justify-content-center align-items-center">
+    <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="btn mr-2">
+      السابق
+    </button>
+    <span>الصفحة {{ currentPage }} من {{ totalPages }}</span>
+    <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages" class="btn ml-2">
+      التالي
+    </button>
   </div>
+</div>
+
 
 <ng-template #noServices>
   <div class="row">

@@ -45,7 +45,7 @@ export class CategoryComponent {
     {
       image: 'assets/allservices.jpg',
       title: 'جميع الخدمات',
-      link: '/all-services'
+      link: '/favorites'
     }
   ];
 

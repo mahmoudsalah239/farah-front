@@ -49,7 +49,7 @@ this.getfavSericves()
     }).then((result) => {
       if (result.isConfirmed) {
         // User confirmed deletion, call API to remove service
-        this.favService.remaoveFromFav(id).subscribe({
+        this.favService.toggleFavorite(id).subscribe({
           next: (res) => {
             console.log(res);
             // Optionally show success message

@@ -10,4 +10,5 @@ export interface Hall {
     city: number;
     pictures: string | null;
     pictureUrls: string[];
+    isFavorite:boolean;
 }

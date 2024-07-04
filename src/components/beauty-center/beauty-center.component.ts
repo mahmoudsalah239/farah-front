@@ -6,6 +6,8 @@ import { DotsPipe } from '../../Pipes/dots.pipe';
 import { AddressServiceService } from '../../services/address-service.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { BeautyService } from '../../services/beauty.service';
+import { FavouritesService } from '../../services/favourites.service';
+import { BeautyCenter } from '../../interfaces/beauty-center';
 
 @Component({
   selector: 'app-beauty-center',
@@ -20,7 +22,7 @@ export class BeautyCenterComponent implements OnInit {
   selectedTown: string = '';
   selectedCity: number = 0;
   selectedPriceRange: string = 'all';
-  beauty: any = [];
+  beauty: BeautyCenter[] = [];
   currentPage: number = 1;
   pageSize: number = 6;
   totalPages: number = 1;
@@ -31,7 +33,8 @@ export class BeautyCenterComponent implements OnInit {
   constructor(
     private beautyService: BeautyService,
     private addressService: AddressServiceService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private fav:FavouritesService
   ) {
     this.registerForm = this.fb.group({
       govID: [''],
@@ -115,11 +118,22 @@ export class BeautyCenterComponent implements OnInit {
     }
   }
 
-  getPaginatedBeauty(): any[] {
+  getPaginatedBeauty(): BeautyCenter[] {
     return this.beauty;
   }
 
   truncateDescription(description: string): string {
     return description.length > 100 ? description.substring(0, 100) + '...' : description;
   }
+
+  toogleFavorite(id:number){
+    this.fav.toggleFavorite(id).subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.filterBeauty();
+      }
+    })
+    
+      }
+ 
 }

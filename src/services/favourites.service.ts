@@ -8,24 +8,19 @@ import { Token } from '@angular/compiler';
   providedIn: 'root'
 })
 export class FavouritesService {
+  // https://localhost:44322/api/FavoriteService/Toggle?serviceID=2008
 
-  private baseUrl = `${environment.apiUrl}/FavoriteService`;
+  private baseUrl = `${environment.apiUrl}/FavoriteService/Toggle`;
   constructor(private http: HttpClient) { }
 
-  addingTsoFav(serviceID: number): Observable<any> {
+  toggleFavorite(serviceID: number): Observable<any> {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const params = new HttpParams().set('serviceID', serviceID.toString());
 
-    return this.http.post(`${this.baseUrl}/Add`, {}, { headers, params });
+    return this.http.post(`${this.baseUrl}`, {}, { headers, params });
   }
-  remaoveFromFav(serviceID: number): Observable<any> {
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const params = new HttpParams().set('serviceID', serviceID.toString());
-
-    return this.http.post(`${this.baseUrl}/Remove`, {}, { headers, params });
-  }
+  
   getFavourites(): Observable<any> {
     const token =
       localStorage.getItem('token') || sessionStorage.getItem('token');

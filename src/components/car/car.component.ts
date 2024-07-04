@@ -7,7 +7,7 @@ import { DotsPipe } from '../../Pipes/dots.pipe';
 import { AddressServiceService } from '../../services/address-service.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
   import { FavouritesService } from './../../services/favourites.service';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'; 
 @Component({
   selector: 'app-car',
   standalone: true,
@@ -34,7 +34,7 @@ export class CarComponent implements OnInit {
     private carService: CarService,
     private addressService: AddressServiceService,
     private fb: FormBuilder,
-    private _favouritesService:FavouritesService
+    private fav:FavouritesService
   ) {
     this.registerForm = this.fb.group({
       govID: [''],
@@ -95,6 +95,7 @@ export class CarComponent implements OnInit {
           this.isload = false;
           this.cars = data.data;
           this.totalPages = data.paginationInfo.totalPages;
+          console.log(data.data);
         },
         error: (error) => {
           this.isload = false;
@@ -130,7 +131,7 @@ export class CarComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         // User confirmed, call API to add to favorites
-        this._favouritesService.addingTsoFav(id).subscribe({
+        this.fav.toggleFavorite(id).subscribe({
           next: (res) => {
             console.log(res);
             Swal.fire({
@@ -159,4 +160,15 @@ export class CarComponent implements OnInit {
   truncateDescription(description: string): string {
     return description.length > 100 ? description.substring(0, 100) + '...' : description;
   }
+
+  
+  toogleFavorite(id:number){
+    this.fav.toggleFavorite(id).subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.filterCars();
+      }
+    })
+    
+      }
 }

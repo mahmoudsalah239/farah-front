@@ -10,7 +10,6 @@ import { CarComponent } from '../components/car/car.component';
 import { BeautyCenterComponent } from '../components/beauty-center/beauty-center.component';
 import { ForgotPasswordComponentComponent } from '../Auth/forgot-password-component/forgot-password-component.component';
 import { HallDetailsComponent } from '../components/hall/hall-details/hall-details.component';
-import { FavoriteComponent } from '../components/favorite/favorite.component';
 import { BookingComponent } from '../components/booking/booking.component';
 
 import { NotFoundComponent } from '../components/not-found/not-found.component';
@@ -30,13 +29,14 @@ import { FavoritePhotographerComponent } from '../components/favorite-photograph
 import { BookingPhotographerComponent } from '../components/booking-photographer/booking-photographer.component';
 import { ProfileComponent } from '../components/profile/profile.component';
 import { FavoritesComponent } from '../components/favorites/favorites.component';
+import { FavoriteComponent } from './../components/favorite/favorite.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'hall', component: HallComponent },
   { path: 'hall-details/:id', component: HallDetailsComponent },
-  { path: 'favorite', component: FavoriteComponent },
+  // { path: 'favorite', component: FavoritesComponent },
   {path:'favorites',component:FavoritesComponent,children:[
     {path:'',component:FavoriteCarComponent},
     {path:'favorite',component:FavoriteCarComponent},
