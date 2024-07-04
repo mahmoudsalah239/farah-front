@@ -1,0 +1,131 @@
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+/* SIDEBAR STYLE */
+.wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+#sidebar {
+    width: 250px;
+    background: var(--main-color);
+    color: #fff;
+    transition: all 0.3s;
+  
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: rgb(59, 3, 45);
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid rgb(59, 3, 45);
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: rgb(59, 3, 45);
+    background-color: #fff;
+}
+
+#sidebar .button {
+    color: rgb(59, 3, 45);
+    background-color: #fff;
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: rgb(59, 3, 45);
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+a.download {
+    background: #fff;
+    color: rgb(59, 3, 45);
+}
+
+#sidebar ul li a.active {
+    background-color: #fff;
+    color: rgb(59, 3, 45);
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 992px) {
+    #sidebar {
+        width: 200px;
+    }
+    
+    .col-lg-2 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+    
+    .col-lg-10 {
+        flex: 0 0 75%;
+        max-width: 75%;
+    }
+}

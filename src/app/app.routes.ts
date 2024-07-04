@@ -29,6 +29,7 @@ import { PhotographerDetailsComponent } from '../components/photographer/photogr
 import { FavoritePhotographerComponent } from '../components/favorite-photographer/favorite-photographer.component';
 import { BookingPhotographerComponent } from '../components/booking-photographer/booking-photographer.component';
 import { ProfileComponent } from '../components/profile/profile.component';
+import { FavoritesComponent } from '../components/favorites/favorites.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -36,6 +37,16 @@ export const routes: Routes = [
   { path: 'hall', component: HallComponent },
   { path: 'hall-details/:id', component: HallDetailsComponent },
   { path: 'favorite', component: FavoriteComponent },
+  {path:'favorites',component:FavoritesComponent,children:[
+    {path:'',component:FavoriteCarComponent},
+    {path:'favorite',component:FavoriteCarComponent},
+    {path:'favorite-photographer',component:FavoritePhotographerComponent},
+    {path:'favorite-dress',component:FavoriteDressComponent},
+    {path:'favorite-car',component:FavoriteCarComponent},
+    {path:'favorite-center',component:FavoriteCenterComponent},
+    { path: '**', component: NotFoundComponent },
+
+  ]},
   { path: 'booking', component: BookingComponent },
   { path: 'photographer', component: PhotographerComponent },
   { path: 'photographer-details/:id', component: PhotographerDetailsComponent },
