@@ -39,7 +39,7 @@ export const routes: Routes = [
   // { path: 'favorite', component: FavoritesComponent },
   {path:'favorites',component:FavoritesComponent,children:[
     {path:'',component:FavoriteCarComponent},
-    {path:'favorite',component:FavoriteCarComponent},
+    {path:'favorite',component:FavoriteComponent},
     {path:'favorite-photographer',component:FavoritePhotographerComponent},
     {path:'favorite-dress',component:FavoriteDressComponent},
     {path:'favorite-car',component:FavoriteCarComponent},

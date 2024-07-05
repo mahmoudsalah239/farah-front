@@ -1,35 +1,57 @@
-<!-- <div class="main">
-    <div class="container mt-5">
-      <div class="row">
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-5" *ngFor="let car of getPaginatedCars()">
-          <div class="card position-relative" tabindex="0" (click)="navigateToDetails(car.id)">
-            <div class="card_image">
-              <img [src]="car.imageUrl" alt="">
-              <i class="fas fa-heart"></i>
+<div class="shell">
+  <div class="container" dir="rtl">
+  
+      <div *ngIf="favoriteCars.length>0 ; else noServices" class="d-flex flex-wrap">
+        <div class=" col col-lg-4 col-md-6 col-sm-12" *ngFor="let car of favoriteCars">
+          <div class="wsk-cp-product">
+            <div class="wsk-cp-img">
+              <img [src]="'https://localhost:44322' + car.pictureUrls[0]" alt="{{ car.brand }}"
+                class="img-responsive" />
+
             </div>
-            <div class="card_content">
-              <h2 class="card_title">{{car.price}}</h2>
-              <p>{{car.name}}</p>
-              <p>{{ truncateDescription(car.description) }}</p>
-            
-              <button (click)="addToFavorites(car)" class="btn btn-light btn-remove">
-                <i class="fas fa-heart-broken"></i> إزالة  
-              </button>
+            <div class="wsk-cp-text">
+              <div class="category">
+                <a [routerLink]="['/hall-details', car.carID]" class="card__button btn btn-light">مزيد من التفاصيل</a>
+              </div>
+              <div class="title-product">
+              </div>
+
+              <p>{{ car.brand }}</p>
+              <p>{{ car.description | dots }}</p>
+
+              <div class="card-footer d-flex align-items-center">
+                <div class="mr-auto">
+                  <span class="price">السعر:{{ car.price | currency:'EGP' }} </span>
+                </div>
+
+
+              </div>
+              <div class="d-flex justify-content-center">
+                <button *ngIf="car.isFavorite" (click)="toogleFavorite(car.carID)" class="btn btn-dark m-2">
+                  أضف للمفضلة <i class="fas fa-heart"></i>
+                </button>
+                <button *ngIf="!car.isFavorite" (click)="toogleFavorite(car.carID)" class="btn btn-dark m-2">
+                  حذف من المفضله <i class="fas fa-heart text-danger"></i>
+                </button>
+
+
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="pagination mb-5 d-flex justify-content-center align-items-center">
-        <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="btn  mr-2">
-          السابق
-        </button>
-        <span>{{ currentPage }}</span>
-        <button (click)="onPageChange(currentPage + 1)" class="btn ml-2">
-          التالي
-        </button>
-      </div>
+ 
+  </div> 
+  <app-spinner *ngIf="isload"></app-spinner>
+
+</div>
+
+
+<ng-template #noServices>
+  <div class="row">
+    <div class="col-md-12 text-center not-found">
+      <img src="../../assets/NotFound.webp" alt="No services found" width="400" height="300">
+      <p class="display-1 fw-bold">لا توجد سيارات  مفضله  </p>
     </div>
   </div>
-   -->
-
-
+</ng-template>
