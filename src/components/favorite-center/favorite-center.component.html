@@ -1,33 +1,57 @@
-<div class="main">
-    <div class="container mt-5">
-      <div class="row">
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-5" *ngFor="let center of getPaginatedCenters()">
-          <div class="card position-relative" tabindex="0" (click)="navigateToDetails(center.id)">
-            <div class="card_image">
-              <img [src]="center.imageUrl" alt="">
-              <i class="fas fa-heart"></i>
+<div class="shell">
+  <div class="container" dir="rtl">
+  
+      <div *ngIf="favoriteBeautyCenter.length>0 ; else noServices" class="d-flex flex-wrap">
+        <div class=" col col-lg-4 col-md-6 col-sm-12" *ngFor="let beauty of favoriteBeautyCenter">
+          <div class="wsk-cp-product">
+            <div class="wsk-cp-img">
+              <img [src]="'https://localhost:44322' + beauty.imageUrls[0]" alt="{{ beauty.name }}"
+                class="img-responsive" />
+
             </div>
-            <div class="card_content">
-              <h2 class="card_title">{{ center.price }}</h2>
-              <p>{{ center.name }}</p>
-              <p>{{ truncateDescription(center.description) }}</p>
-              
-              <button (click)="addToFavorites(center)" class="btn btn-light btn-remove">
-                <i class="fas fa-heart-broken"></i> إزالة  
-              </button>
+            <div class="wsk-cp-text">
+              <div class="category">
+                <a [routerLink]="['/hall-details', beauty.beautyCenterId]" class="card__button btn btn-light">مزيد من التفاصيل</a>
+              </div>
+              <div class="title-product">
+              </div>
+
+              <p>{{ beauty.name }}</p>
+              <p>{{ beauty.description | dots }}</p>
+
+              <div class="card-footer d-flex align-items-center">
+                <div class="mr-auto">
+                  <!-- <span class="price">السعر:{{ beauty | currency:'EGP' }} </span> -->
+                </div>
+
+
+              </div>
+              <div class="d-flex justify-content-center">
+                <button *ngIf="beauty.isFavorite" (click)="toogleFavorite(beauty.beautyCenterId)" class="btn btn-dark m-2">
+                  أضف للمفضلة <i class="fas fa-heart"></i>
+                </button>
+                <button *ngIf="!beauty.isFavorite" (click)="toogleFavorite(beauty.beautyCenterId)" class="btn btn-dark m-2">
+                  حذف من المفضله <i class="fas fa-heart text-danger"></i>
+                </button>
+
+
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="pagination mb-5 d-flex justify-content-center align-items-center">
-        <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="btn  mr-2">
-          السابق
-        </button>
-        <span>{{ currentPage }}</span>
-        <button (click)="onPageChange(currentPage + 1)" class="btn ml-2">
-          التالي
-        </button>
-      </div>
-    </div>
+ 
+  </div> 
+  <app-spinner *ngIf="isload"></app-spinner>
+
+</div>
+
+
+<ng-template #noServices>
+  <div class="row">
+       <div class="col-md-12 text-center not-found">
+            <img src="../../assets/NotFound.webp" alt="No services found" width="400" height="300">
+            <p class="display-1 fw-bold">لا توجد بيوتي سنتر مفضل  </p>
+       </div>
   </div>
-  
+</ng-template>
