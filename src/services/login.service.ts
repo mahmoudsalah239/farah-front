@@ -46,6 +46,8 @@ export class LoginService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
     this.userInfo.next(null);
     this.isLoggedIn.next(false);
   }

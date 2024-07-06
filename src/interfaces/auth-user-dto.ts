@@ -5,4 +5,5 @@ export interface AuthUserDTO {
   message: string;
   token: string;
   errors: string[];
+  fullName: string;
 }
