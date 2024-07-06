@@ -41,8 +41,8 @@
             <button *ngIf="hall.isFavorite" (click)="toogleFavorite(hall.hallID)" class="btn btn-dark m-2">
               حذف من المفضله <i class="fas fa-heart text-danger"></i>
             </button>
-            <button [routerLink]="['/booking-hall']" class="btn m-2">
-              توصل معنا لمزيد من التفاصيل  <i class="fas fa-calendar-check"></i>
+            <button (click)="goToMessage(ownerId)" class="btn m-2">
+              توصل معنا لمزيد من التفاصيل <i class="fas fa-calendar-check"></i>
             </button>
           </div>
         </div>

@@ -24,4 +24,12 @@ export class ChatService {
     const url = `${environment.apiUrl}/Chat/${chatId}`;
     return this.http.get(url, { headers });
   }
+
+  GetChatIdFromServices(ownerID: string): Observable<any> {
+    const token =
+      localStorage.getItem('token') || sessionStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const url = `${environment.apiUrl}/Chat/GetChatBetweenOwnerandCustomer?ownerID=${ownerID}`;
+    return this.http.get(url, { headers });
+  }
 }
