@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
 import { Observable } from 'rxjs';
@@ -19,8 +19,12 @@ export class HallService {
   }
  
    GetHallById(id:number):Observable<any>{
-    const url = `${this.ApiUrl}/Hall/HallByID?id=${id}`;
-    return this.http.get<any>(url);
+    const url = `${this.ApiUrl}/Hall/HallByID`;
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const params = new HttpParams().set('id', id.toString());
+
+    return this.http.get<any>(url, { headers,params});
    }
 }
 

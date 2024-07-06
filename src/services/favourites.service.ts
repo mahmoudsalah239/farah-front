@@ -8,8 +8,7 @@ import { Token } from '@angular/compiler';
   providedIn: 'root'
 })
 export class FavouritesService {
-  // https://localhost:44322/api/FavoriteService/Toggle?serviceID=2008
-  // https://localhost:44322/api/FavoriteService
+ 
   private baseUrl = `${environment.apiUrl}/FavoriteService`;
   constructor(private http: HttpClient) { }
 

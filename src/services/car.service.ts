@@ -19,7 +19,7 @@ export class CarService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<any>(url, { headers});
   }
-  GetCarById(id:number):Observable<any>{
+  GetCarById(id:string):Observable<any>{
     const url = `${this.baseUrl}/Car/CarByID?id=${id}`;
     return this.http.get<any>(url);
    } 

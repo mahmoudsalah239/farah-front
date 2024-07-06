@@ -19,7 +19,7 @@ import { FavouritesService } from '../../services/favourites.service';
 export class HallComponent implements OnInit {
   AllGovernments: any[] = [];
   Cites: any[] = []; 
-  selectedTown: string = '';
+  selectedTown: number = 0;
   selectedCity: number = 0;
   selectedPriceRange: string = 'all';
   halls: Hall[] = [];
@@ -74,7 +74,7 @@ export class HallComponent implements OnInit {
           this.Cites = response.data;
           this.registerForm.get('cityID')?.enable();
           this.selectedCity = 0;
-          this.selectedTown = governorateID.toString(); // تحديث المحافظة المختارة
+          this.selectedTown = 0; // تحديث المحافظة المختارة
           this.currentPage = 1; // إعادة تعيين الصفحة الحالية إلى 1 عند تغيير المحافظة
           this.filterHalls();
         });
@@ -88,7 +88,7 @@ export class HallComponent implements OnInit {
   }
 
   filterHalls(): void {
-    const govId = this.registerForm.get('govID')?.value || 0;
+    const govId = this.selectedTown || 0;
     const cityId = this.selectedCity || 0;
 this.isload=true;
     this.hallService

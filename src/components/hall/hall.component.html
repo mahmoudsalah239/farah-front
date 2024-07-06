@@ -11,7 +11,7 @@
     <div class="col-lg-4 mt-4">
       <div class="form-group">
         <label for="town" class="mr-2">المحافظة:</label>
-        <select class="form-select" id="town" [(ngModel)]="selectedTown" (ngModelChange)="onGovernorateChange($event)">
+        <select class="form-select" id="town" [(ngModel)]="selectedTown"  (change)="filterHalls()" (ngModelChange)="onGovernorateChange($event)" >
           <option value="">الكل</option>
           <option *ngFor="let town of AllGovernments" [value]="town.governorateID">{{ town.name }}</option>
         </select>
@@ -81,7 +81,9 @@
                 <button *ngIf="hall.isFavorite" (click)="toogleFavorite(hall.hallID)" class="btn btn-dark m-2">
                   حذف من المفضله <i class="fas fa-heart text-danger"></i>
                 </button>
-
+                <button  (click)="toogleFavorite(hall.hallID)" class="btn btn-dark m-2">
+                  تواصل للحجز <i class="fas fa-calendar-check"></i>
+                </button>
 
               </div>
             </div>
