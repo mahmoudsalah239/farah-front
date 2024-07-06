@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { BeautyCenter } from '../../../interfaces/beauty-center';
+import { BeautyService } from '../../../services/beauty.service';
+import { FavouritesService } from '../../../services/favourites.service';
+import { AddressServiceService } from '../../../services/address-service.service';
 
 @Component({
   selector: 'app-beauty-details',
@@ -13,37 +17,74 @@ templateUrl: './beauty-details.component.html',
 
 
   export class BeautyDetailsComponent implements OnInit {
-    features: string = '';
-    currentImage: string = '';
-    center: any; 
+    Beauty!: BeautyCenter
+    images: any[] = [];
+    activeSlideIndex = 0;
+    cityName:string=''
   
-    thumbnails: {thumb: string, large: string}[] = [
-      {thumb: 'https://ongineering.com/images/Articles_Aziz/wedding-hall-decoration-design.jpg', large: 'https://ongineering.com/images/Articles_Aziz/wedding-hall-decoration-design.jpg'},
-      {thumb: 'https://ongineering.com/images/Articles_Aziz/wedding-hall-decoration-design.jpg', large: 'https://ongineering.com/images/Articles_Aziz/wedding-hall-decoration-design.jpg'},
-      {thumb: 'https://ongineering.com/images/Articles_Aziz/wedding-hall-decoration-design.jpg', large: 'https://ongineering.com/images/Articles_Aziz/wedding-hall-decoration-design.jpg'},
-      {thumb: 'https://ongineering.com/images/Articles_Aziz/wedding-hall-decoration-design.jpg', large: 'https://ongineering.com/images/Articles_Aziz/wedding-hall-decoration-design.jpg'}
-    ];
-  
-    changeImage(imageSrc: string): void {
-      this.currentImage = imageSrc;
-    }
-  
-    centers = [
-      { id: 1,owner:'a', name: 'مركز تجميل 1', imageUrl: 'https://mostaql.hsoubcdn.com/uploads/portfolios/835649/61a1e466eb008/Beauty-Centre-2.jpg', price: 3000, description: 'الوصف' },
-      { id: 2,owner:'b', name: 'مركز تجميل 2', imageUrl: 'https://mostaql.hsoubcdn.com/uploads/thumbnails/835649/5fb1c7c34bc0a/Beauty-Centre-1.jpg', price: 4000, description: 'الوصف' },
-      { id: 3,owner:'c', name: 'مركز تجميل 3', imageUrl: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/bc1bfb70157027.5b99e26e3d2f2.jpg', price: 5000, description: 'الوصف' },
-      { id: 4,owner:'d', name: 'مركز تجميل 4', imageUrl: 'https://i.pinimg.com/736x/e1/ba/c4/e1bac453a27eb88be3fb05fd64bcf3b6.jpg', price: 2000, description: 'الوصف'}
-    ];
-  
-  
-    constructor(private route: ActivatedRoute) { }
-  
+    constructor(
+      private route: ActivatedRoute,
+      private beautyService: BeautyService,
+      private fav:FavouritesService,
+      private  Address:AddressServiceService,
+    ) {}
     ngOnInit(): void {
-      const dressId = +this.route.snapshot.paramMap.get('id')!;
-      this.center = this.centers.find(c => c.id === dressId);
-      if (this.center) {
-        this.currentImage = this.center.imageUrl;
-      }
+       const hallId: any = this.route.snapshot.paramMap.get('id');
+      
+     this.GetBeautyById(hallId);
     }
+    GetBeautyById(hallId:number){
+      this.beautyService.GetBeautyById(hallId).subscribe({
+        next: (data: any) => {
+          this.Beauty = data.data;
+          console.log(data);
+        this.getCityById(data.data.city)
+          
+          
+          
+          this.images = this.Beauty.imageUrls?.map((url: string) => ({
+            path: 'https://localhost:44322' + url,
+            caption: this.Beauty.name,
+          }));
+        },
+        error: (error) => {
+          console.error('Error fetching hall details', error);
+        },
+      });
+  
+    }
+  
+    prevSlide(): void {
+      this.activeSlideIndex =
+        this.activeSlideIndex === 0
+          ? this.images.length - 1
+          : this.activeSlideIndex - 1;
+    }
+  
+    nextSlide(): void {
+      this.activeSlideIndex = (this.activeSlideIndex + 1) % this.images.length;
+    }
+  
+    
+    toogleFavorite(id:number){
+      this.fav.toggleFavorite(id).subscribe({
+        next:(res)=>{
+          console.log(res);
+  
+          this.GetBeautyById(id);
+        }
+      })
+      
+        }
+  
+        getCityById(id:number){
+          this.Address.getCityById(id).subscribe({
+            next: (data: any) => {
+              this.cityName = data.data.name;
+           
+            }
+          })
+  
+        }
   }
   

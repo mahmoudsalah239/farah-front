@@ -1,40 +1,33 @@
-<div class="container-fluid mt-5 mb-5">
-    <div class="row">
+<div class="container">
+  <div class="detail">
+    <div class="image">
+      <img [src]="currentImage" alt="{{ Photographer.description }}">
+    </div>
+    <div class="content">
+      <div class="description " dir="rtl">
+        {{Photographer.description}}
+      </div> 
+
+      <div class="buttons">
+        <button *ngIf="!Photographer.isFavorite" (click)="toogleFavorite(Photographer.photographyID)" class="btn favorite">
+          أضف إلى المفضلة <i class="fas fa-heart"></i>
+        </button>
+        <button *ngIf="Photographer.isFavorite" (click)="toogleFavorite(Photographer.photographyID)" class="btn remove-favorite">
+          حذف من المفضلة <i class="fas fa-heart text-danger"></i>
+        </button>
+        <button class="btn contact" (click)="toogleFavorite(Photographer.photographyID)">
+          تواصل للحجز <i class="fas fa-calendar-check"></i>
+        </button>
+      </div>
+
     
-      <div class="col-lg-4 col-md-6 mb-3 position-relative">
-        <img [src]="currentImage" alt="{{ photographer.name }}" class="photographer-image img-fluid">
-        <div class="coloredDiv"></div>
-        <!-- Replace thumbnails with images specific to photographers -->
-        <div class="thumbnail-images mt-3">
-          <img *ngFor="let image of thumbnails" 
-               class="thumbnail" 
-               [src]="image.thumb" 
-               (click)="changeImage(image.large)">
-        </div>
-      </div>
-  
-      <!-- Details Section -->
-      <div class="col-lg-8 col-md-6 details mt-5 fs-4">
-        <h2>{{ photographer.name }}</h2>
-        <p><strong>الاسم:</strong> {{ photographer.name }}</p>
-        <p><strong>السعر:</strong> {{ photographer.price }}</p>
-        <!-- Update additional details as needed for photographers -->
-        <p><strong>الوصف:</strong> {{ photographer.description }}</p>
-        <div class="row mt-3 mb-3 w-50">
-          <div class="col-md-8">
-            <label for="features">اضافة مميزات:</label>
-            <!-- Update textarea and ngModel binding for photographers -->
-            <textarea id="features" class="form-control" rows="4" placeholder="اضافة مميزات" [(ngModel)]="features"></textarea>
-          </div>
-        </div>
-  
-        <button [routerLink]="['/favorite-photographer']" class="btn m-2">
-          أضف الى المفضلة <i class="fas fa-heart"></i>
-        </button>
-        <button [routerLink]="['/booking-photographer']" class="btn m-2">
-          أحجز الان <i class="fas fa-calendar-check"></i>
-        </button>
-      </div>
     </div>
   </div>
-  
+
+  <div class="title">مزيد من الصور</div>
+  <div class="thumbnail-images">
+    <div class="thumbnail" *ngFor="let image of thumbnails">
+      <img [src]="image.thumb" (mouseover)="changeImage(image.large)">
+    </div>
+  </div>
+</div>
