@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
 import { environment } from '../environments/environment.development';
 @Injectable({
   providedIn: 'root',
@@ -15,7 +14,7 @@ export class SignalRService {
     []
   );
 
-  constructor(private http: HttpClient, private toastr: ToastrService) {}
+  constructor(private http: HttpClient) {}
 
   private get token() {
     return (
@@ -84,7 +83,7 @@ export class SignalRService {
 
     this.notificationHubConnection
       .start()
-      .then(() => this.toastr.info('تم الاتصال بمركز الإشعارات', 'تم الاتصال'))
+      .then(() => console.log('Notification Hub Connection started'))
       .catch((err) =>
         console.log('Error while starting notification hub connection: ' + err)
       );
