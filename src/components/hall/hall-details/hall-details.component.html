@@ -6,7 +6,7 @@
         <div class="carousel-inner">
           <!-- Main Hall Image -->
           <div class="carousel-item active">
-            <img [src]="images[0]?.path" class="rounded" alt="{{ hall?.name }}">
+            <img [src]="images[0]?.path" class="rounded" alt="{{ hall.name }}">
           </div>
           <!-- Additional Images Carousel Items -->
           <div class="carousel-item" *ngFor="let image of images.slice(1)">
@@ -29,16 +29,19 @@
     <div class="col-lg-6 col-md-12 mt-5 mb-5">
       <div class="detail">
         <div class="content">
-          <div class="name">{{ hall?.name }}</div>
-          <div class="price">السعر: {{ hall?.price | currency:'EGP' }}</div>
-          <div class="price">السعة: {{ hall?.capacity }}</div>
-          <div class="description" dir="rtl">الوصف: {{ hall?.description }}</div>
-          <div class="buttons">
-            <button [routerLink]="['/favorites/favorite']" class="btn m-2">
-              أضف الى المفضلة <i class="fas fa-heart"></i>
+          <div class="name">{{ hall.name }}</div>
+          <div class="price">السعر: {{ hall.price | currency:'EGP' }}</div>
+          <div class="price">السعة: {{ hall.capacity }}</div>
+          <div class="description" dir="rtl">الوصف: {{ hall.description }}</div>
+          <div class="buttons mt-5">
+            <button *ngIf="!hall.isFavorite" (click)="toogleFavorite(hall.hallID)" class="btn btn-dark m-2">
+              أضف للمفضلة <i class="fas fa-heart"></i>
+            </button>
+            <button *ngIf="hall.isFavorite" (click)="toogleFavorite(hall.hallID)" class="btn btn-dark m-2">
+              حذف من المفضله <i class="fas fa-heart text-danger"></i>
             </button>
             <button [routerLink]="['/booking-hall']" class="btn m-2">
-              أحجز الان <i class="fas fa-calendar-check"></i>
+              توصل معنا لمزيد من التفاصيل  <i class="fas fa-calendar-check"></i>
             </button>
           </div>
         </div>

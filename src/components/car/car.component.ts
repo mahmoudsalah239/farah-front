@@ -8,6 +8,7 @@ import { AddressServiceService } from '../../services/address-service.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
   import { FavouritesService } from './../../services/favourites.service';
 import Swal from 'sweetalert2'; 
+import { Car } from '../../interfaces/car';
 @Component({
   selector: 'app-car',
   standalone: true,
@@ -115,7 +116,7 @@ export class CarComponent implements OnInit {
     }
   }
 
-  getPaginatedCars(): any[] {
+  getPaginatedCars(): Car[] {
     return this.cars;
   }
 
