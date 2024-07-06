@@ -23,11 +23,9 @@
             <a class="nav-link" routerLink="/photographer" routerLinkActive="active">المصور</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/dress" routerLinkActive="active">فساتين</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" routerLink="/beauty" routerLinkActive="active">بيوتي سنتر</a>
           </li>
+        
         </ul>
         <ul *ngIf="!IsLogin; else logined" class="navbar-nav ms-auto">
           <li class="nav-item">
@@ -35,7 +33,10 @@
           </li>
         </ul>
         <ng-template #logined>
-          <ul class="navbar-nav me-auto">
+          <ul class="navbar-nav me-auto d-flex align-items-center">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/Chats" routerLinkActive="active">محادثاتي <i class="fa-solid fa-envelope"></i> </a>
+            </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -43,7 +44,7 @@
               </a>
               <ul class="dropdown-menu text-end " aria-labelledby="navbarDropdown" dir="ltr">
                 <li><a class="dropdown-item" routerLink="/Profile">بروفايلي <i class="fa fa-user"></i></a></li>
-                <li><a class="dropdown-item" routerLink="/">طلباتي <i class="fa fa-list"></i></a></li>
+                <li><a class="dropdown-item" routerLink="/Chats">محادثاتي  <i class="fa fa-list"></i></a></li>
                 <li><a class="dropdown-item" routerLink="/favorites/favorite">المفضلة <i class="fa fa-list"></i></a></li>
                 <li><a class="dropdown-item" (click)="logout()">تسجيل الخروج <i class="fa fa-sign-out"></i></a></li>
               </ul>
