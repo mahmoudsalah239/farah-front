@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
   userInfo: any;
   IsLogin: boolean = false;
 
+  FullName: string = '';
   constructor(private loginService: LoginService) {}
 
   ngOnInit(): void {
@@ -24,8 +25,12 @@ export class NavbarComponent implements OnInit {
 
     this.loginService.isLoggedIn.subscribe((isLoggedIn) => {
       this.IsLogin = isLoggedIn;
-    
     });
+    this.FullName =
+      localStorage.getItem('name') ||
+      '' ||
+      sessionStorage.getItem('name') ||
+      '';
 
     this.loginService.setInformationOfUser();
   }

@@ -75,6 +75,8 @@ export class LoginComponent implements OnInit {
 
         if (res.succeeded) {
           localStorage.setItem('token', res.data.token);
+          localStorage.setItem('name', res.data.fullName);
+
           this.ngZone.run(() => {
             Swal.fire({
               title: 'تم تسجيل الدخول بنجاح!',
@@ -83,7 +85,11 @@ export class LoginComponent implements OnInit {
               icon: 'success',
               confirmButtonText: 'موافق',
             }).then(() => {
-              this.router.navigate(['/home']);
+              this.router.navigate(['/home']).then(() => {
+                setTimeout(() => {
+                  window.location.reload();
+                }, 100);
+              });
             });
           });
         } else {
@@ -130,14 +136,16 @@ export class LoginComponent implements OnInit {
     ) {
       this._loginService.login(formData).subscribe({
         next: (response) => {
+          console.log(response);
           this.isLoading = false;
           if (response && response.body.succeeded && response.body.data.token) {
             const token = response.body.data.token;
             const role = response.body.data.role;
             const isConfirmed = response.body.data.isEmailConfirmed;
             this._loginService.storeToken(token);
-            localStorage.setItem('token',token);
-            localStorage.setItem('email',formData.email)
+            localStorage.setItem('token', token);
+            localStorage.setItem('name', response.body.data.name);
+            localStorage.setItem('email', formData.email);
 
             if (role === 'Admin' || role === 'Owner') {
               Swal.fire({
@@ -148,7 +156,7 @@ export class LoginComponent implements OnInit {
               }).then(() => {
                 localStorage.clear();
                 sessionStorage.clear();
-               // this.router.navigate(['/dashboard-login']);
+                // this.router.navigate(['/dashboard-login']);
               });
             } else if (role === 'Customer') {
               if (!isConfirmed) {
@@ -315,10 +323,8 @@ export class LoginComponent implements OnInit {
   }
 
   sendForgotPasswordEmail(email: string) {
-    
     this.resetPasswordService.forgetPassword(email).subscribe({
       next: (response: any) => {
-     
         if (response && response.succeeded) {
           Swal.fire({
             icon: 'success',
@@ -339,6 +345,4 @@ export class LoginComponent implements OnInit {
       },
     });
   }
-
-
 }
