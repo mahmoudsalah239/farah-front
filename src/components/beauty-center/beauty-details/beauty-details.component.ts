@@ -17,74 +17,51 @@ templateUrl: './beauty-details.component.html',
 
 
   export class BeautyDetailsComponent implements OnInit {
-    Beauty!: BeautyCenter
-    images: any[] = [];
-    activeSlideIndex = 0;
-    cityName:string=''
+    Beauty!: BeautyCenter;
+    currentImage: string = '';
+    thumbnails: { thumb: string, large: string }[] = [];
   
-    constructor(
-      private route: ActivatedRoute,
-      private beautyService: BeautyService,
-      private fav:FavouritesService,
-      private  Address:AddressServiceService,
-    ) {}
+    constructor(private route: ActivatedRoute, private beautyService: BeautyService
+      ,private fav:FavouritesService
+    ) { }
+  
+   carId = Number(this.route.snapshot.paramMap.get('id')) ;
     ngOnInit(): void {
-       const hallId: any = this.route.snapshot.paramMap.get('id');
-      
-     this.GetBeautyById(hallId);
+      if (this.carId) {
+        this.getCarById(this.carId);
+      }
     }
-    GetBeautyById(hallId:number){
-      this.beautyService.GetBeautyById(hallId).subscribe({
-        next: (data: any) => {
-          this.Beauty = data.data;
-          console.log(data);
-        this.getCityById(data.data.city)
-          
-          
-          
-          this.images = this.Beauty.imageUrls?.map((url: string) => ({
-            path: 'https://localhost:44322' + url,
-            caption: this.Beauty.name,
-          }));
-        },
-        error: (error) => {
-          console.error('Error fetching hall details', error);
-        },
+  
+    getCarById(id: number): void {
+      this.beautyService.GetBeautyById(id).subscribe({
+        next: (res) => {
+          this.Beauty = res.data;
+          if (this.Beauty.imageUrls && this.Beauty.imageUrls.length > 0) {
+            this.currentImage = 'https://localhost:44322' + this.Beauty.imageUrls[0];
+            this.populateThumbnails();
+          }
+        }
       });
-  
     }
   
-    prevSlide(): void {
-      this.activeSlideIndex =
-        this.activeSlideIndex === 0
-          ? this.images.length - 1
-          : this.activeSlideIndex - 1;
+    populateThumbnails(): void {
+      this.thumbnails = this.Beauty.imageUrls.map(url => ({
+        thumb: 'https://localhost:44322' + url,
+        large: 'https://localhost:44322' + url
+      }));
     }
   
-    nextSlide(): void {
-      this.activeSlideIndex = (this.activeSlideIndex + 1) % this.images.length;
+    changeImage(imageSrc: string): void {
+      this.currentImage = imageSrc;
     }
-  
-    
     toogleFavorite(id:number){
       this.fav.toggleFavorite(id).subscribe({
         next:(res)=>{
           console.log(res);
   
-          this.GetBeautyById(id);
+          this.getCarById(this.carId);
+          
         }
       })
       
-        }
-  
-        getCityById(id:number){
-          this.Address.getCityById(id).subscribe({
-            next: (data: any) => {
-              this.cityName = data.data.name;
-           
-            }
-          })
-  
-        }
-  }
-  
+        }}

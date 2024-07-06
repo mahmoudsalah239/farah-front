@@ -2,7 +2,6 @@
 
 <div class="shell">
   <div class="container">
-    
       <div *ngIf="cars.length > 0; else noServices"  class="d-flex flex-wrap">
         <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let car  of getPaginatedCars()">
           <div class="wsk-cp-product">
