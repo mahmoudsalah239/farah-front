@@ -30,6 +30,8 @@ import { BookingPhotographerComponent } from '../components/booking-photographer
 import { ProfileComponent } from '../components/profile/profile.component';
 import { FavoritesComponent } from '../components/favorites/favorites.component';
 import { FavoriteComponent } from './../components/favorite/favorite.component';
+import { AllChatsComponent } from '../chats/all-chats/all-chats.component';
+import { ChatComponent } from '../chats/chat/chat.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -53,6 +55,8 @@ export const routes: Routes = [
   { path: 'favorite-photographer', component: FavoritePhotographerComponent },
   { path: 'booking-photographer', component: BookingPhotographerComponent },
   { path: 'dress', component: DressComponent },
+  { path: 'Chats', component: AllChatsComponent },
+  { path: 'Chat/:id', component: ChatComponent },
 
   {path:'dress-details/:id',component:DressDetailsComponent},
   {path:'booking-dress',component:BookingDressComponent},
