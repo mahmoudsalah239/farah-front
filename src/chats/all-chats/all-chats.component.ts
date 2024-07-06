@@ -64,7 +64,7 @@ export class AllChatsComponent implements OnInit {
   }
 
   goToMessage(chatId: any, userId: string): void {
-    this.router.navigate(['/orders/chat', chatId]);
+    this.router.navigate(['/Chats/chat', chatId]);
     localStorage.setItem('customerId', userId);
     sessionStorage.setItem('customerId', userId);
   }
