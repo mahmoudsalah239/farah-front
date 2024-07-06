@@ -1,32 +1,42 @@
- <div class="container">
-  <div class="detail">
+<div class="container">
+    <div class="detail">
       <div class="image">
-          <img [src]="'https://localhost:44322' + car.pictureUrls[0]" alt="{{ car.brand }}">
+        <img [src]="currentImage" alt="{{ car.brand }}">
       </div>
       <div class="content">
-        <div class="price">النوع:{{ car.brand }}</div>
-          <div class="price">السعر:{{ car.price }}</div>
-          <div class="price">السنة:{{ car.price }}</div>
-          
-          
-          <div class="buttons">
-              <button [routerLink]="['/favorite-car']" class="btn m-2">
-                  أضف الى المفضلة <i class="fas fa-heart"></i>
-              </button>
-              <button [routerLink]="['/booking-car']" class="btn m-2">
-                   أحجز الان <i class="fas fa-calendar-check"></i>
-              </button> 
-          </div>
-          <div class="description" dir="rtl">
-            هذه السيارة مثالية للأفراد والعائلات الذين يبحثون عن الراحة والأداء الممتاز. تتميز السيارة بمحرك قوي وفعال يضمن لك رحلة سلسة واقتصادية. تصميمها الداخلي أنيق ومريح، مزود بأحدث التقنيات لضمان تجربة قيادة مميزة. كما تتمتع السيارة بميزات أمان متقدمة لضمان سلامتك وسلامة أحبائك.
+        <h1 class="brand">
+          <i class="fas fa-car"></i> النوع: {{ car.brand }}
+        </h1>
+        <div class="price">
+          <i class="fas fa-tag"></i> السعر: {{ car.price | currency }}
+        </div>
+        <div class="year">
+          <i class="fas fa-calendar-alt"></i> الموديل: {{ car.year }}
+        </div>
+  
+        <div class="buttons">
+          <button *ngIf="!car.isFavorite" (click)="toogleFavorite(car.carID)" class="btn favorite">
+            أضف إلى المفضلة <i class="fas fa-heart"></i>
+          </button>
+          <button *ngIf="car.isFavorite" (click)="toogleFavorite(car.carID)" class="btn remove-favorite">
+            حذف من المفضلة <i class="fas fa-heart text-danger"></i>
+          </button>
+          <button class="btn contact" (click)="toogleFavorite(car.carID)">
+            تواصل للحجز <i class="fas fa-calendar-check"></i>
+          </button>
+        </div>
+  
+        <div class="description" dir="rtl">
+          {{car.description}}
         </div>
       </div>
-  </div>
-
-  <div class="title"> مزيد من الصور</div>
-  <div class="thumbnail-images">
+    </div>
+  
+    <div class="title">مزيد من الصور</div>
+    <div class="thumbnail-images">
       <div class="thumbnail" *ngFor="let image of thumbnails">
-          <img [src]="image.thumb" (click)="changeImage(image.large)">
+        <img [src]="image.thumb" (mouseover)="changeImage(image.large)">
       </div>
+    </div>
   </div>
-</div>
+  

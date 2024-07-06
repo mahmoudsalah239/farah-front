@@ -30,6 +30,7 @@
       <div class="detail">
         <div class="content">
           <div class="name">{{ hall.name }}</div>
+          <div class="price">العنوان : {{ cityName}}</div>
           <div class="price">السعر: {{ hall.price | currency:'EGP' }}</div>
           <div class="price">السعة: {{ hall.capacity }}</div>
           <div class="description" dir="rtl">الوصف: {{ hall.description }}</div>
@@ -49,3 +50,31 @@
     </div>
   </div>
 </div>
+
+
+<div class="col-lg-12 details fs-4">
+  <!-- <h2 class="text-center hall-name"><strong>اسم لقاعه :</strong> {{ hall.name }}</h2> -->
+  <div class="text-center mt-3 info-grid">
+    <div class="info-item">
+      <i class="fas fa-money-bill-wave info-icon"></i>
+      <p><strong>السعر:</strong> {{ hall.price | currency:'EGP' }}</p>
+    </div>
+    <div class="info-item">
+      <i class="fas fa-chair info-icon"></i>
+      <p><strong>السعة:</strong> {{ hall.capacity }}</p>
+    </div>
+    <div class="info-item">
+      <i class="fas fa-align-left info-icon"></i>
+      <p><strong>الوصف:</strong> {{ hall.description }}</p>
+    </div>
+  </div>
+
+  <div class="features mt-4">
+    <h4 class="text-center"><i class="fas fa-star feature-icon"></i> المميزات:</h4>
+    <div class="d-flex flex-wrap justify-content-center">
+      <div class="feature-item" *ngFor="let feature of hall.features">
+        <i class="fas fa-check-circle feature-icon mx-2"></i>
+        <span>{{ feature }}</span>
+      </div>
+    </div>
+  </div>

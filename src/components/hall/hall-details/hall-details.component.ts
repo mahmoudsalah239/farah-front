@@ -6,11 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { HallService } from '../../../services/hall.service';
 import { Hall } from '../../../interfaces/hall';
 import { FavouritesService } from '../../../services/favourites.service';
+import { AddressServiceService } from '../../../services/address-service.service';
 
 @Component({
   selector: 'app-hall-details',
   standalone: true,
   imports: [CarouselModule, CommonModule, RouterLink, FormsModule],
+
 
   templateUrl: './hall-details.component.html',
   styleUrls: ['./hall-details.component.scss'],
@@ -19,11 +21,13 @@ export class HallDetailsComponent implements OnInit {
   hall!: Hall
   images: any[] = [];
   activeSlideIndex = 0;
+  cityName:string=''
 
   constructor(
     private route: ActivatedRoute,
     private hallService: HallService,
-    private fav:FavouritesService
+    private fav:FavouritesService,
+    private  Address:AddressServiceService,
   ) {}
   ngOnInit(): void {
      const hallId: any = this.route.snapshot.paramMap.get('id');
@@ -35,6 +39,9 @@ export class HallDetailsComponent implements OnInit {
       next: (data: any) => {
         this.hall = data.data;
         console.log(data);
+      this.getCityById(data.data.city)
+        
+        
         
         this.images = this.hall.pictureUrls?.map((url: string) => ({
           path: 'https://localhost:44322' + url,
@@ -64,9 +71,20 @@ export class HallDetailsComponent implements OnInit {
     this.fav.toggleFavorite(id).subscribe({
       next:(res)=>{
         console.log(res);
+
         this.GetHallById(id);
       }
     })
     
+      }
+
+      getCityById(id:number){
+        this.Address.getCityById(id).subscribe({
+          next: (data: any) => {
+            this.cityName = data.data.name;
+         
+          }
+        })
+
       }
 }

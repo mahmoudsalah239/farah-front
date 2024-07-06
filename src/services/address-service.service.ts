@@ -20,4 +20,10 @@ export class AddressServiceService {
   getCitiesByGovId(governorateID: number): Observable<City[]> {
     return this.http.get<City[]>(`${this.baseUrl}/City/${governorateID}`);
   }
+
+  getCityById(cityId:number): Observable<City>{
+
+    return this.http.get<City>(`${this.baseUrl}/City/getCityById?id=${cityId}`);
+
+  }
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment.development';
@@ -18,9 +18,12 @@ export class PhotographerService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<any>(url, { headers});
   }
-  GetCarById(id:number):Observable<any>{
-    const url = `${this.baseUrl}/Car/CarByID?id=${id}`;
-    return this.http.get<any>(url);
+  getPhotographerById(id:number):Observable<any>{
+    const url = `${this.baseUrl}/Photography/GetPhotographerById`;
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.get<any>(url, { headers,params});
    } 
 
 }
