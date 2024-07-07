@@ -53,7 +53,7 @@ export class RegisterComponent {
         lastName: new FormControl('', Validators.required),
         ssn: new FormControl('', [
           Validators.required,
-          Validators.pattern(/^\d{5}$/),
+          Validators.pattern(/^\d{14}$/),
         ]),
         email: new FormControl('', [Validators.required, Validators.email]),
         phoneNumber: new FormControl('', [

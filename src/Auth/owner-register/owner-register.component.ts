@@ -23,7 +23,7 @@ import { mustMatch } from '../../interfaces/validators';
   imports: [RouterLink, CommonModule, ReactiveFormsModule],
   templateUrl: './owner-register.component.html',
   styleUrls: ['./owner-register.component.scss'],
-})  
+})
 export class OwnerRegisterComponent implements OnInit {
   registerForm: FormGroup;
   AllGovernments: Governorate[] = [];
@@ -41,22 +41,35 @@ export class OwnerRegisterComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private router: Router
   ) {
-    this.registerForm = new FormGroup({
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
-      ssn: new FormControl('', [Validators.required, Validators.minLength(14), Validators.maxLength(14)]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      serviceType: new FormControl('', Validators.required),
-      govID: new FormControl('', Validators.required),
-      cityID: new FormControl('', Validators.required),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      confirmPassword: new FormControl('', Validators.required),
-      phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
-      yourFavirotePerson: new FormControl('', Validators.required),
-      profileImage: new FormControl('', Validators.required),
-      idFrontImage: new FormControl('', Validators.required),
-      idBackImage: new FormControl('', Validators.required)
-    },   { validators: mustMatch('password', 'confirmPassword') });
+    this.registerForm = new FormGroup(
+      {
+        firstName: new FormControl('', Validators.required),
+        lastName: new FormControl('', Validators.required),
+        ssn: new FormControl('', [
+          Validators.required,
+          Validators.minLength(14),
+          Validators.maxLength(14),
+        ]),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        serviceType: new FormControl('', Validators.required),
+        govID: new FormControl('', Validators.required),
+        cityID: new FormControl('', Validators.required),
+        password: new FormControl('', [
+          Validators.required,
+          Validators.minLength(6),
+        ]),
+        confirmPassword: new FormControl('', Validators.required),
+        phoneNumber: new FormControl('', [
+          Validators.required,
+          Validators.pattern('^[0-9]*$'),
+        ]),
+        yourFavirotePerson: new FormControl('', Validators.required),
+        profileImage: new FormControl('', Validators.required),
+        idFrontImage: new FormControl('', Validators.required),
+        idBackImage: new FormControl('', Validators.required),
+      },
+      { validators: mustMatch('password', 'confirmPassword') }
+    );
   }
 
   ngOnInit(): void {
@@ -77,7 +90,7 @@ export class OwnerRegisterComponent implements OnInit {
       this.AllGovernments = response.data;
     });
   }
-    onGovernorateChange(governorateID: number): void {
+  onGovernorateChange(governorateID: number): void {
     this.addressService
       .getCitiesByGovId(governorateID)
       .subscribe((response: any) => {
@@ -109,28 +122,55 @@ export class OwnerRegisterComponent implements OnInit {
     if (this.registerForm.valid) {
       this.spinner.show();
       const formData = new FormData();
-      for (const key in this.registerForm.value) {
-        if (this.registerForm.value.hasOwnProperty(key)) {
-          formData.append(key, this.registerForm.value[key]);
-        }
-      }
+      formData.append('FirstName', this.registerForm.get('firstName')?.value);
+      formData.append('LastName', this.registerForm.get('lastName')?.value);
+      formData.append('SSN', this.registerForm.get('ssn')?.value);
+      formData.append('Email', this.registerForm.get('email')?.value);
+      formData.append('UserType', this.registerForm.get('serviceType')?.value); // Ensure this matches the backend
+      formData.append('GovID', this.registerForm.get('govID')?.value);
+      formData.append('CityID', this.registerForm.get('cityID')?.value);
+      formData.append('Password', this.registerForm.get('password')?.value);
+      formData.append(
+        'PhoneNumber',
+        this.registerForm.get('phoneNumber')?.value
+      );
+      formData.append(
+        'YourFavirotePerson',
+        this.registerForm.get('yourFavirotePerson')?.value
+      );
+      formData.append(
+        'ProfileImageFile',
+        this.registerForm.get('profileImage')?.value
+      );
+      formData.append(
+        'IDFrontImageFile',
+        this.registerForm.get('idFrontImage')?.value
+      );
+      formData.append(
+        'IDBackImageFile',
+        this.registerForm.get('idBackImage')?.value
+      );
 
-      formData.forEach(( key,value) => {
+      formData.forEach((value, key) => {
         console.log(`${key}: ${value}`);
       });
+
       this.registerService.OwnerRegister(formData).subscribe({
         next: (res) => {
           this.spinner.hide();
-          if (res.body && res.body.data && res.body.data.token) {
-            localStorage.setItem('token', res.body.data.token);
-            this.promptForOtp();
-          } else {
-            this.showError();
-          }
+          localStorage.setItem('token', res.data.token);
+          this.promptForOtp();
         },
-        error: () => {
+        error: (err) => {
+          console.log(err.error.message);
           this.spinner.hide();
-          this.showError();
+          Swal.fire({
+            icon: 'error',
+            title: 'عذرًا...',
+            text: `${err.error.message}`,
+            // footer: '<a href="#">لماذا أواجه هذه المشكلة؟</a>',
+          });
+          console.log(err);
         },
       });
     }
@@ -163,9 +203,13 @@ export class OwnerRegisterComponent implements OnInit {
           Swal.fire({
             icon: 'success',
             title: 'تم التحقق من البريد الإلكتروني',
-            text: 'تم التحقق من بريدك الإلكتروني بنجاح. يمكنك الآن تسجيل الدخول.',
+            text: 'تم التحقق من بريدك الإلكتروني بنجاح. يمكنك الآن تسجيل الدخول إلى لوحة التحكم.',
+            footer:
+              '<a href="http://localhost:4200/">http://localhost:4200/</a>',
           }).then(() => {
-            this.router.navigate(['/login']);
+            localStorage.clear();
+            localStorage.removeItem('token');
+            this.router.navigate(['/Login']);
           });
         } else {
           this.promptForOtpWithMessage('OTP غير صالح أو منتهي. حاول مرة أخرى.');
