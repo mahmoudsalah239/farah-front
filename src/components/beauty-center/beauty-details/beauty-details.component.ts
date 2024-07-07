@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BeautyCenter } from '../../../interfaces/beauty-center';
 import { BeautyService } from '../../../services/beauty.service';
 import { FavouritesService } from '../../../services/favourites.service';
 import { AddressServiceService } from '../../../services/address-service.service';
+import { ChatService } from '../../../services/chat.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-beauty-details',
@@ -23,7 +25,9 @@ templateUrl: './beauty-details.component.html',
     cityName:string='';
   
     constructor(private route: ActivatedRoute, private beautyService: BeautyService
-      ,private fav:FavouritesService , private Address:AddressServiceService
+      ,private fav:FavouritesService , private Address:AddressServiceService,
+         private chatService: ChatService,
+      private router: Router
     ) { }
   
    carId = Number(this.route.snapshot.paramMap.get('id')) ;
@@ -81,5 +85,31 @@ templateUrl: './beauty-details.component.html',
             }
           })
         }
+
+
+        
+  openChat(ownerId: string) {
+    if (localStorage.getItem('token')) {
+      this.chatService.GetChatIdFromServices(ownerId).subscribe((res) => {
+        localStorage.setItem('ownerId', ownerId);
+        sessionStorage.setItem('ownerId', res.data.user.id);
+
+        this.router.navigate(['/Chats/chat', res.data.chatId]);
+      });
+    } else {
+      Swal.fire({
+        title: 'غير مسجل ',
+        text: 'أنت غير مسجل . يجب عليك تسجيل الدخول أولاً.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'تسجيل الدخول',
+        cancelButtonText: 'إلغاء',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/Login']);
+        }
+      });
+    }
+  }
       
-      }
+      }  

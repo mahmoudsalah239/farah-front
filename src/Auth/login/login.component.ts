@@ -14,15 +14,18 @@ import { ResetPasswordService } from '../../services/reset-password.service';
 import { PromptMomentNotification, CredentialResponse } from 'google-one-tap';
 import { CustomResponse } from '../../interfaces/custom-response';
 import { AuthUserDTO } from '../../interfaces/auth-user-dto';
-
+import { CustomerInfoService } from './../../services/customer-info.service';
+import { environment } from '../../environments/environment.development';
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [RouterLink, ReactiveFormsModule, CommonModule],
-  templateUrl: './login.component.html',
+  
+templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+
   isLoading = false;
   errorMessage: string = '';
   loginForm: FormGroup = new FormGroup({
@@ -30,16 +33,22 @@ export class LoginComponent implements OnInit {
     password: new FormControl(null, [Validators.required]),
     rememberMe: new FormControl(false),
   });
+  profileImageUrl: string='';
 
   constructor(
     private router: Router,
     private _loginService: LoginService,
     private ngZone: NgZone,
     private sendOtpService: SendOtpService,
-    private resetPasswordService: ResetPasswordService
+    private resetPasswordService: ResetPasswordService,
+    private profileService: CustomerInfoService // Inject the ProfileService
   ) {}
 
   ngOnInit(): void {
+    this.profileService.profileImageUrl$.subscribe(url => {
+      this.profileImageUrl = url;
+      localStorage.setItem('profileImage',  this.profileImageUrl);
+    });
     //@ts-ignore
     google.accounts.id.initialize({
       client_id:
@@ -73,6 +82,9 @@ export class LoginComponent implements OnInit {
         if (res.succeeded) {
           localStorage.setItem('token', res.data.token);
           localStorage.setItem('name', res.data.fullName);
+          localStorage.setItem('profileImageUrl',res.data.profileImage); // Save profile image URL
+
+          this.profileService.setProfileImageUrl(environment.UrlForImages+res.data.profileImage); // Update profile image
 
           this.ngZone.run(() => {
             Swal.fire({
@@ -143,6 +155,9 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('token', token);
             localStorage.setItem('name', response.body.data.name);
             localStorage.setItem('email', formData.email);
+            localStorage.setItem('profileImageUrl', response.body.data.profileImage); // Save profile image URL
+
+            this.profileService.setProfileImageUrl(response.body.data.profileImage); // Update profile image
 
             if (role === 'Admin' || role === 'Owner') {
               Swal.fire({

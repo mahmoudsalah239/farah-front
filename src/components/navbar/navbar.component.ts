@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { UserNamePipe } from '../../Pipes/user-name.pipe';
+import { CustomerInfoService } from '../../services/customer-info.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,16 +13,25 @@ import { UserNamePipe } from '../../Pipes/user-name.pipe';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  profileImageUrl: string = '../../assets/download.png';
+
   userInfo: any;
   IsLogin: boolean = false;
 
   FullName: string = '';
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService
+    , private profileService:CustomerInfoService
+  ) {}
 
   ngOnInit(): void {
+    this.profileImageUrl = localStorage.getItem('profileImageUrl')||'';
+    
     console.log(localStorage.getItem('name'));
     this.loginService.userInfo.subscribe((user) => {
       this.userInfo = user;
+    });
+    this.profileService.profileImageUrl$.subscribe(url => {
+      this.profileImageUrl = url;
     });
 
     this.loginService.isLoggedIn.subscribe((isLoggedIn) => {

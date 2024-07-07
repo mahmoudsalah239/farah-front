@@ -15,7 +15,7 @@
         <button *ngIf="Photographer.isFavorite" (click)="toogleFavorite(Photographer.photographyID)" class="btn remove-favorite">
           حذف من المفضلة <i class="fas fa-heart text-danger"></i>
         </button>
-        <button class="btn contact" (click)="toogleFavorite(Photographer.photographyID)">
+        <button class="btn contact" (click)="openChat(Photographer.ownerID)">
           تواصل للحجز <i class="fas fa-calendar-check"></i>
         </button>
       </div>

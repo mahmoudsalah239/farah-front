@@ -5,6 +5,8 @@ import { FavouritesService } from '../../services/favourites.service';
 import { Photographer } from '../../interfaces/photographer';
 import { DotsPipe } from "../../Pipes/dots.pipe";
 import { SpinnerComponent } from "../spinner/spinner.component";
+import { ChatService } from '../../services/chat.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-favorite',
@@ -18,7 +20,8 @@ export class FavoritePhotographerComponent implements OnInit {
   favoritPhotographer: Photographer[] = [];
   isload: boolean = false;
 
-  constructor(private router: Router, private fav: FavouritesService) {}
+  constructor(   private chatService: ChatService,
+    private router: Router , private fav: FavouritesService) {}
 
   ngOnInit(): void {
     this.getfavSericves();
@@ -52,5 +55,29 @@ export class FavoritePhotographerComponent implements OnInit {
         this.getfavSericves();
       },
     });
+  }
+  
+  openChat(ownerId: string) {
+    if (localStorage.getItem('token')) {
+      this.chatService.GetChatIdFromServices(ownerId).subscribe((res) => {
+        localStorage.setItem('ownerId', ownerId);
+        sessionStorage.setItem('ownerId', res.data.user.id);
+
+        this.router.navigate(['/Chats/chat', res.data.chatId]);
+      });
+    } else {
+      Swal.fire({
+        title: 'غير مسجل ',
+        text: 'أنت غير مسجل . يجب عليك تسجيل الدخول أولاً.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'تسجيل الدخول',
+        cancelButtonText: 'إلغاء',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/Login']);
+        }
+      });
+    }
   }
 }

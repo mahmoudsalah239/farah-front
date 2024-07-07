@@ -33,7 +33,7 @@
                 <button *ngIf="!hall.isFavorite" (click)="toogleFavorite(hall.hallID)" class="btn btn-dark m-2">
                   حذف من المفضله <i class="fas fa-heart text-danger"></i>
                 </button>
-                <button  (click)="toogleFavorite(hall.hallID)" class="btn btn-dark m-2">
+                <button  (click)="openChat(hall.ownerID)" class="btn btn-dark m-2">
                   تواصل للحجز <i class="fas fa-calendar-check"></i>
                 </button>
 
