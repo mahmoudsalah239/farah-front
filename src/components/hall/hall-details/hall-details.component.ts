@@ -76,9 +76,8 @@ export class HallDetailsComponent implements OnInit {
   openChat(ownerId: string) {
     if (localStorage.getItem('token')) {
       this.chatService.GetChatIdFromServices(ownerId).subscribe((res) => {
-        console.log(res.data.chatId);
-        localStorage.setItem('customerId', res.data.user.id);
-        sessionStorage.setItem('customerId', res.data.user.id);
+        localStorage.setItem('ownerId', ownerId);
+        sessionStorage.setItem('ownerId', res.data.user.id);
 
         this.router.navigate(['/Chats/chat', res.data.chatId]);
       });
