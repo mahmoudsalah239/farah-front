@@ -31,8 +31,6 @@
     "ngx-pagination": "^6.0.3",
     "ngx-slick-carousel": "^17.0.0",
     "ngx-spinner": "^17.0.0",
-    "ngx-toast-notify": "^3.0.8",
-    "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",
     "slick-carousel": "^1.8.1",
     "swal": "^0.1.0",

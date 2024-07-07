@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 
 import {
   AbstractControl,
@@ -18,6 +18,11 @@ import { RegisterService } from '../../services/register.service';
 import { mustMatch } from '../../interfaces/validators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SendOtpService } from '../../services/send-otp.service';
+import { CredentialResponse } from 'google-one-tap';
+import { AuthUserDTO } from '../../interfaces/auth-user-dto';
+import { CustomResponse } from '../../interfaces/custom-response';
+import { LoginService } from '../../services/login.service';
+
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -38,7 +43,9 @@ export class RegisterComponent {
     private addressService: AddressServiceService,
     private registerService: RegisterService,
     private sendOtpService: SendOtpService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private _loginService: LoginService,
+    private ngZone: NgZone
   ) {
     this.registerForm = new FormGroup(
       {
@@ -79,6 +86,81 @@ export class RegisterComponent {
           this.registerForm.get('cityID')?.reset({ value: '', disabled: true });
         }
       });
+
+    //@ts-ignore
+    google.accounts.id.initialize({
+      client_id:
+        '808137901632-58vcgh80pl4h70h11re5v243rqpgeptt.apps.googleusercontent.com',
+      callback: this.handleCredentialResponse.bind(this),
+      auto_select: false,
+      cancel_on_tap_outside: true,
+    });
+    //@ts-ignore
+    google.accounts.id.renderButton(
+      //@ts-ignore
+      document.getElementById('google-login-button'),
+      {
+        theme: 'dark',
+        size: 'large',
+        type: 'standard',
+        text: 'تسجيل الدخول باستخدام Google',
+        width: '100%',
+      }
+    );
+    //@ts-ignore
+    google.accounts.id.prompt((notification: PromptMomentNotification) => {});
+  }
+
+  async handleCredentialResponse(response: CredentialResponse) {
+    console.log('Send From Front-->', response);
+    this._loginService.googleLogin(response.credential).subscribe(
+      (res: CustomResponse<AuthUserDTO>) => {
+        console.log('Response', res);
+
+        if (res.succeeded) {
+          localStorage.setItem('token', res.data.token);
+          localStorage.setItem('name', res.data.fullName);
+
+          this.ngZone.run(() => {
+            Swal.fire({
+              title: 'تم تسجيل الدخول بنجاح!',
+              text:
+                res.message || 'لقد قمت بتسجيل الدخول بنجاح باستخدام Google.',
+              icon: 'success',
+              confirmButtonText: 'موافق',
+            }).then(() => {
+              this.router.navigate(['/home']).then(() => {
+                setTimeout(() => {
+                  window.location.reload();
+                }, 100);
+              });
+            });
+          });
+        } else {
+          this.ngZone.run(() => {
+            Swal.fire({
+              title: 'فشل تسجيل الدخول',
+              text:
+                res.message ||
+                'حدث خطأ أثناء تسجيل الدخول باستخدام Google. يرجى المحاولة مرة أخرى.',
+              icon: 'error',
+              confirmButtonText: 'موافق',
+            });
+          });
+        }
+      },
+      (error: any) => {
+        console.log(error);
+        this.ngZone.run(() => {
+          Swal.fire({
+            title: 'فشل تسجيل الدخول',
+            text: 'حدث خطأ أثناء تسجيل الدخول باستخدام Google. يرجى المحاولة مرة أخرى.',
+            icon: 'error',
+            confirmButtonText: 'موافق',
+          });
+        });
+      }
+    );
   }
 
   loadGovernorates(): void {

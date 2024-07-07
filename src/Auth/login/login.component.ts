@@ -34,37 +34,34 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private _loginService: LoginService,
-    private sendOtpService: SendOtpService,
     private ngZone: NgZone,
+    private sendOtpService: SendOtpService,
     private resetPasswordService: ResetPasswordService
   ) {}
 
   ngOnInit(): void {
     //@ts-ignore
-    window.onload = () => {
+    google.accounts.id.initialize({
+      client_id:
+        '808137901632-58vcgh80pl4h70h11re5v243rqpgeptt.apps.googleusercontent.com',
+      callback: this.handleCredentialResponse.bind(this),
+      auto_select: false,
+      cancel_on_tap_outside: true,
+    });
+    //@ts-ignore
+    google.accounts.id.renderButton(
       //@ts-ignore
-      google.accounts.id.initialize({
-        client_id:
-          '808137901632-58vcgh80pl4h70h11re5v243rqpgeptt.apps.googleusercontent.com',
-        callback: this.handleCredentialResponse.bind(this),
-        auto_select: false,
-        cancel_on_tap_outside: true,
-      });
-      //@ts-ignore
-      google.accounts.id.renderButton(
-        //@ts-ignore
-        document.getElementById('google-login-button'),
-        {
-          theme: 'dark',
-          size: 'large',
-          type: 'standard',
-          text: 'تسجيل الدخول باستخدام Google',
-          width: '100%',
-        }
-      );
-      //@ts-ignore
-      google.accounts.id.prompt((notification: PromptMomentNotification) => {});
-    };
+      document.getElementById('google-login-button'),
+      {
+        theme: 'dark',
+        size: 'large',
+        type: 'standard',
+        text: 'تسجيل الدخول باستخدام Google',
+        width: '100%',
+      }
+    );
+    //@ts-ignore
+    google.accounts.id.prompt((notification: PromptMomentNotification) => {});
   }
 
   async handleCredentialResponse(response: CredentialResponse) {

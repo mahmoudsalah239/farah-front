@@ -62,7 +62,7 @@ export const routes: Routes = [
   { path: 'booking-photographer', component: BookingPhotographerComponent },
   { path: 'dress', component: DressComponent },
   { path: 'Chats', component: AllChatsComponent },
-  { path: 'Chat/:id', component: ChatComponent },
+  { path: 'Chats/chat/:id', component: ChatComponent },
 
   { path: 'dress-details/:id', component: DressDetailsComponent },
   { path: 'booking-dress', component: BookingDressComponent },

@@ -8,18 +8,17 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { ChatService } from '../../services/chat.service';
-import { environment } from '../../environments/environment.development';
 import { SignalRService } from '../../services/signal-r.service';
+import { environment } from '../../environments/environment.development';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 interface Message {
   text: string;
   time: Date;
   isMine: boolean;
   isCollapsed: boolean;
 }
-
 @Component({
   selector: 'app-chat',
   standalone: true,
@@ -53,7 +52,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
-    this.reciverId = localStorage.getItem('customerId') || ''; // Default to empty string if null
+    this.reciverId = localStorage.getItem('ownerId') || ''; // Default to empty string if null
     const token = localStorage.getItem('token');
     if (token) {
       const decodedToken: any = jwtDecode(token);
