@@ -8,6 +8,7 @@ import { FavouritesService } from '../../../services/favourites.service';
 import { AddressServiceService } from '../../../services/address-service.service';
 import { HallService } from './../../../services/hall.service';
 import { ChatService } from '../../../services/chat.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-hall-details',
@@ -82,7 +83,18 @@ export class HallDetailsComponent implements OnInit {
         this.router.navigate(['/Chats/chat', res.data.chatId]);
       });
     } else {
-      alert('يجب عليك تسجيل الدخول اولا');
+      Swal.fire({
+        title: 'غير مسجل ',
+        text: 'أنت غير مسجل . يجب عليك تسجيل الدخول أولاً.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'تسجيل الدخول',
+        cancelButtonText: 'إلغاء',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/Login']);
+        }
+      });
     }
   }
 }
