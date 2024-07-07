@@ -144,14 +144,34 @@ this.isload=true;
   }
 
   toogleFavorite(id:number){
-this.fav.toggleFavorite(id).subscribe({
-  next:(res)=>{
-    console.log(res);
-    this.filterHalls();
-  }
-})
+    if (localStorage.getItem('token')) {
+      this.fav.toggleFavorite(id).subscribe({
+        next:(res)=>{
+          console.log(res);
+          this.filterHalls();
+          
+        }
+      })
+    } else {
+      Swal.fire({
+        title: 'غير مسجل ',
+        text: 'أنت غير مسجل . يجب عليك تسجيل الدخول أولاً.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'تسجيل الدخول',
+        cancelButtonText: 'إلغاء',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/Login']);
+        }
+      });
+    }
 
-  }
+
+
+   
+      }
+      
 
 
   

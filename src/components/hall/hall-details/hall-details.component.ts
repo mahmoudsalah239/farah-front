@@ -64,15 +64,35 @@ export class HallDetailsComponent implements OnInit {
   changeImage(imageSrc: string): void {
     this.currentImage = imageSrc;
   }
-  toogleFavorite(id: number) {
-    this.fav.toggleFavorite(id).subscribe({
-      next: (res) => {
-        console.log(res);
+  toogleFavorite(id:number){
+    if (localStorage.getItem('token')) {
+      this.fav.toggleFavorite(id).subscribe({
+        next:(res)=>{
+          console.log(res);
+          this.getCarById(this.carId);
+          
+        }
+      })
+    } else {
+      Swal.fire({
+        title: 'غير مسجل ',
+        text: 'أنت غير مسجل . يجب عليك تسجيل الدخول أولاً.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'تسجيل الدخول',
+        cancelButtonText: 'إلغاء',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/Login']);
+        }
+      });
+    }
 
-        this.getCarById(this.carId);
-      },
-    });
-  }
+
+
+   
+      }
+      
 
   openChat(ownerId: string) {
     if (localStorage.getItem('token')) {

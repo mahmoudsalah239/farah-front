@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+   this.profileImageUrl = '../../assets/download.png';
     this.profileImageUrl = localStorage.getItem('profileImageUrl')||'';
     
     console.log(localStorage.getItem('name'));
