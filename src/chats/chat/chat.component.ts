@@ -13,7 +13,7 @@ import { environment } from '../../environments/environment.development';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-interface Message { 
+interface Message {
   text: string;
   time: Date;
   isMine: boolean;
@@ -63,6 +63,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.route.params.subscribe((params) => {
       this.chatId = +params['id'];
       this.loadChat(this.chatId);
+    });
+
+    this.signalrService.newMessageReceivedListener((date) => {
+      this.onMessageReceived(date);
     });
   }
 
@@ -120,5 +124,15 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         console.error('Error fetching chat data', error);
       }
     );
+  }
+  onMessageReceived(message: any): void {
+    console.log('Get New Message ');
+    this.messages.push({
+      text: message.message,
+      time: message.sentAt,
+      isMine: false,
+      isCollapsed: true,
+    });
+    this.scrollToBottom();
   }
 }
