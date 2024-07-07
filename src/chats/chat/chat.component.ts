@@ -52,7 +52,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
-    this.reciverId = localStorage.getItem('customerId') || ''; // Default to empty string if null
+    this.reciverId = localStorage.getItem('ownerId') || ''; // Default to empty string if null
     const token = localStorage.getItem('token');
     if (token) {
       const decodedToken: any = jwtDecode(token);
