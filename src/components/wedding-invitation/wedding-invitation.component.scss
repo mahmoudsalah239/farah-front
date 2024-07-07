@@ -7,7 +7,7 @@
     height: 100vh;
     display: grid;
     place-items: center;
-    background: radial-gradient(red 30%, silver);
+    // background: radial-gradient(red 30%, silver);
   }
   .container {
     min-width: 90%;
@@ -55,7 +55,7 @@
   h3,
   h4 {
     margin-top: 0.5em;
-    text-shadow: 2px 2px 1em red;
+    // text-shadow: 2px 2px 1em red;
     letter-spacing: 2px;
     // font-family: "Times New Roman", Times, serif;
   }
