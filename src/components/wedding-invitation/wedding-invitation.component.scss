@@ -32,7 +32,7 @@
     position: relative;
   }
   .one {
-    background: url(../../assets/22.jpg);
+    background: url(../../assets/55.jpg);
     background-color: aliceblue;
     width: 95%;
     height: 95%;
@@ -49,6 +49,7 @@
     top: 0;
     transform-origin: top;
     clip-path: polygon(50% 70%, 100% 35%, 100% 0, 0 0, 0 35%);
+    border-radius: 10px;
   }
   h1,
   h2,
@@ -97,6 +98,7 @@
   .opens {
     transform: rotatex(190deg);
     transition: all 1s linear;
+    border-radius: 10px;
   }
   .show-card {
     z-index: 2;

@@ -1,8 +1,9 @@
+// src/app/services/login.service.ts
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 import { CustomResponse } from '../interfaces/custom-response';
 import { AuthUserDTO } from '../interfaces/auth-user-dto';
 
@@ -67,5 +68,9 @@ export class LoginService {
           }
         })
       );
+  }
+
+  isUserLoggedIn(): boolean {
+    return this.isLoggedIn.value;
   }
 }
