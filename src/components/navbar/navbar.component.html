@@ -25,7 +25,6 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/beauty" routerLinkActive="active">بيوتي سنتر</a>
           </li>
-
         </ul>
         <ul *ngIf="!IsLogin; else logined" class="navbar-nav ms-auto">
           <li class="nav-item">
@@ -41,7 +40,7 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                {{ FullName|userName }} <img class="rounded rounded-circle loginUserImg" src="../../assets/download.png"
+                {{ FullName | userName }} <img class="rounded rounded-circle loginUserImg" [src]="profileImageUrl"
                   alt="">
               </a>
               <ul class="dropdown-menu text-end " aria-labelledby="navbarDropdown" dir="ltr">

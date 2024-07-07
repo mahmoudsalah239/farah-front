@@ -29,7 +29,7 @@ export class HallDetailsComponent implements OnInit {
     private fav: FavouritesService,
     private chatService: ChatService,
     private router: Router
-  ) {}
+  ) {} 
 
   carId = Number(this.route.snapshot.paramMap.get('id'));
   ngOnInit(): void {

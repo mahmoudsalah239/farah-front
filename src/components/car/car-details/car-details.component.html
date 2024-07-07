@@ -21,7 +21,7 @@
           <button *ngIf="car.isFavorite" (click)="toogleFavorite(car.carID)" class="btn remove-favorite">
             حذف من المفضلة <i class="fas fa-heart text-danger"></i>
           </button>
-          <button class="btn contact" (click)="toogleFavorite(car.carID)">
+          <button class="btn contact" (click)="openChat(car.ownerID)">
             تواصل للحجز <i class="fas fa-calendar-check"></i>
           </button>
         </div>

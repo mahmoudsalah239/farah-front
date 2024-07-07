@@ -9,6 +9,7 @@ import { DotsPipe } from '../../Pipes/dots.pipe';
 import { AddressServiceService } from '../../services/address-service.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { FavouritesService } from '../../services/favourites.service';
+import { ChatService } from '../../services/chat.service';
 @Component({
   selector: 'app-favorite',
   standalone: true,
@@ -20,7 +21,10 @@ export class FavoriteComponent implements OnInit {
   favoriteHalls: Hall[] = [];
   isload: boolean = false;
 
-  constructor(private router: Router, private fav: FavouritesService) {}
+  constructor(private router: Router, private fav: FavouritesService,
+    private chatService: ChatService,
+  
+  ) {}
 
   ngOnInit(): void {
     this.getfavSericves();
@@ -29,46 +33,12 @@ export class FavoriteComponent implements OnInit {
     this.fav.getFavourites().subscribe({
       next: (res) => {
         console.log(res.data);
-
         this.favoriteHalls = res.data.halls;
-        // this.favoritebeautyCenters = res.data.beautyCenters;
-        // this.favoriteshopDresses = res.data.shopDresses;
-        // this.favoritephotographys = res.data.favoritephotographys;
       },
     });
   }
 
-  //  removeService(id:number){
-  //   Swal.fire({
-  //     title: 'هل انتا متاكد ؟',
-  //     text: 'تريد حذف هذه الخدمه ممن المفضله ؟',
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'نعم احذفها ',
-  //     cancelButtonText: 'لا اتركها '
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       // User confirmed deletion, call API to remove service
-  //       this.fav.toggleFavorite(id).subscribe({
-  //         next: (res) => {
-  //           console.log(res);
-  //           // Optionally show success message
-  //           Swal.fire('تم الحذف ', 'success');
-  //           // Refresh service list or perform any necessary actions
-  //           this.getfavSericves();
-  //         },
-  //         error: (err) => {
-  //           console.error('تم :', err);
-  //           Swal.fire('Error!', 'Failed to delete service.', 'error');
-  //         }
-  //       });
-  //     } else if (result.dismiss === Swal.DismissReason.cancel) {
-  //       // User canceled deletion, do nothing or show a message
-  //       Swal.fire('تم الالغاء', 'خدمتك بأمان  :)');
-  //     }
-  //   });
-
-  //  }
+  
 
   navigateToDetails(hallId: number): void {
     this.router.navigate(['/hall-details', hallId]);
@@ -90,4 +60,28 @@ export class FavoriteComponent implements OnInit {
       },
     });
   }
+  openChat(ownerId: string) {
+    if (localStorage.getItem('token')) {
+      this.chatService.GetChatIdFromServices(ownerId).subscribe((res) => {
+        localStorage.setItem('ownerId', ownerId);
+        sessionStorage.setItem('ownerId', res.data.user.id);
+
+        this.router.navigate(['/Chats/chat', res.data.chatId]);
+      });
+    } else {
+      Swal.fire({
+        title: 'غير مسجل ',
+        text: 'أنت غير مسجل . يجب عليك تسجيل الدخول أولاً.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'تسجيل الدخول',
+        cancelButtonText: 'إلغاء',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/Login']);
+        }
+      });
+    }
+  }
+
 }

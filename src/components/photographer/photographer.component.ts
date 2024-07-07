@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { HallService } from '../../services/hall.service';
 import { Hall } from '../../interfaces/hall';
@@ -10,6 +10,8 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 import { PhotographerService } from '../../services/photographer.service';
 import { FavouritesService } from '../../services/favourites.service';
 import { Photographer } from '../../interfaces/photographer';
+import Swal from 'sweetalert2';
+import { ChatService } from '../../services/chat.service';
 @Component({
   selector: 'app-photographer',
   standalone: true,
@@ -31,7 +33,9 @@ export class PhotographerComponent implements OnInit {
     private PhotographerS: PhotographerService,
     private addressService: AddressServiceService,
     private fb: FormBuilder,
-    private fav:FavouritesService
+    private fav:FavouritesService,
+    private chatService: ChatService,
+    private router: Router
 
   
   ) {
@@ -105,4 +109,27 @@ export class PhotographerComponent implements OnInit {
     
       }
 
+      openChat(ownerId: string) {
+        if (localStorage.getItem('token')) {
+          this.chatService.GetChatIdFromServices(ownerId).subscribe((res) => {
+            localStorage.setItem('ownerId', ownerId);
+            sessionStorage.setItem('ownerId', res.data.user.id);
+    
+            this.router.navigate(['/Chats/chat', res.data.chatId]);
+          });
+        } else {
+          Swal.fire({
+            title: 'غير مسجل ',
+            text: 'أنت غير مسجل . يجب عليك تسجيل الدخول أولاً.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'تسجيل الدخول',
+            cancelButtonText: 'إلغاء',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate(['/Login']);
+            }
+          });
+        }
+      }
 }

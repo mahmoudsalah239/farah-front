@@ -21,7 +21,7 @@
         <button *ngIf="Beauty.isFavorite" (click)="toogleFavorite(Beauty.beautyCenterId)" class="btn remove-favorite">
           حذف من المفضلة <i class="fas fa-heart text-danger"></i>
         </button>
-        <button class="btn contact" (click)="toogleFavorite(Beauty.beautyCenterId)">
+        <button class="btn contact" (click)="openChat(Beauty.ownerID)">
           تواصل للحجز <i class="fas fa-calendar-check"></i>
         </button>
       </div>
@@ -80,7 +80,7 @@
         <div class="card-body  ">
           <div class="d-flex justify-content-between">
             <div class="card-text">{{ service.name }}</div>
-            <h6 class="card-subtitle mb-2 text-light badge bg-danger">{{ service.appointment }}</h6>
+            <h6 class="card-subtitle  text-light badge bg-danger">{{ service.appointment }}</h6>
           </div>
           
           <p class="card-text"> وصف الخدمه :{{ service.description }}</p>
@@ -89,4 +89,4 @@
       </div>
     </div>
   </div>
-</div>
+</div>  

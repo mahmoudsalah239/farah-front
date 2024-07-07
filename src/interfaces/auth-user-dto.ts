@@ -6,4 +6,5 @@ export interface AuthUserDTO {
   token: string;
   errors: string[];
   fullName: string;
+  profileImage:string;
 }

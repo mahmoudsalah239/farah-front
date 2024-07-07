@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { CarService } from '../../services/car.service';
 import { DotsPipe } from '../../Pipes/dots.pipe';
@@ -9,6 +9,7 @@ import { SpinnerComponent } from '../spinner/spinner.component';
   import { FavouritesService } from './../../services/favourites.service';
 import Swal from 'sweetalert2'; 
 import { Car } from '../../interfaces/car';
+import { ChatService } from '../../services/chat.service';
 @Component({
   selector: 'app-car',
   standalone: true,
@@ -35,7 +36,8 @@ export class CarComponent implements OnInit {
     private carService: CarService,
     private addressService: AddressServiceService,
     private fb: FormBuilder,
-    private fav:FavouritesService
+    private fav:FavouritesService,   private chatService: ChatService,
+    private router: Router
   ) {
     this.registerForm = this.fb.group({
       govID: [''],
@@ -136,4 +138,29 @@ export class CarComponent implements OnInit {
     })
     
       }
+
+      
+  openChat(ownerId: string) {
+    if (localStorage.getItem('token')) {
+      this.chatService.GetChatIdFromServices(ownerId).subscribe((res) => {
+        localStorage.setItem('ownerId', ownerId);
+        sessionStorage.setItem('ownerId', res.data.user.id);
+
+        this.router.navigate(['/Chats/chat', res.data.chatId]);
+      });
+    } else {
+      Swal.fire({
+        title: 'غير مسجل ',
+        text: 'أنت غير مسجل . يجب عليك تسجيل الدخول أولاً.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'تسجيل الدخول',
+        cancelButtonText: 'إلغاء',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/Login']);
+        }
+      });
+    }
+  }
 }

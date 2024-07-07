@@ -3,7 +3,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { HallComponent } from '../hall/hall.component';
 import { CarComponent } from '../car/car.component';
 import { BeautyCenterComponent } from '../beauty-center/beauty-center.component';
-import { DressComponent } from '../dress/dress.component';
+
 import { PhotographerComponent } from '../photographer/photographer.component';
 import { CommonModule } from '@angular/common';
 
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [ RouterLink,CommonModule, RouterLinkActive ,HallComponent,CarComponent,BeautyCenterComponent,DressComponent,PhotographerComponent ],
+  imports: [ RouterLink,CommonModule, RouterLinkActive ,HallComponent,CarComponent,BeautyCenterComponent,PhotographerComponent ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss'
 })
@@ -28,13 +28,8 @@ export class CategoryComponent {
       link: '/car'
     },
     {
-      image: 'assets/weddingDress.jpg',
-      title: 'الفساتين',
-      link: '/dress'
-    },
-    {
       image: 'assets/weddingPhotographer.jpeg',
-      title: 'المصور',
+      title: 'المصورين',
       link: '/photographer'
     },
     {
@@ -44,7 +39,7 @@ export class CategoryComponent {
     },
     {
       image: 'assets/allservices.jpg',
-      title: 'جميع الخدمات',
+      title: ' الخدمات المفضلة',
       link: '/favorites'
     }
   ];
