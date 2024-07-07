@@ -130,14 +130,34 @@ export class CarComponent implements OnInit {
 
   
   toogleFavorite(id:number){
-    this.fav.toggleFavorite(id).subscribe({
-      next:(res)=>{
-        console.log(res);
-        this.filterCars();
+    if (localStorage.getItem('token')) {
+      this.fav.toggleFavorite(id).subscribe({
+        next:(res)=>{
+          console.log(res);
+          this.filterCars();
+          
+        }
+      })
+    } else {
+      Swal.fire({
+        title: 'غير مسجل ',
+        text: 'أنت غير مسجل . يجب عليك تسجيل الدخول أولاً.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'تسجيل الدخول',
+        cancelButtonText: 'إلغاء',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/Login']);
+        }
+      });
+    }
+
+
+
+   
       }
-    })
-    
-      }
+      
 
       
   openChat(ownerId: string) {

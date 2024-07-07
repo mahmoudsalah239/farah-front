@@ -63,17 +63,7 @@ templateUrl: './beauty-details.component.html',
     changeImage(imageSrc: string): void {
       this.currentImage = imageSrc;
     }
-    toogleFavorite(id:number){
-      this.fav.toggleFavorite(id).subscribe({
-        next:(res)=>{
-          console.log(res);
-  
-          this.getBeautyById(this.carId);
-          
-        }
-      })
-      
-        }
+ 
         getCityById(id:number){
           this.Address.getCityById(id).subscribe({
             next:(data)=>{
@@ -111,5 +101,34 @@ templateUrl: './beauty-details.component.html',
       });
     }
   }
+  toogleFavorite(id:number){
+    if (localStorage.getItem('token')) {
+      this.fav.toggleFavorite(id).subscribe({
+        next:(res)=>{
+          console.log(res);
+  
+          this.getBeautyById(this.carId);
+          
+        }
+      })
+    } else {
+      Swal.fire({
+        title: 'غير مسجل ',
+        text: 'أنت غير مسجل . يجب عليك تسجيل الدخول أولاً.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'تسجيل الدخول',
+        cancelButtonText: 'إلغاء',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/Login']);
+        }
+      });
+    }
+
+
+
+   
+      }
       
       }  
