@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { UserNamePipe } from '../../Pipes/user-name.pipe';
 import { CustomerInfoService } from '../../services/customer-info.service';
@@ -20,7 +20,8 @@ export class NavbarComponent implements OnInit {
 
   FullName: string = '';
   constructor(private loginService: LoginService
-    , private profileService:CustomerInfoService
+    , private profileService:CustomerInfoService,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -48,5 +49,6 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.loginService.logout();
+    this.router.navigate(['/home']);
   }
 }

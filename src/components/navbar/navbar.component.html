@@ -25,6 +25,9 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/beauty" routerLinkActive="active">بيوتي سنتر</a>
           </li>
+          <li class="nav-item" *ngIf="IsLogin">
+            <a class="nav-link" routerLink="/favorites/favorite" routerLinkActive="active">مفضلاتي</a>
+          </li>
         </ul>
         <ul *ngIf="!IsLogin; else logined" class="navbar-nav ms-auto">
           <li class="nav-item">
@@ -38,16 +41,13 @@
                   class="fa-solid fa-envelope"></i> </a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 {{ FullName | userName }} <img class="rounded rounded-circle loginUserImg" [src]="profileImageUrl"
                   alt="">
               </a>
               <ul class="dropdown-menu text-end " aria-labelledby="navbarDropdown" dir="ltr">
                 <li><a class="dropdown-item" routerLink="/Profile">بروفايلي <i class="fa fa-user"></i></a></li>
-                <li><a class="dropdown-item" routerLink="/Chats">محادثاتي <i class="fa fa-list"></i></a></li>
-                <li><a class="dropdown-item" routerLink="/favorites/favorite">المفضلة <i class="fa fa-list"></i></a>
-                </li>
                 <li><a class="dropdown-item" (click)="logout()">تسجيل الخروج <i class="fa fa-sign-out"></i></a></li>
               </ul>
             </li>
