@@ -20,22 +20,27 @@ templateUrl: './beauty-details.component.html',
     Beauty!: BeautyCenter;
     currentImage: string = '';
     thumbnails: { thumb: string, large: string }[] = [];
+    cityName:string='';
   
     constructor(private route: ActivatedRoute, private beautyService: BeautyService
-      ,private fav:FavouritesService
+      ,private fav:FavouritesService , private Address:AddressServiceService
     ) { }
   
    carId = Number(this.route.snapshot.paramMap.get('id')) ;
     ngOnInit(): void {
       if (this.carId) {
-        this.getCarById(this.carId);
+        this.getBeautyById(this.carId);
       }
     }
   
-    getCarById(id: number): void {
+    getBeautyById(id: number): void {
       this.beautyService.GetBeautyById(id).subscribe({
         next: (res) => {
           this.Beauty = res.data;
+          this.getCityById(res.data.city);
+          console.log(res);
+
+          
           if (this.Beauty.imageUrls && this.Beauty.imageUrls.length > 0) {
             this.currentImage = 'https://localhost:44322' + this.Beauty.imageUrls[0];
             this.populateThumbnails();
@@ -59,9 +64,22 @@ templateUrl: './beauty-details.component.html',
         next:(res)=>{
           console.log(res);
   
-          this.getCarById(this.carId);
+          this.getBeautyById(this.carId);
           
         }
       })
       
-        }}
+        }
+        getCityById(id:number){
+          this.Address.getCityById(id).subscribe({
+            next:(data)=>{
+              console.log(data.data.name);
+              this.cityName = data.data.name;
+
+              
+              
+            }
+          })
+        }
+      
+      }

@@ -84,6 +84,8 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
+    padding: 100px 0 ;
+    
   }
   
   .background-overlay {
@@ -92,7 +94,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(101, 47, 90, 0.3);
+    background-color: rgba(12, 1, 10, 0.3);
     z-index: 1;
   }
   

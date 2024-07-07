@@ -120,43 +120,7 @@ export class CarComponent implements OnInit {
     return this.cars;
   }
 
-  addToFavorites(id: number) {
-    // Display SweetAlert confirmation dialog
-    Swal.fire({
-      title: 'هل أنت متأكد؟',
-      text: 'سيتم إضافة هذه الخدمة إلى المفضلة',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: 'نعم، أضف',
-      cancelButtonText: 'لا، إلغاء'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // User confirmed, call API to add to favorites
-        this.fav.toggleFavorite(id).subscribe({
-          next: (res) => {
-            console.log(res);
-            Swal.fire({
-              icon: 'success',
-              title: 'تمت الإضافة إلى المفضلة بنجاح',
-              showConfirmButton: false,
-              timer: 1500
-            });
-          },
-          error: (err) => {
-            console.error('حدث خطأ:', err);
-            Swal.fire({
-              icon: 'error',
-              title: 'فشلت العملية',
-              text: 'يرجى المحاولة مرة أخرى لاحقاً'
-            });
-          }
-        });
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        // User canceled, do nothing or show a message
-        Swal.fire('تم الإلغاء', 'لم يتم إضافة الخدمة إلى المفضلة', 'info');
-      }
-    });
-  }
+
 
   truncateDescription(description: string): string {
     return description.length > 100 ? description.substring(0, 100) + '...' : description;

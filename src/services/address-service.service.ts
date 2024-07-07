@@ -21,7 +21,7 @@ export class AddressServiceService {
     return this.http.get<City[]>(`${this.baseUrl}/City/${governorateID}`);
   }
 
-  getCityById(cityId:number): Observable<City>{
+  getCityById(cityId:number): Observable<any>{
 
     return this.http.get<City>(`${this.baseUrl}/City/getCityById?id=${cityId}`);
 
