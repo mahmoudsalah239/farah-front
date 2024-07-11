@@ -40,32 +40,45 @@ export const routes: Routes = [
         path: 'favorite-photographer',
         component: FavoritePhotographerComponent,
       },
-  
+
       { path: 'favorite-car', component: FavoriteCarComponent },
       { path: 'favorite-center', component: FavoriteCenterComponent },
       { path: '**', component: NotFoundComponent },
     ],
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
- 
+
   { path: 'photographer', component: PhotographerComponent },
   { path: 'photographer-details/:id', component: PhotographerDetailsComponent },
   { path: 'favorite-photographer', component: FavoritePhotographerComponent },
 
   { path: 'Chats', component: AllChatsComponent, canActivate: [AuthGuard] },
-  { path: 'Chats/chat/:id', component: ChatComponent, canActivate: [AuthGuard] },
+  {
+    path: 'Chats/chat/:id',
+    component: ChatComponent,
+    canActivate: [AuthGuard],
+  },
 
   { path: 'car', component: CarComponent },
   { path: 'car-details/:id', component: CarDetailsComponent },
-  { path: 'favorite-car', component: FavoriteCarComponent, canActivate: [AuthGuard] },
+  {
+    path: 'favorite-car',
+    component: FavoriteCarComponent,
+    canActivate: [AuthGuard],
+  },
 
   { path: 'beauty', component: BeautyCenterComponent },
   { path: 'beauty-center-details/:id', component: BeautyDetailsComponent },
-  { path: 'favorite-center', component: FavoriteCenterComponent, canActivate: [AuthGuard] },
+  {
+    path: 'favorite-center',
+    component: FavoriteCenterComponent,
+    canActivate: [AuthGuard],
+  },
 
   { path: 'Account', component: AccountComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'Login', component: LoginComponent },
+
   { path: 'forgot-password', component: ForgotPasswordComponentComponent },
   { path: 'OwnerRegister', component: OwnerRegisterComponent },
   { path: 'Profile', component: ProfileComponent, canActivate: [AuthGuard] },

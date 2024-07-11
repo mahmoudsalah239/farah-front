@@ -6,7 +6,9 @@
   border-radius: 0;
   border: none;
 }
-
+.panel-body {
+  height: 60vh;
+}
 .table td,
 .table th {
   text-align: center;
