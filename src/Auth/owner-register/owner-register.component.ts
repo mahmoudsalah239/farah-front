@@ -205,7 +205,7 @@ export class OwnerRegisterComponent implements OnInit {
             title: 'تم التحقق من البريد الإلكتروني',
             text: 'تم التحقق من بريدك الإلكتروني بنجاح. يمكنك الآن تسجيل الدخول إلى لوحة التحكم.',
             footer:
-              '<a href="http://localhost:4200/">http://localhost:4200/</a>',
+              '<a href="http://localhost:5555//">http://localhost:5555//</a>',
           }).then(() => {
             localStorage.clear();
             localStorage.removeItem('token');
